@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Crashlytics generates a wrong dash, who cares -->
+    <issue id="TypographyDashes">
+        <ignore path="src/main/res/values/com_crashlytics_export_strings.xml" />
+    </issue>
+    <!-- Lint doesn't recognize Gradle min API declaration -->
+    <issue id="InlinedApi" severity="ignore" />
+    <issue id="NewApi" severity="ignore" />
+    <issue id="UnusedAttribute" severity="ignore" />
+</lint>
