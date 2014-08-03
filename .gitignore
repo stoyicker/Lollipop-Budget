@@ -8,11 +8,7 @@ gradle
 *.iml
 gradlew.bat
 gradlew
-com_crashlytics_export_strings.xml
-build
-crashlytics.properties
 *.keystore
 *.pwd
 *.alias
-crashlytics-build.properties
 Deployment
