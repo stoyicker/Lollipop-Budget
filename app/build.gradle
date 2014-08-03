@@ -1,24 +1,46 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    mavenCentral()
+}
+
 android {
     compileSdkVersion 'android-L'
     buildToolsVersion "20.0.0"
 
-    defaultConfig {
-        applicationId "org.jorge.lbudget"
-        minSdkVersion 'L'
-        targetSdkVersion 'L'
-        versionCode 1
-        versionName "1.0"
+    productFlavors {
+        standard {
+            minSdkVersion 'L'
+            targetSdkVersion 'L'
+            versionCode 1
+            versionName "0.1"
+        }
+
+//        signingConfigs {
+//            release {
+//                storeFile new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1gplaykey.keystore")
+//                storePassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1storage.pwd").text)
+//                keyAlias(new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1.alias").text)
+//                keyPassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1key.pwd").text)
+//            }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+
     buildTypes {
         release {
+            runProguard true
+            zipAlign true
+            proguardFiles getDefaultProguardFile('proguard-app.pro')
+//            signingConfig signingConfigs.release
+        }
+
+        debug {
             runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-app.pro'
+            zipAlign false
         }
     }
-}
-
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
 }

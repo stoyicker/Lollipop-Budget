@@ -8,7 +8,5 @@ gradle
 *.iml
 gradlew.bat
 gradlew
-*.keystore
-*.pwd
-*.alias
 Deployment
+signing
