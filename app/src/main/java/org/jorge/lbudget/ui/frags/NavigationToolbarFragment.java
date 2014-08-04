@@ -34,6 +34,12 @@ public class NavigationToolbarFragment extends Fragment {
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isOpen = savedInstanceState == null ? Boolean.FALSE : savedInstanceState.getBoolean(KEY_OPEN_STATE);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (outState == null) outState = new Bundle();
@@ -52,6 +58,7 @@ public class NavigationToolbarFragment extends Fragment {
                 } else {
                     openNavigationMenu();
                 }
+                isOpen = !isOpen;
             }
         });
         return ret;
