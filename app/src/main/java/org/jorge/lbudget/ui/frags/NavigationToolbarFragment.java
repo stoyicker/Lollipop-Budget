@@ -12,16 +12,28 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.activities;
+package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
+import android.app.Fragment;
 
-public class InitialActivity extends Activity {
+public class NavigationToolbarFragment extends Fragment {
+
+    private NavigationToolbarListener mCallback;
+
+    public static interface NavigationToolbarListener{
+        public void onMenuSelected();
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (NavigationToolbarListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NewsListFragmentListener");
+        }
     }
 }

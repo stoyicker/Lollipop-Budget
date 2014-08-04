@@ -15,8 +15,6 @@
 package org.jorge.lbudget.devutils;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import org.jorge.lbudget.BuildConfig;
@@ -24,7 +22,6 @@ import org.jorge.lbudget.BuildConfig;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 
 @SuppressWarnings({"UnusedDeclaration"})
 public abstract class DevUtils {
@@ -56,24 +53,6 @@ public abstract class DevUtils {
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
-    }
-
-    public static void debugSelectAllFromTable(SQLiteDatabase readableDatabase, String tag, String[] fields, String tableName) {
-        if (!BuildConfig.DEBUG) return;
-
-        readableDatabase.beginTransaction();
-        Cursor cursor = readableDatabase.query(tableName, fields, null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            Log.d(tag, fields[0] + ": " + cursor.getInt(0));
-            Log.d(tag, fields[1] + ": " + cursor.getString(1));
-            Log.d(tag, fields[2] + ": " + cursor.getString(2));
-            Log.d(tag, fields[3] + ": " + cursor.getString(3));
-            Log.d(tag, fields[4] + ": " + cursor.getString(4));
-            Log.d(tag, fields[5] + ": " + Arrays.toString(cursor.getBlob(5)));
-        }
-        cursor.close();
-        readableDatabase.setTransactionSuccessful();
-        readableDatabase.endTransaction();
     }
 
     public static void logArray(String tag, String arrayName, Object[] array) {
