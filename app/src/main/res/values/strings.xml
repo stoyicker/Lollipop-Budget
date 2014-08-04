@@ -14,4 +14,8 @@
 
 <resources>
     <string name="app_name">LBudget</string>
+    <string name="menu_item0">Monthly graph</string>
+    <string name="menu_item1">List</string>
+    <string name="menu_item2">Yearly graph</string>
+    <string name="menu_item3">Accounts</string>
 </resources>
