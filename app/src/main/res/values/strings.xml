@@ -18,4 +18,5 @@
     <string name="menu_item1">List</string>
     <string name="menu_item2">Yearly graph</string>
     <string name="menu_item3">Accounts</string>
+    <string name="content_description_menu">Menu</string>
 </resources>
