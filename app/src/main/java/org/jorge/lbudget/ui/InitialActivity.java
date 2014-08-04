@@ -12,4 +12,7 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-include ':app'
+package org.jorge.lbudget.ui;
+
+public class InitialActivity {
+}
