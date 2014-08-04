@@ -30,6 +30,6 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
 
     @Override
     public void onMenuSelected() {
-        //TODO
+        //TODO Perform the fragment transaction
     }
 }

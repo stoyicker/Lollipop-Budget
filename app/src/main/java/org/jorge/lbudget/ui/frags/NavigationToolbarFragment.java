@@ -26,15 +26,43 @@ import org.jorge.lbudget.R;
 public class NavigationToolbarFragment extends Fragment {
 
     private NavigationToolbarListener mCallback;
+    private Boolean isOpen;
+    private static final String KEY_OPEN_STATE = "IS_OPEN";
 
     public static interface NavigationToolbarListener {
         public void onMenuSelected();
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (outState == null) outState = new Bundle();
+        outState.putBoolean(KEY_OPEN_STATE, isOpen);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
+        View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
+        ret.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isOpen) {
+                    closeNavigationMenu();
+                } else {
+                    openNavigationMenu();
+                }
+            }
+        });
+        return ret;
+    }
+
+    private void closeNavigationMenu() {
+
+    }
+
+    private void openNavigationMenu() {
+
     }
 
     @Override
