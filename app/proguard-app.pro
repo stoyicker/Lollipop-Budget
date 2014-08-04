@@ -26,8 +26,6 @@
 -keepattributes *Annotation*
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
--keep public class org.jorge.lolin1.func.champs.models.*
--keep public class org.jorge.lolin1.utils.LoLin1Utils.*
 -keep public class com.github.amlcurran.showcaseview.targets.ActionBarViewWrapper
 
 -keepclasseswithmembernames class * {
