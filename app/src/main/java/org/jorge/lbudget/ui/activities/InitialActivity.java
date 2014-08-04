@@ -12,7 +12,9 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui;
+package org.jorge.lbudget.ui.activities;
 
-public class InitialActivity {
+import android.app.Activity;
+
+public class InitialActivity extends Activity {
 }
