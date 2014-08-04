@@ -15,6 +15,9 @@
 <resources>
     <color name="theme_color_primary">#4285F4</color>
     <color name="theme_text_color_primary">@android:color/white</color>
+    <color name="theme_text_color_secondary">#4B4B4B</color>
     <color name="theme_window_background">#E5E5E5</color>
     <color name="theme_color_primary_dark">#3367D6</color>
+    <color name="navigation_toolbar_background">@android:color/white</color>
+    <color name="navigation_toolbar_selected_menu_item_text">#00001F</color>
 </resources>
