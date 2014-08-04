@@ -1,4 +1,4 @@
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This file is part of LBudget.
   ~ LBudget is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -13,10 +13,7 @@
   -->
 
 <resources>
-    <string name="app_name">LBudget</string>
-    <string name="menu_item0">Movements</string>
-    <string name="menu_item1">Monthly graph</string>
-    <string name="menu_item2">Accounts</string>
-    <string name="menu_item3">Yearly graph</string>
-    <string name="content_description_menu">Menu</string>
+    <dimen name="content_margin">8dp</dimen>
+    <dimen name="navigation_toolbar_element_horizontal_margin">16dp</dimen>
+    <dimen name="navigation_toolbar_element_vertical_margin">8dp</dimen>
 </resources>
