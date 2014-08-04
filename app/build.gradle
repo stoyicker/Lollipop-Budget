@@ -16,31 +16,32 @@ android {
             versionName "0.1"
         }
 
-//        signingConfigs {
-//            release {
-//                storeFile new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1gplaykey.keystore")
-//                storePassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1storage.pwd").text)
-//                keyAlias(new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1.alias").text)
-//                keyPassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lolin1key.pwd").text)
-//            }
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-    buildTypes {
-        release {
-            runProguard true
-            zipAlign true
-            proguardFiles getDefaultProguardFile('proguard-app.pro')
-//            signingConfig signingConfigs.release
+        signingConfigs {
+            release {
+                storeFile new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetgplaykey.keystore")
+                storePassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetstorage.pwd").text)
+                keyAlias(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudget.alias").text)
+                keyPassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetkey.pwd").text)
+            }
         }
 
-        debug {
-            runProguard false
-            zipAlign false
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_7
+            targetCompatibility JavaVersion.VERSION_1_7
+        }
+
+        buildTypes {
+            release {
+                runProguard true
+                zipAlign true
+                proguardFiles getDefaultProguardFile('proguard-app.pro')
+                signingConfig signingConfigs.release
+            }
+
+            debug {
+                runProguard false
+                zipAlign false
+            }
         }
     }
 }
