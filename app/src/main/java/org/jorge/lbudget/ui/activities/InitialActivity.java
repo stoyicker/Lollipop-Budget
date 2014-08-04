@@ -22,6 +22,9 @@ public class InitialActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        finish();
+        startActivity(intent);
     }
 }

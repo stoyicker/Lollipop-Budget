@@ -16,13 +16,25 @@ package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import org.jorge.lbudget.R;
 
 public class NavigationToolbarFragment extends Fragment {
 
     private NavigationToolbarListener mCallback;
 
-    public static interface NavigationToolbarListener{
+    public static interface NavigationToolbarListener {
         public void onMenuSelected();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
     }
 
     @Override
@@ -33,7 +45,7 @@ public class NavigationToolbarFragment extends Fragment {
             mCallback = (NavigationToolbarListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement NewsListFragmentListener");
+                    + " must implement NavigationToolbarListener");
         }
     }
 }
