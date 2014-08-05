@@ -17,6 +17,5 @@
         <item>@string/menu_item0</item>
         <item>@string/menu_item1</item>
         <item>@string/menu_item2</item>
-        <item>@string/menu_item3</item>
     </string-array>
 </resources>

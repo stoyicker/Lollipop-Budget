@@ -15,35 +15,50 @@
 package org.jorge.lbudget.ui.custom;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.util.AttributeSet;
+import android.view.WindowManager;
 import android.widget.Spinner;
 
+@SuppressWarnings("unused") //Constructors are necessary for instantiation from XML
 public class NavigationToolbarSpinner extends Spinner {
     private boolean mOpenInitiated = Boolean.FALSE;
     private OpenStateChangeListener mListener;
 
     private NavigationToolbarSpinner(Context context) {
         super(context);
+        setMaxDropdownWidth(context);
     }
 
     public NavigationToolbarSpinner(Context context, int mode) {
         super(context, mode);
+        setMaxDropdownWidth(context);
     }
 
     public NavigationToolbarSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setMaxDropdownWidth(context);
     }
 
     public NavigationToolbarSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setMaxDropdownWidth(context);
     }
 
     public NavigationToolbarSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         super(context, attrs, defStyleAttr, mode);
+        setMaxDropdownWidth(context);
     }
 
     public NavigationToolbarSpinner(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, int mode) {
         super(context, attrs, defStyleAttr, defStyleRes, mode);
+        setMaxDropdownWidth(context);
+    }
+
+    private void setMaxDropdownWidth(Context context) {
+        Point target = new Point();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(target);
+        setDropDownWidth(target.x);
     }
 
     @Override

@@ -17,7 +17,6 @@
     <string name="menu_item0">Movements</string>
     <string name="menu_item1">Monthly graph</string>
     <string name="menu_item2">Accounts</string>
-    <string name="menu_item3">Yearly graph</string>
     <string name="content_description_menu">Menu</string>
     <string name="action_settings">Settings</string>
 </resources>

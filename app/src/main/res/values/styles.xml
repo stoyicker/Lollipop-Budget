@@ -27,5 +27,6 @@
 
     <style name="DropDownListViewStyle" parent="android:Widget.ListView.DropDown">
         <item name="android:divider">@null</item>
+        <item name="android:background">@color/navigation_toolbar_background</item>
     </style>
 </resources>
