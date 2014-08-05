@@ -16,6 +16,8 @@ package org.jorge.lbudget.ui.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
@@ -31,5 +33,12 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     @Override
     public void onMenuSelected() {
         //TODO Perform the fragment transaction
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
