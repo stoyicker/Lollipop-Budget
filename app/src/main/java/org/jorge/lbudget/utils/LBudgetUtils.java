@@ -97,9 +97,8 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-//    public static String[] getStringArray(Context context, String variableName,
-//                                          String[] defaultRet) {
-//        String[] ret = defaultRet;
+//    public static String[] getStringArray(Context context, String variableName) {
+//        String[] ret = null;
 //
 //        try {
 //            Field resourceField = R.array.class.getDeclaredField(variableName);
@@ -112,8 +111,8 @@ public abstract class LBudgetUtils {
 //        return ret;
 //    }
 
-    public static String getString(Context context, String variableName, String defaultRet) {
-        String ret = defaultRet;
+    public static String getString(Context context, String variableName) {
+        String ret = null;
 
         try {
             Field resourceField = R.string.class.getDeclaredField(variableName);
@@ -127,8 +126,8 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-    public static int getDrawableAsId(String variableName, int defaultRet) {
-        int ret = defaultRet;
+    public static int getDrawableAsId(String variableName) {
+        int ret = -1;
 
         try {
             Field resourceField = R.drawable.class.getDeclaredField(variableName);
@@ -162,8 +161,8 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-//    public static int getInt(Context context, String variableName, int defaultRet) {
-//        int ret = defaultRet;
+//    public static int getInt(Context context, String variableName) {
+//        int ret = null;
 //
 //        try {
 //            Field resourceField = R.integer.class.getDeclaredField(variableName);
