@@ -20,12 +20,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.Interpolator;
+import android.widget.ImageView;
 
 import org.jorge.lbudget.R;
 
 public class NavigationToolbarFragment extends Fragment {
 
     private NavigationToolbarListener mCallback;
+    private ImageView wedgeView;
     private Boolean isOpen;
     private static final String KEY_OPEN_STATE = "IS_OPEN";
 
@@ -37,6 +42,7 @@ public class NavigationToolbarFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         isOpen = savedInstanceState == null ? Boolean.FALSE : savedInstanceState.getBoolean(KEY_OPEN_STATE);
+        //TODO Inflate the menu if isOpen == Boolean.TRUE
     }
 
     @Override
@@ -50,6 +56,7 @@ public class NavigationToolbarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
+        wedgeView = (ImageView) ret.findViewById(R.id.menu_selector_wedge);
         ret.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,11 +72,23 @@ public class NavigationToolbarFragment extends Fragment {
     }
 
     private void closeNavigationMenu() {
+        rotateWedge(Boolean.FALSE);
+    }
 
+    private void rotateWedge(Boolean clockwise) {
+        Animation animationRotate = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise_180);
+        if (!clockwise) animationRotate.setInterpolator(new Interpolator() {
+            @Override
+            public float getInterpolation(float v) {
+                return Math.abs(v - 1f); //Reverse the animation
+            }
+        });
+        animationRotate.setFillAfter(Boolean.TRUE);
+        wedgeView.startAnimation(animationRotate);
     }
 
     private void openNavigationMenu() {
-
+        rotateWedge(Boolean.TRUE);
     }
 
     @Override
