@@ -16,6 +16,7 @@ package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,48 +25,41 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.ui.custom.NavigationToolbarSpinner;
 
 public class NavigationToolbarFragment extends Fragment {
 
     private NavigationToolbarListener mCallback;
     private ImageView wedgeView;
-    private Boolean isOpen;
-    private static final String KEY_OPEN_STATE = "IS_OPEN";
+    private NavigationToolbarSpinner navigationSpinner;
 
     public static interface NavigationToolbarListener {
-        public void onMenuSelected();
+        public void onMenuSelected(int index);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        isOpen = savedInstanceState == null ? Boolean.FALSE : savedInstanceState.getBoolean(KEY_OPEN_STATE);
-        //TODO Inflate the menu if isOpen == Boolean.TRUE
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if (outState == null) outState = new Bundle();
-        outState.putBoolean(KEY_OPEN_STATE, isOpen);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
-        wedgeView = (ImageView) ret.findViewById(R.id.menu_selector_wedge);
-        ret.setOnClickListener(new View.OnClickListener() {
+        navigationSpinner = (NavigationToolbarSpinner) ret.findViewById(R.id.navigation_toolbar_selector);
+        wedgeView = (ImageView) ret.findViewById(R.id.navigation_toolbar_wedge);
+        navigationSpinner.setOnOpenStateChangeLister(new NavigationToolbarSpinner.OpenStateChangeListener() {
             @Override
-            public void onClick(View view) {
-                if (isOpen) {
-                    closeNavigationMenu();
-                } else {
-                    openNavigationMenu();
-                }
-                isOpen = !isOpen;
+            public void onSpinnerOpened() {
+                openNavigationMenu();
+            }
+
+            @Override
+            public void onSpinnerClosed() {
+                closeNavigationMenu();
             }
         });
         return ret;

@@ -26,14 +26,19 @@ import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
 
 public class MainActivity extends Activity implements NavigationToolbarFragment.NavigationToolbarListener {
 
+    private int selectedMenuIndex;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        selectedMenuIndex = 0;
     }
 
     @Override
-    public void onMenuSelected() {
+    public void onMenuSelected(int index) {
+        if (index == selectedMenuIndex)
+            return;
         //TODO Perform the fragment transaction
     }
 

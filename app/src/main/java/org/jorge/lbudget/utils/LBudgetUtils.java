@@ -97,19 +97,19 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-//    public static String[] getStringArray(Context context, String variableName) {
-//        String[] ret = null;
-//
-//        try {
-//            Field resourceField = R.array.class.getDeclaredField(variableName);
-//            int resourceId = resourceField.getInt(resourceField);
-//            ret = context.getResources().getStringArray(resourceId);
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            DevUtils.showTrace("debug", e);
-//        }
-//
-//        return ret;
-//    }
+    public static String[] getStringArray(Context context, String variableName) {
+        String[] ret = null;
+
+        try {
+            Field resourceField = R.array.class.getDeclaredField(variableName);
+            int resourceId = resourceField.getInt(resourceField);
+            ret = context.getResources().getStringArray(resourceId);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            DevUtils.showTrace("debug", e);
+        }
+
+        return ret;
+    }
 
     public static String getString(Context context, String variableName) {
         String ret = null;

@@ -15,29 +15,29 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:background="@color/navigation_toolbar_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="@dimen/elevation_navigation_toolbar">
 
     <ImageView
-        android:id="@+id/menu_selector_wedge"
+        android:id="@+id/navigation_toolbar_wedge"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:src="@drawable/ic_wedge"
         android:scaleType="fitCenter"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/menu_selector_text_field"
+        android:layout_alignBottom="@+id/navigation_toolbar_selector"
         android:contentDescription="@string/content_description_menu"
         android:layout_marginLeft="@dimen/navigation_toolbar_element_horizontal_margin"
         android:layout_marginRight="@dimen/navigation_toolbar_element_horizontal_margin" />
 
-    <TextView
-        android:id="@+id/menu_selector_text_field"
-        android:layout_width="wrap_content"
+    <org.jorge.lbudget.ui.custom.NavigationToolbarSpinner
+        android:id="@+id/navigation_toolbar_selector"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/menu_item0"
+        android:entries="@array/navigation_items"
+        android:background="@null"
         android:textSize="@dimen/text_size_navigation_toolbar"
         android:textColor="@color/navigation_toolbar_selected_menu_item_text"
         android:layout_marginLeft="@dimen/navigation_toolbar_element_horizontal_margin"
