@@ -22,24 +22,33 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.ui.custom.NavigationToolbarSpinner;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
 
 public class MainActivity extends Activity implements NavigationToolbarFragment.NavigationToolbarListener {
 
-    private int selectedMenuIndex;
+    private NavigationToolbarSpinner mNavigationToolbarSelector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        selectedMenuIndex = 0;
+        mNavigationToolbarSelector = ((NavigationToolbarFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_toolbar)).getNavigationSpinner();
     }
 
     @Override
     public void onMenuSelected(int index) {
-        if (index == selectedMenuIndex)
+        if (mNavigationToolbarSelector.getSelectedItemPosition() == index)
             return;
         //TODO Perform the fragment transaction
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (mNavigationToolbarSelector.hasBeenOpened() && hasFocus) {
+            mNavigationToolbarSelector.performClosedEvent();
+        }
     }
 
     @Override

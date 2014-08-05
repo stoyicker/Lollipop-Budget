@@ -34,6 +34,11 @@ public class NavigationToolbarFragment extends Fragment {
 
     private NavigationToolbarListener mCallback;
     private ImageView wedgeView;
+
+    public NavigationToolbarSpinner getNavigationSpinner() {
+        return navigationSpinner;
+    }
+
     private NavigationToolbarSpinner navigationSpinner;
 
     public static interface NavigationToolbarListener {

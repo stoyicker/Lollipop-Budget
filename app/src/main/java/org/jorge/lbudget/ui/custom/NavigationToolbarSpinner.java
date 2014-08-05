@@ -19,8 +19,8 @@ import android.util.AttributeSet;
 import android.widget.Spinner;
 
 public class NavigationToolbarSpinner extends Spinner {
-    private Boolean open = Boolean.FALSE;
-    private OpenStateChangeListener listener;
+    private boolean mOpenInitiated = Boolean.FALSE;
+    private OpenStateChangeListener mListener;
 
     private NavigationToolbarSpinner(Context context) {
         super(context);
@@ -48,18 +48,26 @@ public class NavigationToolbarSpinner extends Spinner {
 
     @Override
     public boolean performClick() {
-        if (listener != null)
-            if (open) {
-                listener.onSpinnerClosed();
-            } else {
-                listener.onSpinnerOpened();
-            }
-        open = !open;
+        mOpenInitiated = true;
+        if (mListener != null) {
+            mListener.onSpinnerOpened();
+        }
         return super.performClick();
     }
 
     public void setOnOpenStateChangeLister(OpenStateChangeListener listener) {
-        this.listener = listener;
+        this.mListener = listener;
+    }
+
+    public void performClosedEvent() {
+        mOpenInitiated = false;
+        if (mListener != null) {
+            mListener.onSpinnerClosed();
+        }
+    }
+
+    public boolean hasBeenOpened() {
+        return mOpenInitiated;
     }
 
     public interface OpenStateChangeListener {
