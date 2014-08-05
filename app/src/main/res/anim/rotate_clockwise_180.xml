@@ -13,13 +13,11 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
-<set xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shareInterpolator="false">
-    <rotate
-        android:duration="500"
-        android:interpolator="@android:anim/linear_interpolator"
-        android:pivotX="50%"
-        android:pivotY="50%"
-        android:repeatCount="1"
-        android:toDegrees="-180" />
-</set>
+<rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shareInterpolator="false"
+    android:duration="500"
+    android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:repeatCount="1"
+    android:toDegrees="-180" />
