@@ -15,14 +15,12 @@
 package org.jorge.lbudget.utils;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
 
@@ -30,16 +28,7 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.devutils.DevUtils;
 import org.jorge.lbudget.ui.activities.InitialActivity;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public abstract class LBudgetUtils {
 
@@ -121,7 +110,7 @@ public abstract class LBudgetUtils {
     }
 
 //    public static int getInt(Context context, String variableName) {
-//        int ret = null;
+//        int ret = -1;
 //
 //        try {
 //            Field resourceField = R.integer.class.getDeclaredField(variableName);

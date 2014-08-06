@@ -38,8 +38,6 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.jorge.lbudget.devutils.DevUtils.logString;
-
 public class NavigationToolbarFragment extends Fragment implements NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener {
 
     private NavigationToolbarListener mCallback;
@@ -85,16 +83,12 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
                     mNavigationToolbarButton.performClosedEvent();
                     return;
                 }
-                logString("debug", "Open request initialized");
                 openNavigationMenu();
-                logString("debug", "Open request completed");
             }
 
             @Override
             public void onCloseRequest() {
-                logString("debug", "Close request initialized");
                 closeNavigationMenu();
-                logString("debug", "Close request completed");
             }
         });
         return ret;
@@ -110,29 +104,28 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
 
     private void closeNavigationMenu() {
         rotateWedge(Boolean.FALSE);
-//        Animation animationPushUp = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
-//        animationPushUp.setInterpolator(new Interpolator() {
-//            @Override
-//            public float getInterpolation(float v) {
-//                return Math.abs(v - 1f); //Reverse the animation so that it actually pushes upwards
-//            }
-//        });
-//        mNavigationMenuView.setLayoutAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//                mNavigationMenuView.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//            }
-//        });
-//        mNavigationMenuView.startAnimation(animationPushUp);
-        mNavigationMenuView.setVisibility(View.GONE);
+        Animation animationPushUp = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
+        animationPushUp.setInterpolator(new Interpolator() {
+            @Override
+            public float getInterpolation(float v) {
+                return Math.abs(v - 1f); //Reverse the animation so that it actually pushes upwards
+            }
+        });
+        animationPushUp.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mNavigationMenuView.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        mNavigationMenuView.startAnimation(animationPushUp);
     }
 
     private void rotateWedge(Boolean clockwise) {
@@ -149,25 +142,22 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
 
     private void openNavigationMenu() {
         rotateWedge(Boolean.TRUE);
-//        Animation animationPushDown = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
-//        mNavigationMenuView.setLayoutAnimationListener(new Animation.AnimationListener() {
-//            @Override
-//            public void onAnimationStart(Animation animation) {
-//                logString("debug", "onAnimationStart called for the opening");
-//                mNavigationMenuView.setVisibility(View.VISIBLE);
-//            }
-//
-//            @Override
-//            public void onAnimationEnd(Animation animation) {
-//            }
-//
-//            @Override
-//            public void onAnimationRepeat(Animation animation) {
-//            }
-//        });
-//        mNavigationMenuView.startAnimation(animationPushDown);
-//        logString("debug", "Animation start requested for the opening");
-        mNavigationMenuView.setVisibility(View.VISIBLE);
+        Animation animationPushDown = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
+        animationPushDown.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                mNavigationMenuView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        mNavigationMenuView.startAnimation(animationPushDown);
     }
 
     @Override
