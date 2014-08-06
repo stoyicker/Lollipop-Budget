@@ -37,12 +37,17 @@
         android:visibility="gone"
         android:elevation="@dimen/elevation_navigation_dropdown" />
 
-    <FrameLayout
-        android:id="@+id/content_fragment_container"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.78"
-        android:background="@android:color/holo_blue_bright"
         android:layout_margin="@dimen/content_margin"
-        android:elevation="@dimen/elevation_fragment_content" />
+        android:background="@android:color/holo_blue_bright"
+        android:elevation="@dimen/elevation_fragment_content">
+
+        <FrameLayout
+            android:id="@+id/content_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+      </ScrollView>
 </LinearLayout>

@@ -13,8 +13,8 @@
   -->
 
 <resources>
-    <dimen name="elevation_navigation_toolbar">4dp</dimen>
-    <dimen name="elevation_navigation_dropdown">3dp</dimen>
-    <dimen name="elevation_fragment_content">2dp</dimen>
+    <dimen name="elevation_navigation_toolbar">5dp</dimen>
+    <dimen name="elevation_navigation_dropdown">4dp</dimen>
+    <dimen name="elevation_fragment_content">3dp</dimen>
     <item name="navigation_toolbar_icon_scale_ratio" format="float" type="dimen">0.7</item>
 </resources>
