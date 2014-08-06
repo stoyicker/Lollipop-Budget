@@ -14,5 +14,5 @@
 
 <resources>
     <dimen name="elevation_navigation_toolbar">4dp</dimen>
-    <dimen name="text_size_navigation_toolbar">16sp</dimen>
+    <item name="navigation_toolbar_icon_scale_ratio" format="float" type="dimen">0.7</item>
 </resources>

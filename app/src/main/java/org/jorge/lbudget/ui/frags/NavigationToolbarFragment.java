@@ -18,6 +18,9 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,57 +28,115 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
-import android.widget.Spinner;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.ui.custom.NavigationToolbarSpinner;
+import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
+import org.jorge.lbudget.ui.navbar.NavigationToolbarRecyclerAdapter;
+import org.jorge.lbudget.ui.navbar.NavigationToolbarDataModel;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
-public class NavigationToolbarFragment extends Fragment {
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.jorge.lbudget.devutils.DevUtils.logString;
+
+public class NavigationToolbarFragment extends Fragment implements NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener {
 
     private NavigationToolbarListener mCallback;
-    private ImageView wedgeView;
+    private ImageView mWedgeView;
+    private RecyclerView mNavigationMenuView;
 
-    public NavigationToolbarSpinner getNavigationSpinner() {
-        return navigationSpinner;
+    public NavigationToolbarButton getNavigationToolbarButton() {
+        return mNavigationToolbarButton;
     }
 
-    private NavigationToolbarSpinner navigationSpinner;
+    private NavigationToolbarButton mNavigationToolbarButton;
+    private Context mContext;
 
     public static interface NavigationToolbarListener {
         public void onMenuSelected(int index);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onNavigationItemSelected(int index) {
+        mNavigationToolbarButton.setSelectedIndex(index);
+        mCallback.onMenuSelected(index);
+        mNavigationToolbarButton.performClosedEvent();
+        RecyclerView.Adapter adapter = mNavigationMenuView.getAdapter();
+        adapter.notifyItemRangeChanged(0, adapter.getItemCount());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mContext = getActivity().getApplicationContext();
         View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
-        navigationSpinner = (NavigationToolbarSpinner) ret.findViewById(R.id.navigation_toolbar_selector);
-        wedgeView = (ImageView) ret.findViewById(R.id.navigation_toolbar_wedge);
-        navigationSpinner.setOnOpenStateChangeLister(new NavigationToolbarSpinner.OpenStateChangeListener() {
+        mNavigationToolbarButton = (NavigationToolbarButton) ret.findViewById(R.id.navigation_toolbar_selected);
+        mWedgeView = (ImageView) ret.findViewById(R.id.navigation_toolbar_wedge);
+        mNavigationMenuView = (RecyclerView) ret.findViewById(R.id.navigation_toolbar_selector);
+        mNavigationMenuView.setHasFixedSize(Boolean.TRUE);
+        mNavigationMenuView.setLayoutManager(new LinearLayoutManager(mContext));
+        mNavigationMenuView.setItemAnimator(new DefaultItemAnimator());
+        mNavigationMenuView.setAdapter(new NavigationToolbarRecyclerAdapter(mContext, loadMenuItems(), this, mNavigationToolbarButton));
+        mNavigationToolbarButton.setOnOpenStateChangeLister(new NavigationToolbarButton.OpenStateChangeListener() {
             @Override
-            public void onSpinnerOpened() {
+            public void onOpenRequest() {
+                if (mNavigationMenuView.getVisibility() == View.VISIBLE) {
+                    //If the menu is already open, close it instead
+                    mNavigationToolbarButton.performClosedEvent();
+                    return;
+                }
+                logString("debug", "Open request initialized");
                 openNavigationMenu();
+                logString("debug", "Open request completed");
             }
 
             @Override
-            public void onSpinnerClosed() {
+            public void onCloseRequest() {
+                logString("debug", "Close request initialized");
                 closeNavigationMenu();
+                logString("debug", "Close request completed");
             }
         });
         return ret;
     }
 
+    private List<NavigationToolbarDataModel> loadMenuItems() {
+        List<NavigationToolbarDataModel> ret = new ArrayList<>();
+        int length = LBudgetUtils.getStringArray(mContext, "navigation_items").length;
+        for (int i = 0; i < length; i++)
+            ret.add(new NavigationToolbarDataModel(mContext, i));
+        return ret;
+    }
+
     private void closeNavigationMenu() {
         rotateWedge(Boolean.FALSE);
+//        Animation animationPushUp = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
+//        animationPushUp.setInterpolator(new Interpolator() {
+//            @Override
+//            public float getInterpolation(float v) {
+//                return Math.abs(v - 1f); //Reverse the animation so that it actually pushes upwards
+//            }
+//        });
+//        mNavigationMenuView.setLayoutAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                mNavigationMenuView.setVisibility(View.GONE);
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//            }
+//        });
+//        mNavigationMenuView.startAnimation(animationPushUp);
+        mNavigationMenuView.setVisibility(View.GONE);
     }
 
     private void rotateWedge(Boolean clockwise) {
-        Animation animationRotate = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.rotate_clockwise_180);
+        Animation animationRotate = AnimationUtils.loadAnimation(mContext, R.anim.rotate_clockwise_180);
         if (!clockwise) animationRotate.setInterpolator(new Interpolator() {
             @Override
             public float getInterpolation(float v) {
@@ -83,11 +144,30 @@ public class NavigationToolbarFragment extends Fragment {
             }
         });
         animationRotate.setFillAfter(Boolean.TRUE);
-        wedgeView.startAnimation(animationRotate);
+        mWedgeView.startAnimation(animationRotate);
     }
 
     private void openNavigationMenu() {
         rotateWedge(Boolean.TRUE);
+//        Animation animationPushDown = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
+//        mNavigationMenuView.setLayoutAnimationListener(new Animation.AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//                logString("debug", "onAnimationStart called for the opening");
+//                mNavigationMenuView.setVisibility(View.VISIBLE);
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//            }
+//        });
+//        mNavigationMenuView.startAnimation(animationPushDown);
+//        logString("debug", "Animation start requested for the opening");
+        mNavigationMenuView.setVisibility(View.VISIBLE);
     }
 
     @Override

@@ -22,13 +22,15 @@
 
     <fragment
         android:id="@+id/fragment_navigation_toolbar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:name="org.jorge.lbudget.ui.frags.NavigationToolbarFragment"
         tools:layout="@layout/fragment_navigation_toolbar" />
 
     <FrameLayout
         android:id="@+id/content_fragment_container"
+        android:background="@android:color/holo_blue_bright"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/content_margin" />

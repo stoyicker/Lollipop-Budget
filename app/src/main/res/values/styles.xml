@@ -22,11 +22,20 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowEnterTransition">@transition/explode</item>
         <item name="android:windowExitTransition">@transition/explode</item>
-        <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
     </style>
 
-    <style name="DropDownListViewStyle" parent="android:Widget.ListView.DropDown">
-        <item name="android:divider">@null</item>
-        <item name="android:background">@color/navigation_toolbar_background</item>
+    <style name="NavigationToolbarButtonTextStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/text_size_navigation_toolbar</item>
+        <item name="android:textColor">@color/navigation_toolbar_selected_menu_item_text</item>
+    </style>
+
+    <style name="NavigationToolbarMenuItemStyle">
+        <item name="android:textAlignment">viewStart</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textSize">@dimen/text_size_navigation_dropdown</item>
+        <item name="android:textColor">@color/navigation_toolbar_menu_item</item>
     </style>
 </resources>

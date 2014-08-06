@@ -19,5 +19,8 @@
     <color name="theme_window_background">#E5E5E5</color>
     <color name="theme_color_primary_dark">#3367D6</color>
     <color name="navigation_toolbar_background">@android:color/white</color>
-    <color name="navigation_toolbar_selected_menu_item_text">#00001F</color>
+    <color name="navigation_toolbar_selected_menu_item_text">#414141</color>
+    <color name="navigation_dropdown_background">@color/navigation_toolbar_background</color>
+    <color name="navigation_item_background">#37474F</color>
+    <color name="navigation_toolbar_menu_item">#404040</color>
 </resources>

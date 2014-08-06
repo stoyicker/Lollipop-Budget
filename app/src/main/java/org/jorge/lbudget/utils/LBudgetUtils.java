@@ -43,28 +43,6 @@ import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public abstract class LBudgetUtils {
 
-    private static final Map<String, Charset> charsetMap = new HashMap<>();
-
-    public static String getCurrentForegroundActivityClass(Context context) {
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        logString("debug", "Class in top: " + taskInfo.get(0).topActivity.getClassName());
-        return taskInfo.get(0).topActivity.getClassName();
-    }
-
-    /**
-     * This is bad, very bad, but the problems only show on some devices and my time window is gone.
-     */
-    public static void configureStrictMode() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-    }
-
-    public static Charset getLocaleCharset(String locale) {
-        return charsetMap.containsKey(locale) ? charsetMap.get(locale) :
-                Charset.forName(locale);
-    }
-
     public static int dpToPx(Resources res, int dp) {
         return (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
@@ -76,25 +54,6 @@ public abstract class LBudgetUtils {
                 .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(i);
-    }
-
-    public static String getRealm(Context context) {
-
-        return context != null ? PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(
-                "pref_title_server",
-                "euw").toLowerCase(Locale.ENGLISH) : "";
-    }
-
-    public static String getLocale(Context context) {
-        String ret;
-        try {
-            ret = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
-                    .getString("pref_title_locale", "en_US");
-        } catch (NullPointerException ex) {
-            ret = null;
-        }
-
-        return ret;
     }
 
     public static String[] getStringArray(Context context, String variableName) {
@@ -178,13 +137,5 @@ public abstract class LBudgetUtils {
     public static int pixelsAsDp(Context context, int sizeInPx) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (sizeInPx * scale + 0.5f);
-    }
-
-    public static String inputStreamAsString(InputStream is, String locale) throws IOException {
-        java.util.Scanner s =
-                new java.util.Scanner(is, LBudgetUtils.getLocaleCharset(locale).name());
-        String ret;
-        ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
-        return ret;
     }
 }

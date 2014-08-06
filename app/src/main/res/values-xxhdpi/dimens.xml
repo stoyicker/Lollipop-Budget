@@ -16,4 +16,6 @@
     <dimen name="content_margin">8dp</dimen>
     <dimen name="navigation_toolbar_element_horizontal_margin">16dp</dimen>
     <dimen name="navigation_toolbar_element_vertical_margin">8dp</dimen>
+    <dimen name="text_size_navigation_toolbar">16sp</dimen>
+    <dimen name="text_size_navigation_dropdown">@dimen/text_size_navigation_toolbar</dimen>
 </resources>

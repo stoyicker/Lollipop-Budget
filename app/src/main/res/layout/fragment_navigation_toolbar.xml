@@ -13,36 +13,47 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/navigation_toolbar_background"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:elevation="@dimen/elevation_navigation_toolbar">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/navigation_toolbar_wedge"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:src="@drawable/ic_wedge"
-        android:scaleType="fitCenter"
-        android:layout_alignParentRight="true"
-        android:layout_alignBottom="@+id/navigation_toolbar_selector"
-        android:contentDescription="@string/content_description_menu"
-        android:layout_marginLeft="@dimen/navigation_toolbar_element_horizontal_margin"
-        android:layout_marginRight="@dimen/navigation_toolbar_element_horizontal_margin" />
-
-    <org.jorge.lbudget.ui.custom.NavigationToolbarSpinner
-        android:id="@+id/navigation_toolbar_selector"
+    <RelativeLayout
+        android:background="@color/navigation_toolbar_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/navigation_items"
-        android:background="@null"
-        android:textSize="@dimen/text_size_navigation_toolbar"
-        android:textColor="@color/navigation_toolbar_selected_menu_item_text"
-        android:paddingLeft="@dimen/navigation_toolbar_element_horizontal_margin"
-        android:paddingRight="@dimen/navigation_toolbar_element_horizontal_margin"
-        android:paddingTop="@dimen/navigation_toolbar_element_vertical_margin"
-        android:paddingBottom="@dimen/navigation_toolbar_element_vertical_margin"
-        android:layout_alignParentLeft="true" />
-</RelativeLayout>
+        android:elevation="@dimen/elevation_navigation_toolbar">
+
+        <ImageView
+            android:id="@+id/navigation_toolbar_wedge"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_wedge"
+            android:scaleType="fitCenter"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/navigation_toolbar_selected"
+            android:contentDescription="@string/content_description_menu"
+            android:layout_marginLeft="@dimen/navigation_toolbar_element_horizontal_margin"
+            android:layout_marginRight="@dimen/navigation_toolbar_element_horizontal_margin" />
+
+        <org.jorge.lbudget.ui.navbar.NavigationToolbarButton
+            android:id="@+id/navigation_toolbar_selected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            style="@style/NavigationToolbarButtonTextStyle"
+            android:paddingLeft="@dimen/navigation_toolbar_element_horizontal_margin"
+            android:paddingRight="@dimen/navigation_toolbar_element_horizontal_margin"
+            android:paddingTop="@dimen/navigation_toolbar_element_vertical_margin"
+            android:paddingBottom="@dimen/navigation_toolbar_element_vertical_margin"
+            android:layout_alignParentLeft="true" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/navigation_toolbar_selector"
+        android:background="@color/navigation_dropdown_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</LinearLayout>
