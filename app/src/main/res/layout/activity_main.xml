@@ -18,7 +18,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
 
     <fragment
         android:id="@+id/fragment_navigation_toolbar"
@@ -49,5 +50,5 @@
             android:id="@+id/content_fragment_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-      </ScrollView>
+    </ScrollView>
 </LinearLayout>

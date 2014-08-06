@@ -25,9 +25,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
@@ -87,48 +84,12 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
 
     private void closeNavigationMenu() {
         mNavigationToolbarFragment.rotateWedge(Boolean.FALSE);
-        Animation animationPushUp = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
-        animationPushUp.setInterpolator(new Interpolator() {
-            @Override
-            public float getInterpolation(float v) {
-                return Math.abs(v - 1f); //Reverse the animation so that it actually pushes upwards
-            }
-        });
-        animationPushUp.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                mNavigationMenuView.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        mNavigationMenuView.startAnimation(animationPushUp);
+        mNavigationMenuView.setVisibility(View.GONE);
     }
 
     private void openNavigationMenu() {
         mNavigationToolbarFragment.rotateWedge(Boolean.TRUE);
-        Animation animationPushDown = AnimationUtils.loadAnimation(mContext, R.anim.push_down);
-        animationPushDown.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                mNavigationMenuView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        mNavigationMenuView.startAnimation(animationPushDown);
+        mNavigationMenuView.setVisibility(View.VISIBLE);
     }
 
     @Override
