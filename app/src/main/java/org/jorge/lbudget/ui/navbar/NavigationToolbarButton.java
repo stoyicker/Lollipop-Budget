@@ -63,7 +63,7 @@ public class NavigationToolbarButton extends Button implements NavigationToolbar
         this.mListener = listener;
     }
 
-    public void performClosedEvent() {
+    public void initCloseProtocol() {
         mOpenInitiated = false;
         if (mListener != null) {
             mListener.onCloseRequest();

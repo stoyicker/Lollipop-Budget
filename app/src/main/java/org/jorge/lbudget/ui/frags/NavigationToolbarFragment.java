@@ -18,9 +18,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +29,6 @@ import android.widget.ImageView;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarRecyclerAdapter;
-import org.jorge.lbudget.ui.navbar.NavigationToolbarDataModel;
-import org.jorge.lbudget.utils.LBudgetUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class NavigationToolbarFragment extends Fragment implements NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener {
 
@@ -57,7 +49,7 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
     public void onNavigationItemSelected(int index) {
         mNavigationToolbarButton.setSelectedIndex(index);
         mCallback.onMenuSelected(index);
-        mNavigationToolbarButton.performClosedEvent();
+        mNavigationToolbarButton.initCloseProtocol();
     }
 
     @Override

@@ -24,6 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import org.jorge.lbudget.R;
@@ -36,6 +37,8 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.jorge.lbudget.devutils.DevUtils.logString;
+
 public class MainActivity extends Activity implements NavigationToolbarFragment.NavigationToolbarListener {
 
     private NavigationToolbarButton mNavigationToolbarButton;
@@ -47,6 +50,16 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.content_scroll_view).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                int action = motionEvent.getAction();
+                if (action == MotionEvent.ACTION_UP == mNavigationToolbarButton.hasBeenOpened()) {
+                    mNavigationToolbarButton.initCloseProtocol();
+                }
+                return Boolean.FALSE;
+            }
+        });
         mContext = getApplicationContext();
         mNavigationToolbarFragment = (NavigationToolbarFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_toolbar);
         mNavigationToolbarButton = mNavigationToolbarFragment.getNavigationToolbarButton();
@@ -60,7 +73,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
             public void onOpenRequest() {
                 if (mNavigationMenuView.getVisibility() == View.VISIBLE) {
                     //If the menu is already open, close it instead
-                    mNavigationToolbarButton.performClosedEvent();
+                    mNavigationToolbarButton.initCloseProtocol();
                     return;
                 }
                 openNavigationMenu();
