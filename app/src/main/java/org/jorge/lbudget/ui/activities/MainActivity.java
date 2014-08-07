@@ -1,9 +1,8 @@
 /*
  * This file is part of LBudget.
  * LBudget is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * it under the terms of version 3 of the GNU General Public License as published by
+ * the Free Software Foundation
  * LBudget is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
@@ -36,8 +35,6 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public class MainActivity extends Activity implements NavigationToolbarFragment.NavigationToolbarListener {
 

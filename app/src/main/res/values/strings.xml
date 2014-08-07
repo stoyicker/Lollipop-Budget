@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ This file is part of LBudget.
   ~ LBudget is free software: you can redistribute it and/or modify
   ~ it under the terms of version 3 of the GNU General Public License as published by
@@ -13,4 +11,6 @@
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<explode/>
+<resources>
+    <string name="app_name">LBudget</string>
+</resources>
