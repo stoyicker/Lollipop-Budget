@@ -23,6 +23,10 @@
         android:configChanges="orientation|screenSize|keyboardHidden"
         android:launchMode="singleTop"
         android:theme="@style/AppTheme">
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAIfUZv_HqOv6U1My_aBIVhDMYBSwC8I4vGP8pjWA" />
+
         <activity
             android:name=".ui.activities.InitialActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
