@@ -56,7 +56,7 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContext = getActivity().getApplicationContext();
-        View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, false);
+        View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, Boolean.FALSE);
         mNavigationToolbarButton = (NavigationToolbarButton) ret.findViewById(R.id.navigation_toolbar_selected);
         mWedgeView = (ImageView) ret.findViewById(R.id.navigation_toolbar_wedge);
         return ret;
