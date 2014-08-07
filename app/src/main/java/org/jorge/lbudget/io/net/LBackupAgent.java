@@ -15,11 +15,17 @@
 package org.jorge.lbudget.io.net;
 
 import android.app.backup.BackupAgentHelper;
+import android.app.backup.BackupDataInput;
+import android.app.backup.BackupDataOutput;
 import android.app.backup.BackupManager;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
+import android.os.ParcelFileDescriptor;
 
+import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.utils.LBudgetUtils;
+
+import java.io.IOException;
 
 public class LBackupAgent extends BackupAgentHelper {
 
@@ -34,6 +40,22 @@ public class LBackupAgent extends BackupAgentHelper {
         addHelper(PREFERENCES_BACKUP_KEY, sharedPreferencesBackupHelper);
 
         //TODO Add the database and the pictures
+    }
+
+    @Override
+    public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
+                         ParcelFileDescriptor newState) throws IOException {
+        synchronized (SQLiteDAO.dbLock) {
+            super.onBackup(oldState, data, newState);
+        }
+    }
+
+    @Override
+    public void onRestore(BackupDataInput data, int appVersionCode,
+                          ParcelFileDescriptor newState) throws IOException {
+        synchronized (SQLiteDAO.dbLock) {
+            super.onRestore(data, appVersionCode, newState);
+        }
     }
 
     public static void requestBackup(Context appContext) {

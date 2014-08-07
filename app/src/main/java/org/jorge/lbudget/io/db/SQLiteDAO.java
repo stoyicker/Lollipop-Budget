@@ -19,6 +19,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
+
+    public static final Object[] dbLock = new Object[0];
+
     public SQLiteDAO(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
