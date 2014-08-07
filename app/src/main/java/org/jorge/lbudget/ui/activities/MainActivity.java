@@ -14,6 +14,7 @@
 package org.jorge.lbudget.ui.activities;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.ui.frags.MovementListFragment;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarDataModel;
@@ -41,6 +43,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     private NavigationToolbarButton mNavigationToolbarButton;
     private RecyclerView mNavigationMenuView;
     private Context mContext;
+    private Fragment[] mContentFragments;
     private NavigationToolbarFragment mNavigationToolbarFragment;
 
     @Override
@@ -81,8 +84,13 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
                 closeNavigationMenu();
             }
         });
+        mContentFragments = new Fragment[LBudgetUtils.getStringArray(mContext, "navigation_items").length];
+        showInitialFragment();
     }
 
+    private void showInitialFragment() {
+        getFragmentManager().beginTransaction().replace(R.id.content_fragment_container, findMovementListFragment()).commit();
+    }
 
     private List<NavigationToolbarDataModel> loadMenuItems() {
         List<NavigationToolbarDataModel> ret = new ArrayList<>();
@@ -110,7 +118,35 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         RecyclerView.Adapter adapter = mNavigationMenuView.getAdapter();
         adapter.notifyItemChanged(oldIndex);
         adapter.notifyItemChanged(selectedIndex);
-        //TODO Perform the fragment transaction
+        Fragment target;
+        switch (selectedIndex) {
+            case 0:
+                target = findMovementListFragment();
+                break;
+            case 1:
+                target = findBalanceGraphFragment();
+                break;
+            case 2:
+                target = findAccountsFragment();
+                break;
+            default:
+                throw new IllegalArgumentException("Menu with id " + selectedIndex + " not found.");
+        }
+        getFragmentManager().beginTransaction().replace(R.id.content_fragment_container, target).addToBackStack(null).commit();
+    }
+
+    private Fragment findMovementListFragment() {
+        if (mContentFragments[0] == null)
+            mContentFragments[0] = new MovementListFragment();
+        return mContentFragments[0];
+    }
+
+    private Fragment findBalanceGraphFragment() {
+        throw new UnsupportedOperationException("Not yet implemented.");
+    }
+
+    private Fragment findAccountsFragment() {
+        throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     @Override
