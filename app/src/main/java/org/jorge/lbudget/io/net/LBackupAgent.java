@@ -21,7 +21,7 @@ import android.content.Context;
 
 import org.jorge.lbudget.utils.LBudgetUtils;
 
-public abstract class LBackupAgent extends BackupAgentHelper {
+public class LBackupAgent extends BackupAgentHelper {
 
     private static final String PREFERENCES_BACKUP_KEY = "PREFERENCES_BACKUP_KEY";
 
