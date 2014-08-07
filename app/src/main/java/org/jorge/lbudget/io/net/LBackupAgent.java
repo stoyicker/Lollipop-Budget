@@ -12,7 +12,7 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.logic;
+package org.jorge.lbudget.io.net;
 
 import android.app.backup.BackupAgentHelper;
 import android.app.backup.BackupManager;
