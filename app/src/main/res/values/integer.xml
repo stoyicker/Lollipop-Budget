@@ -12,13 +12,5 @@
   -->
 
 <resources>
-    <string name="app_name">LBudget</string>
-    <string name="pref_key_movement_income_color">preference_movement_income_color</string>
-    <string name="pref_key_movement_expense_color">preference_movement_expense_color</string>
-    <string name="symbol_file_separator">/</string>
-    <string name="symbol_parent_directory">..</string>
-    <string name="database_directory_name">databases</string>
-    <string name="picture_folder_name">pictures</string>
-    <string name="camera_image_extension">.</string>
-    <string name="db_name">LBudgetUtils_DB</string>
+    <integer name="db_version">1</integer>
 </resources>

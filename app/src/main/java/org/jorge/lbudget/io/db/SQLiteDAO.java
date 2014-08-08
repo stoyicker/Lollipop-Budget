@@ -18,25 +18,36 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import org.jorge.lbudget.control.MovementListRecyclerAdapter;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
 
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     public static final Object[] DB_LOCK = new Object[0];
-    public static final String DB_NAME = "LBUDGET_DB";
+    public static final String DB_NAME = "LBudget_DB"; //This has to be <@string/app_name>+_DB
+    private static Context mContext;
+    private static SQLiteDAO singleton;
 
-    public SQLiteDAO(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    private SQLiteDAO(Context _context) {
+        super(_context, LBudgetUtils.getString(_context, "db_name"), null, LBudgetUtils.getInt(_context, "db_version"));
+        mContext = _context;
     }
 
     @Override
     public void onRobustUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) throws SQLiteException {
-        //At the moment no further database versions are planned.
+        //No older versions have been released.
     }
 
     public static List<MovementListRecyclerAdapter.MovementDataModel> loadAccountMovements() {
         //TODO loadAccountMovements()
         return null;
+    }
+
+    public static void setup(Context _context) {
+        if (singleton == null) {
+            singleton = new SQLiteDAO(_context);
+            mContext = _context;
+        }
     }
 }

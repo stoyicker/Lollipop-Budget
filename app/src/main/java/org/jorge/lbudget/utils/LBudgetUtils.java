@@ -108,19 +108,19 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-//    public static int getInt(Context context, String variableName) {
-//        int ret = -1;
-//
-//        try {
-//            Field resourceField = R.integer.class.getDeclaredField(variableName);
-//            int resourceId = resourceField.getInt(resourceField);
-//            ret = context.getResources().getInteger(resourceId);
-//        } catch (NoSuchFieldException | IllegalAccessException e) {
-//            DevUtils.showTrace("debug", e);
-//        }
-//
-//        return ret;
-//    }
+    public static int getInt(Context context, String variableName) {
+        int ret = -1;
+
+        try {
+            Field resourceField = R.integer.class.getDeclaredField(variableName);
+            int resourceId = resourceField.getInt(resourceField);
+            ret = context.getResources().getInteger(resourceId);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            DevUtils.showTrace("debug", e);
+        }
+
+        return ret;
+    }
 
     public static int pixelsAsDp(Context context, int sizeInPx) {
         float scale = context.getResources().getDisplayMetrics().density;
