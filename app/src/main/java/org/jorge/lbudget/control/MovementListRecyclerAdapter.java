@@ -66,7 +66,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         long amount = item.getAmount();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         viewHolder.movementTypeView.setBackgroundResource(amount >= 0 ? sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_income_color"), R.color.movement_color_green) : sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"), R.color.movement_color_red));
-        viewHolder.movementAmountView.setText(LBudgetUtils.printifyAmount(amount));
+        viewHolder.movementAmountView.setText(LBudgetUtils.printifyMoneyAmount(mContext, amount));
         final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
         File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
         if (target.exists()) {

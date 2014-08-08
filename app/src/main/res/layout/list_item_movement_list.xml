@@ -40,7 +40,7 @@
             <View
                 android:id="@+id/movement_type_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movement_card_content_separator" />
+                android:layout_height="@dimen/movement_card_movement_type_height" />
 
             <TextView
                 android:id="@+id/movement_amount_view"

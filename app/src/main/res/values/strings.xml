@@ -19,6 +19,6 @@
     <string name="symbol_parent_directory">..</string>
     <string name="database_directory_name">databases</string>
     <string name="picture_folder_name">pictures</string>
-    <string name="camera_image_extension">.</string>
+    <string name="camera_image_extension">.png</string>
     <string name="db_name">LBudgetUtils_DB</string>
 </resources>

@@ -21,6 +21,7 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.TypedValue;
 
 import org.jorge.lbudget.R;
@@ -28,6 +29,7 @@ import org.jorge.lbudget.devutils.DevUtils;
 import org.jorge.lbudget.ui.activities.InitialActivity;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 
 public abstract class LBudgetUtils {
 
@@ -127,7 +129,13 @@ public abstract class LBudgetUtils {
         return (int) (sizeInPx * scale + 0.5f);
     }
 
-    public static String printifyAmount(long amount) {
-        return String.valueOf(Math.abs(amount / 100));
+    public static String printifyMoneyAmount(Context context, long amount) {
+        final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
+        double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
+        Log.d("debug", "Printed value: " + val);
+        BigDecimal bigDecimal = new BigDecimal(val);
+        bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
+        Log.d("debug", "Stringed value: " + bigDecimal.toPlainString());
+        return bigDecimal.toPlainString();
     }
 }

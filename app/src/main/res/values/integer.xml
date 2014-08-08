@@ -13,4 +13,5 @@
 
 <resources>
     <integer name="db_version">1</integer>
+    <integer name="amount_of_decimals_allowed">2</integer>
 </resources>
