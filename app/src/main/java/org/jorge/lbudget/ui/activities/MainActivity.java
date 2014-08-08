@@ -49,18 +49,6 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.content_fragment_container).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                //FIXME Catching onto a click event here doesn't work
-                int action = motionEvent.getAction();
-                if (action == MotionEvent.ACTION_UP && mNavigationToolbarButton.hasBeenOpened()) {
-                    mNavigationToolbarButton.initCloseProtocol();
-                    return Boolean.TRUE;
-                }
-                return Boolean.FALSE;
-            }
-        });
         mContext = getApplicationContext();
         mNavigationToolbarFragment = (NavigationToolbarFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_toolbar);
         mNavigationToolbarButton = mNavigationToolbarFragment.getNavigationToolbarButton();
