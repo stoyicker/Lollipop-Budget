@@ -64,7 +64,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getName());
         long amount = item.getAmount();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        viewHolder.movementAmountView.setTextColor(amount >= 0 ? sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_income_color"), R.color.movement_color_green) : sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"), R.color.movement_color_red));
+        viewHolder.movementTypeView.setBackgroundResource(amount >= 0 ? sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_income_color"), R.color.movement_color_green) : sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"), R.color.movement_color_red));
         viewHolder.movementAmountView.setText(LBudgetUtils.printifyAmount(amount));
         final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
         File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
@@ -82,12 +82,14 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView movementNameView, movementAmountView;
         private final ImageView movementImageView;
+        private final View movementTypeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
             movementNameView = (TextView) itemView.findViewById(R.id.movement_name_view);
             movementAmountView = (TextView) itemView.findViewById(R.id.movement_amount_view);
             movementImageView = (ImageView) itemView.findViewById(R.id.movement_image_view);
+            movementTypeView = itemView.findViewById(R.id.movement_type_view);
         }
     }
 

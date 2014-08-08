@@ -38,9 +38,9 @@
                 android:background="@android:color/transparent" />
 
             <View
+                android:id="@+id/movement_type_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movement_card_content_separator"
-                android:background="@color/movement_card_content_separator_background" />
+                android:layout_height="@dimen/movement_card_content_separator" />
 
             <TextView
                 android:id="@+id/movement_amount_view"
