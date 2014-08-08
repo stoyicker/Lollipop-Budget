@@ -35,11 +35,31 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private List<MovementDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_movement_list;
+    private static int incomeColor, expenseColor;
     private Context mContext;
 
     public MovementListRecyclerAdapter(Context context, List<MovementDataModel> items) {
         this.items = items;
         mContext = context;
+    }
+
+    public void updateMovementColors() {
+        incomeColor = getMovementColorFromPreferences("pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier"));
+        expenseColor = getMovementColorFromPreferences("pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier"));
+    }
+
+    private int getMovementColorFromPreferences(String prefName, String defaultColor) {
+        int retId = -1;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        final String identifier = sharedPreferences.getString(LBudgetUtils.getString(mContext, prefName), LBudgetUtils.getString(mContext, "movement_color_" + defaultColor.toLowerCase() + "_identifier"));
+        if (identifier.contentEquals(LBudgetUtils.getString(mContext, "movement_color_red_identifier"))) {
+            retId = R.color.movement_color_red;
+        } else if (identifier.contentEquals(LBudgetUtils.getString(mContext, "movement_color_green_identifier"))) {
+            retId = R.color.movement_color_green;
+        } else if (identifier.contentEquals(LBudgetUtils.getString(mContext, "movement_color_blue_identifier"))) {
+            retId = R.color.movement_color_blue;
+        }
+        return mContext.getResources().getColor(retId);
     }
 
     public void add(MovementDataModel item, int position) {
@@ -56,6 +76,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
+
         return new ViewHolder(v);
     }
 
@@ -64,8 +85,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         MovementDataModel item = items.get(i);
         viewHolder.movementNameView.setText(item.getName());
         long amount = item.getAmount();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        viewHolder.movementTypeView.setBackgroundResource(amount >= 0 ? sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_income_color"), R.color.movement_color_green) : sharedPreferences.getInt(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"), R.color.movement_color_red));
+        updateMovementColors();
+        viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(LBudgetUtils.printifyMoneyAmount(mContext, amount));
         final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
         File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
