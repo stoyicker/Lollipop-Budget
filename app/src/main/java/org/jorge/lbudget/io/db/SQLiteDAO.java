@@ -24,8 +24,7 @@ import java.util.List;
 
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
-    public static final Object[] DB_LOCK = new Object[0];
-    public static final String DB_NAME = "LBudget_DB"; //This has to be <@string/app_name>+_DB
+    public static final Object[] DB_LOCK = new Object[0];//This has to be <@string/app_name>+_DB
     private static Context mContext;
     private static SQLiteDAO singleton;
 

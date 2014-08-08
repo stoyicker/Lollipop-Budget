@@ -29,7 +29,7 @@ import java.io.IOException;
 
 public class LBackupAgent extends BackupAgentHelper {
 
-    private static final String PREFERENCES_BACKUP_KEY = "PREFERENCES_BACKUP_KEY";
+    private static final String PREFERENCES_BACKUP_KEY = "PREFERENCES_BACKUP_KEY", DATABASE_BACKUP_KEY="DATABASE_BACKUP_KEY";
 
     @Override
     public void onCreate() {
@@ -41,8 +41,8 @@ public class LBackupAgent extends BackupAgentHelper {
 
         final String fileSeparator = LBudgetUtils.getString(appContext, "symbol_file_separator");
 
-        FileBackupHelper database = new FileBackupHelper(this, LBudgetUtils.getString(appContext, "symbol_parent_directory") + fileSeparator + LBudgetUtils.getString(appContext, "database_directory_name") + fileSeparator + SQLiteDAO.DB_NAME);
-        addHelper(SQLiteDAO.DB_NAME, database);
+        FileBackupHelper database = new FileBackupHelper(this, LBudgetUtils.getString(appContext, "symbol_parent_directory") + fileSeparator + LBudgetUtils.getString(appContext, "database_directory_name") + fileSeparator + LBudgetUtils.getString(appContext, "db_name"));
+        addHelper(DATABASE_BACKUP_KEY, database);
 
         //The pictures are not synchronized because it would go beyond the Backup API 1 MB limit
     }
