@@ -52,6 +52,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         findViewById(R.id.content_fragment_container).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
+                //FIXME Catching onto a click event here doesn't work
                 int action = motionEvent.getAction();
                 if (action == MotionEvent.ACTION_UP && mNavigationToolbarButton.hasBeenOpened()) {
                     mNavigationToolbarButton.initCloseProtocol();

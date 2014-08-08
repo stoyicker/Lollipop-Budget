@@ -124,6 +124,21 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
+    public static int getColor(Context context, String variableName) {
+        int ret = -1;
+
+        try {
+            Field resourceField = R.color.class.getDeclaredField(variableName);
+            Log.d("debug", "Color name " + variableName);
+            int resourceId = resourceField.getInt(resourceField);
+            ret = context.getResources().getColor(resourceId);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            DevUtils.showTrace("debug", e);
+        }
+
+        return ret;
+    }
+
     public static int pixelsAsDp(Context context, int sizeInPx) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (sizeInPx * scale + 0.5f);
@@ -132,10 +147,8 @@ public abstract class LBudgetUtils {
     public static String printifyMoneyAmount(Context context, long amount) {
         final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
         double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
-        Log.d("debug", "Printed value: " + val);
         BigDecimal bigDecimal = new BigDecimal(val);
         bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
-        Log.d("debug", "Stringed value: " + bigDecimal.toPlainString());
         return bigDecimal.toPlainString();
     }
 }
