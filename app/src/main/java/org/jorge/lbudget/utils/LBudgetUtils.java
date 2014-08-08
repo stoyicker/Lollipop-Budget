@@ -126,4 +126,8 @@ public abstract class LBudgetUtils {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (sizeInPx * scale + 0.5f);
     }
+
+    public static String printifyAmount(long amount) {
+        return String.valueOf(Math.abs(amount / 100));
+    }
 }

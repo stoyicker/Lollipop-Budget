@@ -13,6 +13,17 @@
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<PreferenceScreen>
-
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:entries="@array/movement_color_entries"
+        android:entryValues="@array/movement_color_values"
+        android:defaultValue="@color/movement_color_red"
+        android:key="@string/pref_key_movement_income_color"
+        android:title="@string/pref_title_movement_income_color" />
+    <ListPreference
+        android:entries="@array/movement_color_entries"
+        android:entryValues="@array/movement_color_values"
+        android:defaultValue="@color/movement_color_green"
+        android:key="@string/pref_key_movement_expense_color"
+        android:title="@string/pref_title_movement_expense_color" />
 </PreferenceScreen>

@@ -29,7 +29,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8">
+            android:layout_weight="0.75">
 
             <TextView
                 android:id="@+id/movement_name_view"
@@ -53,8 +53,9 @@
             android:id="@+id/movement_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2"
+            android:layout_weight="0.25"
             android:scaleType="centerCrop"
+            android:visibility="gone"
             android:contentDescription="@string/movement_image_content_description" />
     </LinearLayout>
 </android.support.v7.widget.CardView>

@@ -22,10 +22,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
 
-@SuppressWarnings("unused")
 public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<NavigationToolbarRecyclerAdapter.ViewHolder> {
 
     private List<NavigationToolbarDataModel> items;
@@ -46,21 +46,10 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
         mContext = context;
     }
 
-    public void add(NavigationToolbarDataModel item, int position) {
-        items.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(NavigationToolbarDataModel item) {
-        int position = items.indexOf(item);
-        items.remove(position);
-        notifyItemRemoved(position);
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
-        return new ViewHolder(mContext, v, mCallback);
+        return new ViewHolder(v, mCallback);
     }
 
     @Override
@@ -84,7 +73,7 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
         private final ImageView selectedView, iconView;
         private final NavigationToolbarRecyclerAdapterOnItemClickListener mCallback;
 
-        public ViewHolder(Context context, View itemView, NavigationToolbarRecyclerAdapterOnItemClickListener callback) {
+        public ViewHolder(View itemView, NavigationToolbarRecyclerAdapterOnItemClickListener callback) {
             super(itemView);
             mCallback = callback;
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -104,5 +93,24 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
 
     public interface NavigationToolbarRecyclerAdapterOnItemClickListener {
         public void onNavigationItemSelected(int index);
+    }
+
+    public static class NavigationToolbarDataModel {
+        private final int iconResId;
+
+        public String getText() {
+            return text;
+        }
+
+        public int getIconResId() {
+            return iconResId;
+        }
+
+        private String text;
+
+        public NavigationToolbarDataModel(Context context, int menuId) {
+            iconResId = LBudgetUtils.getDrawableAsId("ic_navigation_menu" + menuId);
+            text = LBudgetUtils.getStringArray(context, "navigation_items")[menuId];
+        }
     }
 }

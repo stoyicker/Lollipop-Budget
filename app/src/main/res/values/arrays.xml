@@ -17,7 +17,18 @@
         <item>@string/navigation_menu_item1</item>
         <item>@string/navigation_menu_item2</item>
     </string-array>
-    <string-array name="all_preferences">
-
+    <color-array name="movement_color_values">
+        <item>@color/movement_color_red</item>
+        <item>@color/movement_color_green</item>
+        <item>@color/movement_color_blue</item>
+    </color-array>
+    <string-array name="movement_color_entries">
+        <item>@string/movement_color_name_red</item>
+        <item>@string/movement_color_name_green</item>
+        <item>@string/movement_color_name_blue</item>
+    </string-array>
+    <string-array name="all_preference_keys">
+        <item>@string/pref_key_movement_income_color</item>
+        <item>@string/pref_key_movement_expense_color</item>
     </string-array>
 </resources>

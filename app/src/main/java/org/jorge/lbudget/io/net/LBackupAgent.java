@@ -17,6 +17,7 @@ import android.app.backup.BackupAgentHelper;
 import android.app.backup.BackupDataInput;
 import android.app.backup.BackupDataOutput;
 import android.app.backup.BackupManager;
+import android.app.backup.FileBackupHelper;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.os.ParcelFileDescriptor;
@@ -38,13 +39,18 @@ public class LBackupAgent extends BackupAgentHelper {
         SharedPreferencesBackupHelper sharedPreferencesBackupHelper = new SharedPreferencesBackupHelper(appContext, allPreferences);
         addHelper(PREFERENCES_BACKUP_KEY, sharedPreferencesBackupHelper);
 
-        //TODO Add the database and the pictures
+        final String fileSeparator = LBudgetUtils.getString(appContext, "symbol_file_separator");
+
+        FileBackupHelper database = new FileBackupHelper(this, LBudgetUtils.getString(appContext, "symbol_parent_directory") + fileSeparator + LBudgetUtils.getString(appContext, "database_directory_name") + fileSeparator + SQLiteDAO.DB_NAME);
+        addHelper(SQLiteDAO.DB_NAME, database);
+
+        //The pictures are not synchronized because it would go beyond the Backup API 1 MB limit
     }
 
     @Override
     public void onBackup(ParcelFileDescriptor oldState, BackupDataOutput data,
                          ParcelFileDescriptor newState) throws IOException {
-        synchronized (SQLiteDAO.dbLock) {
+        synchronized (SQLiteDAO.DB_LOCK) {
             super.onBackup(oldState, data, newState);
         }
     }
@@ -52,7 +58,7 @@ public class LBackupAgent extends BackupAgentHelper {
     @Override
     public void onRestore(BackupDataInput data, int appVersionCode,
                           ParcelFileDescriptor newState) throws IOException {
-        synchronized (SQLiteDAO.dbLock) {
+        synchronized (SQLiteDAO.DB_LOCK) {
             super.onRestore(data, appVersionCode, newState);
         }
     }

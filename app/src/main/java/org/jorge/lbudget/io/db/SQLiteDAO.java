@@ -17,9 +17,14 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import org.jorge.lbudget.control.MovementListRecyclerAdapter;
+
+import java.util.List;
+
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
-    public static final Object[] dbLock = new Object[0];
+    public static final Object[] DB_LOCK = new Object[0];
+    public static final String DB_NAME = "LBUDGET_DB";
 
     public SQLiteDAO(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -28,5 +33,10 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     @Override
     public void onRobustUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) throws SQLiteException {
         //At the moment no further database versions are planned.
+    }
+
+    public static List<MovementListRecyclerAdapter.MovementDataModel> loadAccountMovements() {
+        //TODO loadAccountMovements()
+        return null;
     }
 }
