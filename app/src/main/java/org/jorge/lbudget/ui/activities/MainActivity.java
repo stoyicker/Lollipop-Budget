@@ -31,7 +31,6 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.ui.frags.MovementListFragment;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
-import org.jorge.lbudget.ui.navbar.NavigationToolbarDataModel;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarRecyclerAdapter;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -50,12 +49,13 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findViewById(R.id.content_scroll_view).setOnTouchListener(new View.OnTouchListener() {
+        findViewById(R.id.content_fragment_container).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 int action = motionEvent.getAction();
-                if (action == MotionEvent.ACTION_UP == mNavigationToolbarButton.hasBeenOpened()) {
+                if (action == MotionEvent.ACTION_UP && mNavigationToolbarButton.hasBeenOpened()) {
                     mNavigationToolbarButton.initCloseProtocol();
+                    return Boolean.TRUE;
                 }
                 return Boolean.FALSE;
             }
@@ -89,14 +89,14 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     }
 
     private void showInitialFragment() {
-        getFragmentManager().beginTransaction().replace(R.id.content_fragment_container, findMovementListFragment()).commit();
+        getFragmentManager().beginTransaction().add(R.id.content_fragment_container, findMovementListFragment()).commit();
     }
 
-    private List<NavigationToolbarDataModel> loadMenuItems() {
-        List<NavigationToolbarDataModel> ret = new ArrayList<>();
+    private List<NavigationToolbarRecyclerAdapter.NavigationToolbarDataModel> loadMenuItems() {
+        List<NavigationToolbarRecyclerAdapter.NavigationToolbarDataModel> ret = new ArrayList<>();
         int length = LBudgetUtils.getStringArray(mContext, "navigation_items").length;
         for (int i = 0; i < length; i++)
-            ret.add(new NavigationToolbarDataModel(mContext, i));
+            ret.add(new NavigationToolbarRecyclerAdapter.NavigationToolbarDataModel(mContext, i));
         return ret;
     }
 
@@ -132,7 +132,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
             default:
                 throw new IllegalArgumentException("Menu with id " + selectedIndex + " not found.");
         }
-        getFragmentManager().beginTransaction().replace(R.id.content_fragment_container, target).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().add(R.id.content_fragment_container, target).addToBackStack(null).commit();
     }
 
     private Fragment findMovementListFragment() {

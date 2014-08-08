@@ -37,8 +37,9 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final int itemLayout = R.layout.list_item_movement_list;
     private Context mContext;
 
-    public MovementListRecyclerAdapter(List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(Context context, List<MovementDataModel> items) {
         this.items = items;
+        mContext = context;
     }
 
     public void add(MovementDataModel item, int position) {

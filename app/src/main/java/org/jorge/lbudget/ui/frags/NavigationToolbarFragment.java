@@ -54,7 +54,6 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mContext = getActivity().getApplicationContext();
         View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, Boolean.FALSE);
         mNavigationToolbarButton = (NavigationToolbarButton) ret.findViewById(R.id.navigation_toolbar_selected);
         mWedgeView = (ImageView) ret.findViewById(R.id.navigation_toolbar_wedge);
@@ -76,6 +75,8 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+
+        mContext = getActivity().getApplicationContext();
 
         try {
             mCallback = (NavigationToolbarListener) activity;

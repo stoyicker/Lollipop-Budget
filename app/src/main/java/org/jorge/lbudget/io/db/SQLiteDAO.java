@@ -20,6 +20,7 @@ import android.database.sqlite.SQLiteException;
 import org.jorge.lbudget.control.MovementListRecyclerAdapter;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
@@ -40,7 +41,21 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     public static List<MovementListRecyclerAdapter.MovementDataModel> loadAccountMovements() {
         //TODO loadAccountMovements()
-        return null;
+        List<MovementListRecyclerAdapter.MovementDataModel> ret = new ArrayList<>();
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(1,"info1",0));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(2,"info2",-1));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(3,"info3",2));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(4,"info4",-30));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(5,"info5",40));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(6,"info6",500));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(7,"info7",7000));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(8,"info8",-0));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(9,"info9",-80));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(10,"info10",123));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(11,"info11",598));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(12,"info12",250));
+        ret.add(new MovementListRecyclerAdapter.MovementDataModel(0,"info13",145));
+        return ret;
     }
 
     public static void setup(Context _context) {

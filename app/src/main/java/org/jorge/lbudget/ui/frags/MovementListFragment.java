@@ -13,6 +13,7 @@
 
 package org.jorge.lbudget.ui.frags;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -33,14 +34,25 @@ public class MovementListFragment extends Fragment {
     private Context mContext;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mContext = getActivity().getApplicationContext();
-        View ret = inflater.inflate(R.layout.fragment_movement_list, container, Boolean.FALSE);
-        mMovementsView = (RecyclerView) ret.findViewById(R.id.movement_list_view);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(SQLiteDAO.loadAccountMovements()));
+        mMovementsView.setHasFixedSize(Boolean.TRUE);
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mContext, SQLiteDAO.loadAccountMovements()));
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View ret = inflater.inflate(R.layout.fragment_movement_list, container, Boolean.FALSE);
+        mMovementsView = (RecyclerView) ret.findViewById(R.id.movement_list_view);
         return ret;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = getActivity().getApplicationContext();
     }
 }
