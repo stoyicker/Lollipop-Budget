@@ -15,5 +15,6 @@
     <dimen name="elevation_navigation_toolbar">5dp</dimen>
     <dimen name="elevation_navigation_dropdown">4dp</dimen>
     <dimen name="elevation_fragment_content">4dp</dimen>
+    <dimen name="movement_image_padding_end">0dp</dimen>
     <item name="navigation_toolbar_icon_scale_ratio" format="float" type="dimen">0.7</item>
 </resources>

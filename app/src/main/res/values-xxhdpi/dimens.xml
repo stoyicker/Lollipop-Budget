@@ -18,4 +18,10 @@
     <dimen name="text_size_navigation_toolbar">16sp</dimen>
     <dimen name="text_size_navigation_dropdown">@dimen/text_size_navigation_toolbar</dimen>
     <dimen name="movement_card_movement_type_height">1dp</dimen>
+    <dimen name="movement_card_padding">4dp</dimen>
+    <dimen name="movement_card_view_bottom_margin">8dp</dimen>
+    <dimen name="movement_image_padding_start">8dp</dimen>
+    <dimen name="movement_padding_end">4dp</dimen>
+    <dimen name="movement_text_vertical_padding">4dp</dimen>
+    <dimen name="text_size_movement_name">20sp</dimen>
 </resources>
