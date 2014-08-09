@@ -13,10 +13,12 @@
 
 package org.jorge.lbudget.control;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,19 +31,22 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.List;
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
 
+    private final Activity mActivity;
     private List<MovementDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_movement_list;
     private static int incomeColor, expenseColor;
     private Context mContext;
 
-    public MovementListRecyclerAdapter(Context context, List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(Activity activity, Context context, List<MovementDataModel> items) {
         this.items = items;
         mContext = context;
+        mActivity = activity;
     }
 
     public static void updateMovementColors(Context context) {
@@ -85,13 +90,16 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     private void sendShareIntent(MovementDataModel item) {
         Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         final String textMime = "text/plain", fullMimes = textMime + "image/*";
-        final boolean hasPicture;
+        final boolean hasPicture, isIncome = item.getAmount() >= 0;
         intent.setType((hasPicture = movementHasPicture(item)) ? fullMimes : textMime);
-        //TODO Set the information
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyMoneyAmount(mContext, item.getAmount())) + LBudgetUtils.getCurrency());
+        if (hasPicture) {
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath())));
+        }
 
-        mContext.startActivity(Intent.createChooser(intent, LBudgetUtils.getString(mContext, "share_dialog_title")));
+        mActivity.startActivity(Intent.createChooser(intent, LBudgetUtils.getString(mContext, "share_dialog_title")));
     }
 
     @Override
@@ -112,9 +120,9 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getName());
         long amount = item.getAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
-        viewHolder.movementAmountView.setText(LBudgetUtils.printifyMoneyAmount(mContext, amount));
+        viewHolder.movementAmountView.setText(MovementDataModel.printifyMoneyAmount(mContext, amount));
         if (movementHasPicture(item)) {
-            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(MovementDataModel.getImagePath(item)));
+            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(item.getImagePath()));
             viewHolder.movementImageView.setVisibility(View.VISIBLE);
         }
     }
@@ -149,6 +157,14 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         private final String name;
         private final long amount;
 
+        public static String printifyMoneyAmount(Context context, long amount) {
+            final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
+            double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
+            BigDecimal bigDecimal = new BigDecimal(val);
+            bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
+            return bigDecimal.toPlainString();
+        }
+
         public long getAmount() {
             return amount;
         }
@@ -167,7 +183,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             this.amount = amount;
         }
 
-        public static String getImagePath(MovementDataModel item) {
+        public String getImagePath() {
             //TODO getImagePath
             return null;
         }

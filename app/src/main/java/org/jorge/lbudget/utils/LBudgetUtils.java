@@ -144,11 +144,8 @@ public abstract class LBudgetUtils {
         return (int) (sizeInPx * scale + 0.5f);
     }
 
-    public static String printifyMoneyAmount(Context context, long amount) {
-        final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
-        double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
-        BigDecimal bigDecimal = new BigDecimal(val);
-        bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
-        return bigDecimal.toPlainString();
+    public static String getCurrency() {
+        //TODO getCurrency
+        return "€";
     }
 }

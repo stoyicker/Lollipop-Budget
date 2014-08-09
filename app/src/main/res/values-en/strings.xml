@@ -27,4 +27,5 @@
     <string name="setting_updated_upon_restart">Change will be applied on application restart.</string>
     <string name="action_share">Share</string>
     <string name="share_dialog_title">Share to...</string>
+    <string name="share_text_expense">Spent {MONEYPLACEHOLDER} </string>
 </resources>
