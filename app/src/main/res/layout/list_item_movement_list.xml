@@ -18,6 +18,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:elevation="@dimen/elevation_fragment_content"
+    android:padding="@dimen/movement_card_padding"
+    android:layout_marginBottom="8dp"
     card_view:cardBackgroundColor="@color/movement_card_background">
 
     <LinearLayout

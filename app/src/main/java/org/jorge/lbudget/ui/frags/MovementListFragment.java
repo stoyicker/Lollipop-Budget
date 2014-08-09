@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.control.MovementListRecyclerAdapter;
 import org.jorge.lbudget.io.db.SQLiteDAO;
-import org.jorge.lbudget.ui.items.DividerItemDecoration;
 
 public class MovementListFragment extends Fragment {
 
@@ -39,7 +38,6 @@ public class MovementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
         mMovementsView.setAdapter(new MovementListRecyclerAdapter(mContext, SQLiteDAO.loadAccountMovements()));
     }
 
