@@ -39,6 +39,7 @@
         <activity
             android:name=".ui.activities.SettingsPreferenceActivity"
             android:logo="@drawable/ic_action_settings"
+            android:theme="@style/SettingsTheme"
             android:label="@string/action_settings" />
     </application>
 

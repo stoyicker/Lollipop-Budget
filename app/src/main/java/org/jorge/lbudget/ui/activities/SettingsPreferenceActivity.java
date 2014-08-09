@@ -14,14 +14,16 @@
 package org.jorge.lbudget.ui.activities;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import org.jorge.lbudget.ui.frags.SettingsPreferenceFragment;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
-public class SettingsPreferenceActivity extends PreferenceActivity {
+public class SettingsPreferenceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

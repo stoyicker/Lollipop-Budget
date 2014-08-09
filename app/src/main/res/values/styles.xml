@@ -41,4 +41,9 @@
     <style name="MovementNameTextStyle">
         <item name="android:textSize">@dimen/text_size_movement_name</item>
     </style>
+
+    <style name="SettingsTheme" parent="@android:style/Theme.Material.Settings">
+        <item name="android:colorPrimary">@color/theme_color_primary</item>
+        <item name="android:colorPrimaryDark">@color/theme_color_primary_dark</item>
+    </style>
 </resources>

@@ -13,10 +13,13 @@
 
 package org.jorge.lbudget.ui.frags;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 public class SettingsPreferenceFragment extends PreferenceFragment {
 
@@ -24,6 +27,8 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        addPreferencesFromResource(R.xml.settings);
+        addPreferencesFromResource(R.xml.preferences);
+
+        Preference myPref = findPreference("preference_movement_expense_color");
     }
 }
