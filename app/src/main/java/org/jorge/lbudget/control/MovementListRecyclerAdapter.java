@@ -14,6 +14,7 @@
 package org.jorge.lbudget.control;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
@@ -82,10 +83,26 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         notifyItemRemoved(position);
     }
 
-    @Override
-    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
+    private void sendShareIntent(MovementDataModel item) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
+        final String textMime = "text/plain", fullMimes = textMime + "image/*";
+        final boolean hasPicture;
+        intent.setType((hasPicture = movementHasPicture(item)) ? fullMimes : textMime);
+        //TODO Set the information
 
+        mContext.startActivity(Intent.createChooser(intent, LBudgetUtils.getString(mContext, "share_dialog_title")));
+    }
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int i) {
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
+        v.findViewById(R.id.movement_button_share).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendShareIntent(items.get(i));
+            }
+        });
         return new ViewHolder(v);
     }
 
@@ -96,12 +113,16 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         long amount = item.getAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(LBudgetUtils.printifyMoneyAmount(mContext, amount));
-        final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
-        File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
-        if (target.exists()) {
-            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(target.getAbsolutePath()));
+        if (movementHasPicture(item)) {
+            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(MovementDataModel.getImagePath(item)));
             viewHolder.movementImageView.setVisibility(View.VISIBLE);
         }
+    }
+
+    private boolean movementHasPicture(MovementDataModel item) {
+        final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
+        File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
+        return target.exists();
     }
 
     @Override
@@ -144,6 +165,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             this.id = id;
             this.name = info;
             this.amount = amount;
+        }
+
+        public static String getImagePath(MovementDataModel item) {
+            //TODO getImagePath
+            return null;
         }
     }
 }

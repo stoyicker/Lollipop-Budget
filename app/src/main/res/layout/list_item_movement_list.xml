@@ -52,6 +52,7 @@
                 android:layout_height="match_parent">
 
                 <ImageButton
+                    android:id="@+id/movement_button_share"
                     android:layout_alignParentEnd="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
