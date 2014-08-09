@@ -53,5 +53,6 @@ public class MovementListFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mContext = getActivity().getApplicationContext();
+        MovementListRecyclerAdapter.updateMovementColors(mContext);
     }
 }

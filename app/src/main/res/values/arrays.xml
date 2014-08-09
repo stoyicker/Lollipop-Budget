@@ -28,7 +28,7 @@
         <item>@string/movement_color_name_blue</item>
     </string-array>
     <string-array name="all_preference_keys">
-        <item>@string/pref_key_movement_income_color_identifier</item>
-        <item>@string/pref_key_movement_expense_color_identifier</item>
+        <item>@string/pref_key_movement_income_color</item>
+        <item>@string/pref_key_movement_expense_color</item>
     </string-array>
 </resources>

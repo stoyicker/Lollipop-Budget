@@ -43,23 +43,32 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         mContext = context;
     }
 
-    public void updateMovementColors() {
-        incomeColor = getMovementColorFromPreferences("pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier"));
-        expenseColor = getMovementColorFromPreferences("pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier"));
+    public static void updateMovementColors(Context context) {
+        updateIncomeColor(context);
+        updateExpenseColor(context);
     }
 
-    private int getMovementColorFromPreferences(String prefName, String defaultColor) {
+    private static void updateIncomeColor(Context context, String... newColor) {
+        incomeColor = getMovementColorFromPreferences(context, "pref_key_movement_income_color", newColor.length <= 0 ? LBudgetUtils.getString(context, "movement_color_green_identifier") : newColor[0]);
+    }
+
+    private static void updateExpenseColor(Context context, String... newColor) {
+        expenseColor = getMovementColorFromPreferences(context, "pref_key_movement_expense_color", newColor.length <= 0 ? LBudgetUtils.getString(context, "movement_color_red_identifier") : newColor[0]);
+    }
+
+    private static int getMovementColorFromPreferences(Context context, String prefName, String defaultColor) {
         int retId = -1;
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        final String identifier = sharedPreferences.getString(LBudgetUtils.getString(mContext, prefName), LBudgetUtils.getString(mContext, "movement_color_" + defaultColor.toLowerCase() + "_identifier"));
-        if (identifier.contentEquals(LBudgetUtils.getString(mContext, "movement_color_red_identifier"))) {
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final String prefKey = LBudgetUtils.getString(context, prefName);
+        final String identifier = sharedPreferences.getString(prefKey, LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase() + "_identifier"));
+        if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_red_identifier"))) {
             retId = R.color.movement_color_red;
-        } else if (identifier.contentEquals(LBudgetUtils.getString(mContext, "movement_color_green_identifier"))) {
+        } else if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_green_identifier"))) {
             retId = R.color.movement_color_green;
-        } else if (identifier.contentEquals(LBudgetUtils.getString(mContext, "movement_color_blue_identifier"))) {
+        } else if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_blue_identifier"))) {
             retId = R.color.movement_color_blue;
         }
-        return mContext.getResources().getColor(retId);
+        return context.getResources().getColor(retId);
     }
 
     public void add(MovementDataModel item, int position) {
@@ -85,7 +94,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         MovementDataModel item = items.get(i);
         viewHolder.movementNameView.setText(item.getName());
         long amount = item.getAmount();
-        updateMovementColors();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(LBudgetUtils.printifyMoneyAmount(mContext, amount));
         final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
