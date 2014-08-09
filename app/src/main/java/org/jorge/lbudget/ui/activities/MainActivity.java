@@ -24,7 +24,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import org.jorge.lbudget.R;
@@ -149,6 +148,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_settings:
+                mNavigationToolbarButton.initCloseProtocol();
                 openSettings();
                 return Boolean.TRUE;
             default:
