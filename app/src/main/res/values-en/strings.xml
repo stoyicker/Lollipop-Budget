@@ -25,4 +25,5 @@
     <string name="pref_title_movement_income_color">Income color</string>
     <string name="pref_title_movement_expense_color">Expense color</string>
     <string name="setting_updated_upon_restart">Change will be applied on application restart.</string>
+    <string name="action_share">Share</string>
 </resources>
