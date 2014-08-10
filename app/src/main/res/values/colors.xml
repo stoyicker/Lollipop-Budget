@@ -22,7 +22,7 @@
     <color name="navigation_dropdown_background">@color/navigation_toolbar_background</color>
     <color name="navigation_item_background">#37474F</color>
     <color name="navigation_toolbar_menu_item">#404040</color>
-    <color name="movement_card_background">@android:color/white</color>
+    <color name="card_background">@android:color/white</color>
     <color name="content_fragment_background">@android:color/transparent</color>
     <color name="movement_color_red">@android:color/holo_red_light</color>
     <color name="movement_color_green">@android:color/holo_green_light</color>
