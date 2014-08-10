@@ -14,35 +14,27 @@
   -->
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/account_card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/card_padding"
-    android:layout_marginBottom="@dimen/movement_card_view_bottom_margin"
-    card_view:cardBackgroundColor="@color/card_background">
+    android:layout_marginBottom="@dimen/movement_card_view_bottom_margin">
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <Button
             android:id="@+id/account_name_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:drawableStart="@drawable/ic_edit" />
 
         <Button
             android:id="@+id/account_currency_view"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-        <ImageView
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:scaleType="center"
-            android:src="@drawable/ic_edit"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/item_edit" />
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

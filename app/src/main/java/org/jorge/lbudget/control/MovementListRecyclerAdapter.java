@@ -21,7 +21,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -82,8 +84,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         notifyItemInserted(position);
     }
 
-    public void remove(MovementDataModel item) {
-        int position = items.indexOf(item);
+    public void remove(int position) {
         items.remove(position);
         notifyItemRemoved(position);
     }
@@ -145,6 +146,33 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public ViewHolder(View itemView) {
             super(itemView);
+            Log.d("debug", "Constructor");
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //Required for onTouchListener to work.
+                }
+            });
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                private float x;
+
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    switch (motionEvent.getAction()) {
+                        case MotionEvent.ACTION_UP:
+                            if (Math.abs(motionEvent.getX() - x) >= 100) {
+                                //TODO Swipe
+                            } else {
+                                //TODO onClick
+                            }
+                            break;
+                        case MotionEvent.ACTION_DOWN:
+                            x = motionEvent.getX();
+                            break;
+                    }
+                    return false;
+                }
+            });
             movementNameView = (TextView) itemView.findViewById(R.id.movement_name_view);
             movementAmountView = (TextView) itemView.findViewById(R.id.movement_amount_view);
             movementImageView = (ImageView) itemView.findViewById(R.id.movement_image_view);
