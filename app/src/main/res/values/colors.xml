@@ -27,4 +27,9 @@
     <color name="movement_color_red">@android:color/holo_red_light</color>
     <color name="movement_color_green">@android:color/holo_green_light</color>
     <color name="movement_color_blue">@android:color/holo_blue_light</color>
+    <color name="undo_divider_color">#AFAFAF</color>
+    <color name="undo_message_text">#FFFFFF</color>
+    <color name="undo_button_text">#ACACAC</color>
+    <color name="undo_bar_button_background">#DB555555</color>
+    <color name="undo_bar_button_background_pressed">#858585</color>
 </resources>

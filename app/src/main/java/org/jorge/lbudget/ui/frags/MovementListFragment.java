@@ -38,7 +38,7 @@ public class MovementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(getActivity(), mContext, SQLiteDAO.loadAccountMovements()));
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mMovementsView, getActivity(), mContext, SQLiteDAO.loadAccountMovements()));
     }
 
     @Override

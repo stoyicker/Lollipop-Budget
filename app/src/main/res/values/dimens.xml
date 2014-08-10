@@ -17,4 +17,11 @@
     <dimen name="elevation_fragment_content">4dp</dimen>
     <dimen name="movement_image_padding_end">0dp</dimen>
     <item name="navigation_toolbar_icon_scale_ratio" format="float" type="dimen">0.7</item>
+    <dimen name="undo_bar_height">64dp</dimen>
+    <dimen name="undo_bar_padding">16dp</dimen>
+    <dimen name="undo_bar_outer_margin">24dp</dimen>
+    <dimen name="undo_bar_max_width">500dp</dimen>
+    <dimen name="undo_bar_divider_margin">8dp</dimen>
+    <dimen name="undo_bar_button_drawable_padding">12dp</dimen>
+    <dimen name="undo_bar_button_corner_radius">24dp</dimen>
 </resources>

@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,10 +27,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.ui.utils.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
@@ -40,17 +44,19 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     private final float MIN_SWIPE_WIDTH_PIXELS;
     private final Activity mActivity;
+    private final RecyclerView mRecyclerView;
     private List<MovementDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_movement_list;
     private static int incomeColor, expenseColor;
     private Context mContext;
 
-    public MovementListRecyclerAdapter(Activity activity, Context context, List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(RecyclerView recyclerView, Activity activity, Context context, List<MovementDataModel> items) {
         this.items = items;
         mContext = context;
         mActivity = activity;
         MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(context, "min_swipe_width_pixels");
+        mRecyclerView = recyclerView;
     }
 
     public static void updateMovementColors(Context context) {
@@ -84,11 +90,14 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public void add(MovementDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
+        //TODO Add to db
     }
 
-    public void remove(int position) {
-        items.remove(position);
+    public MovementDataModel remove(int position) {
+        MovementDataModel ret = items.remove(position);
         notifyItemRemoved(position);
+        //TODO Remove from db
+        return ret;
     }
 
     private void sendShareIntent(MovementDataModel item) {
@@ -97,6 +106,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         final String textMime = "text/plain", fullMimes = textMime + "image/*";
         final boolean hasPicture, isIncome = item.getAmount() >= 0;
         intent.setType((hasPicture = movementHasPicture(item)) ? fullMimes : textMime);
+        intent.putExtra(Intent.EXTRA_TITLE, item.getTitle());
         intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyMoneyAmount(mContext, item.getAmount())) + LBudgetUtils.getCurrency());
         if (hasPicture) {
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath())));
@@ -120,7 +130,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         MovementDataModel item = items.get(i);
-        viewHolder.movementNameView.setText(item.getName());
+        viewHolder.movementNameView.setText(item.getTitle());
         long amount = item.getAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(MovementDataModel.printifyMoneyAmount(mContext, amount));
@@ -159,11 +169,42 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                 private float x;
 
                 @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
+                public boolean onTouch(final View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
-                            if (Math.abs(motionEvent.getX() - x) >= MIN_SWIPE_WIDTH_PIXELS) {
-                                //TODO Swipe
+                            float diff = motionEvent.getX() - x;
+                            if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
+                                Animation fade = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_left : R.anim.fade_out_right);
+                                fade.setAnimationListener(new Animation.AnimationListener() {
+                                    @Override
+                                    public void onAnimationStart(Animation animation) {
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animation animation) {
+                                        final MovementDataModel movement = remove(getPosition());
+                                        new UndoBar.Builder(mActivity)
+                                                .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
+                                                .setListener(new UndoBar.Listener() {
+                                                    @Override
+                                                    public void onHide() {
+                                                    }
+
+                                                    @Override
+                                                    public void onUndo(Parcelable token) {
+                                                        int pos;
+                                                        add(movement, pos = getPosition());
+                                                        mRecyclerView.scrollToPosition(pos);
+                                                    }
+                                                })
+                                                .show();
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animation animation) {
+                                    }
+                                });
+                                view.startAnimation(fade);
                             } else {
                                 //TODO onClick
                             }
@@ -184,7 +225,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     public static class MovementDataModel {
         private final int id; //The id will be used to find the image
-        private final String name;
+        private final String title;
         private final long amount;
 
         public static String printifyMoneyAmount(Context context, long amount) {
@@ -199,8 +240,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             return amount;
         }
 
-        public String getName() {
-            return name;
+        public String getTitle() {
+            return title;
         }
 
         public int getId() {
@@ -209,7 +250,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public MovementDataModel(int id, String info, long amount) {
             this.id = id;
-            this.name = info;
+            this.title = info;
             this.amount = amount;
         }
 
