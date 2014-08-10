@@ -21,12 +21,14 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.ui.frags.AccountListFragment;
 import org.jorge.lbudget.ui.frags.MovementListFragment;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
@@ -55,7 +57,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         mNavigationMenuView.setHasFixedSize(Boolean.TRUE);
         mNavigationMenuView.setLayoutManager(new LinearLayoutManager(mContext));
         mNavigationMenuView.setItemAnimator(new DefaultItemAnimator());
-        mNavigationMenuView.setAdapter(new NavigationToolbarRecyclerAdapter(mContext, loadMenuItems(), mNavigationToolbarFragment, mNavigationToolbarButton));
+        mNavigationMenuView.setAdapter(new NavigationToolbarRecyclerAdapter(loadMenuItems(), mNavigationToolbarFragment, mNavigationToolbarButton));
         mNavigationToolbarButton.setOnOpenStateChangeLister(new NavigationToolbarButton.OpenStateChangeListener() {
             @Override
             public void onOpenRequest() {
@@ -101,8 +103,9 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     @Override
     public void onMenuSelected(int selectedIndex) {
         int oldIndex;
-        if ((oldIndex = mNavigationToolbarButton.getSelectedItemPosition()) == selectedIndex)
+        if ((oldIndex = mNavigationToolbarButton.getSelectedItemPosition()) == selectedIndex) {
             return;
+        }
         RecyclerView.Adapter adapter = mNavigationMenuView.getAdapter();
         adapter.notifyItemChanged(oldIndex);
         adapter.notifyItemChanged(selectedIndex);
@@ -115,7 +118,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
                 target = findBalanceGraphFragment();
                 break;
             case 2:
-                target = findAccountsFragment();
+                target = findAccountListFragment();
                 break;
             default:
                 throw new IllegalArgumentException("Menu with id " + selectedIndex + " not found.");
@@ -133,8 +136,10 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         throw new UnsupportedOperationException("Not yet implemented.");
     }
 
-    private Fragment findAccountsFragment() {
-        throw new UnsupportedOperationException("Not yet implemented.");
+    private Fragment findAccountListFragment() {
+        if (mContentFragments[2] == null)
+            mContentFragments[2] = new AccountListFragment();
+        return mContentFragments[2];
     }
 
     @Override

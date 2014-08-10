@@ -129,7 +129,6 @@ public abstract class LBudgetUtils {
 
         try {
             Field resourceField = R.color.class.getDeclaredField(variableName);
-            Log.d("debug", "Color name " + variableName);
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getColor(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {

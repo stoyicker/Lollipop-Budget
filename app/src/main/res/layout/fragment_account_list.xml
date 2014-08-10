@@ -12,8 +12,11 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
+
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/movement_list_view"
+    android:id="@+id/account_list_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/content_fragment_background" />
+    android:background="@color/content_fragment_background">
+
+</android.support.v7.widget.RecyclerView>

@@ -15,6 +15,7 @@ package org.jorge.lbudget.ui.navbar;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +34,15 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
     private final int itemLayout = R.layout.list_item_navigation_toolbar;
     private NavigationToolbarRecyclerAdapterOnItemClickListener mCallback;
     private final NavigationToolbarSelectionRecorder mSelectionRecorder;
-    private final Context mContext;
 
     public interface NavigationToolbarSelectionRecorder {
         public int getSelectedItemPosition();
     }
 
-    public NavigationToolbarRecyclerAdapter(Context context, List<NavigationToolbarDataModel> items, NavigationToolbarRecyclerAdapterOnItemClickListener callback, NavigationToolbarSelectionRecorder _selectionRecorder) {
+    public NavigationToolbarRecyclerAdapter(List<NavigationToolbarDataModel> items, NavigationToolbarRecyclerAdapterOnItemClickListener callback, NavigationToolbarSelectionRecorder _selectionRecorder) {
         this.items = items;
         mCallback = callback;
         mSelectionRecorder = _selectionRecorder;
-        mContext = context;
     }
 
     @Override
