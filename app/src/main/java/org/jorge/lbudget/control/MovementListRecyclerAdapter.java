@@ -38,6 +38,7 @@ import java.util.List;
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
 
+    private final float MIN_SWIPE_WIDTH_PIXELS;
     private final Activity mActivity;
     private List<MovementDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
@@ -49,6 +50,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         this.items = items;
         mContext = context;
         mActivity = activity;
+        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(context, "min_swipe_width_pixels");
     }
 
     public static void updateMovementColors(Context context) {
@@ -160,7 +162,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                 public boolean onTouch(View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
-                            if (Math.abs(motionEvent.getX() - x) >= 100) {
+                            if (Math.abs(motionEvent.getX() - x) >= MIN_SWIPE_WIDTH_PIXELS) {
                                 //TODO Swipe
                             } else {
                                 //TODO onClick
