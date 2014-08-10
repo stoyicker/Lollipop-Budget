@@ -172,16 +172,17 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                 public boolean onTouch(final View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
-                            float diff = motionEvent.getX() - x;
+                            final float diff = motionEvent.getX() - x;
                             if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
-                                Animation fade = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_left : R.anim.fade_out_right);
-                                fade.setAnimationListener(new Animation.AnimationListener() {
+                                final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_left : R.anim.fade_out_right);
+                                fadeOut.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
                                     public void onAnimationStart(Animation animation) {
                                     }
 
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
+                                        view.setVisibility(View.GONE);
                                         final MovementDataModel movement = remove(getPosition());
                                         new UndoBar.Builder(mActivity)
                                                 .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
@@ -194,7 +195,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                     public void onUndo(Parcelable token) {
                                                         int pos;
                                                         add(movement, pos = getPosition());
-                                                        mRecyclerView.scrollToPosition(pos);
+                                                        mRecyclerView.smoothScrollToPosition(pos);
                                                     }
                                                 })
                                                 .show();
@@ -204,7 +205,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                     public void onAnimationRepeat(Animation animation) {
                                     }
                                 });
-                                view.startAnimation(fade);
+                                view.startAnimation(fadeOut);
                             } else {
                                 //TODO onClick
                             }
