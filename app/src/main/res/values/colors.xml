@@ -32,4 +32,5 @@
     <color name="undo_button_text">#ACACAC</color>
     <color name="undo_bar_button_background">#DB555555</color>
     <color name="undo_bar_button_background_pressed">#858585</color>
+    <color name="selected_card_background">@color/theme_color_primary</color>
 </resources>

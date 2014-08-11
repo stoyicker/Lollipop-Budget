@@ -22,7 +22,6 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.ui.utils.UndoBar;
+import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
@@ -90,13 +89,13 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public void add(MovementDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
-        //TODO Add to db
+        //TODO Add movement to db
     }
 
     public MovementDataModel remove(int position) {
         MovementDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        //TODO Remove from db
+        //TODO Remove movement from db
         return ret;
     }
 
@@ -158,7 +157,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            Log.d("debug", "Constructor");
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
