@@ -13,6 +13,8 @@
 
 package org.jorge.lbudget.io.files;
 
+import android.util.Log;
+
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +30,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -140,6 +143,8 @@ public abstract class XMLFileManager {
         List<String> ret = new ArrayList<>();
         DocumentBuilder docBuilder;
         Document doc;
+
+        System.exit(-1);
 
         try {
             docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

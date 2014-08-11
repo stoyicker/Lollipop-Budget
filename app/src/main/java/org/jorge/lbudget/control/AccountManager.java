@@ -59,10 +59,14 @@ public class AccountManager {
             @Override
             protected Void doInBackground(CountDownLatch... countDownLatches) {
                 mAccountList = new ArrayList<>();
-                File accountsFile = mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "accounts_file_name"));
-                if (accountsFile == null || !accountsFile.exists()) {
+                File accountsFile = new File(mContext.getExternalFilesDir(null) + LBudgetUtils.getString(mContext, "accounts_file_name"));
+                if (!accountsFile.exists()) {
                     try {
-                        FileManager.writeStringToFile(LBudgetUtils.getString(mContext, "default_accounts_file_contents").replace("{DEFAULT_ACCOUNT_NAME}", LBudgetUtils.getString(mContext, "default_account_name")), accountsFile);
+                        if (!FileManager.writeStringToFile(LBudgetUtils.getString(mContext, "default_accounts_file_contents").replace("{DEFAULT_ACCOUNT_NAME}", LBudgetUtils.getString(mContext, "default_account_name")), accountsFile)) {
+                            mAccountList.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", LBudgetUtils.getString(mContext, "default_account_name"), "USD"));
+                            countDownLatches[0].countDown();
+                            return null;
+                        }
                     } catch (IOException e) {
                         //The exception is handled by assigning a  single, new, and temporary default account
                         mAccountList.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", LBudgetUtils.getString(mContext, "default_account_name"), "USD"));
@@ -95,12 +99,12 @@ public class AccountManager {
     }
 
     public Boolean setSelectedAccount(AccountListRecyclerAdapter.AccountDataModel newSelectedAccount) {
-        File accountsFile = mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "accounts_file_name"));
+        File accountsFile = new File(mContext.getExternalFilesDir(null)+LBudgetUtils.getString(mContext, "accounts_file_name"));
         List<String[]> nonSelected = new ArrayList<>(), selected = new ArrayList<>();
         nonSelected.add(new String[]{"selected", "false"});
         selected.add(new String[]{"selected", "true"});
         try {
-        XMLFileManager.updateNodeInfo("account", "id", getSelectedAccount().getId(), accountsFile, nonSelected);
+            XMLFileManager.updateNodeInfo("account", "id", getSelectedAccount().getId(), accountsFile, nonSelected);
             XMLFileManager.updateNodeInfo("account", "id", newSelectedAccount.getId(), accountsFile, selected);
         } catch (IOException e) {
             return Boolean.FALSE;

@@ -15,6 +15,7 @@ package org.jorge.lbudget.io.files;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -34,15 +35,35 @@ public abstract class FileManager {
         return dir.delete();
     }
 
-    public static void writeStringToFile(String string, File file)
+    public static String readFileAsString(File target)
+            throws IOException {
+
+        char[] buff = new char[1024];
+        StringBuilder builder = new StringBuilder();
+
+        FileReader reader = new FileReader(target);
+
+        while (reader.read(buff) != -1) {
+            builder.append(buff);
+        }
+
+        reader.close();
+
+        return builder.toString();
+    }
+
+    public static Boolean writeStringToFile(String string, File file)
             throws IOException {
 
         if (!file.exists()) {
-            file.createNewFile();
+            if (!file.createNewFile())
+                return Boolean.FALSE;
         }
 
         FileOutputStream outputStream = new FileOutputStream(file);
         outputStream.write(string.getBytes(Charset.defaultCharset()));
         outputStream.close();
+
+        return Boolean.TRUE;
     }
 }
