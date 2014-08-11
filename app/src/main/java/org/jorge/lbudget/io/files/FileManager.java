@@ -14,10 +14,14 @@
 package org.jorge.lbudget.io.files;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 
 public abstract class FileManager {
     public static Boolean recursiveDelete(File dir) {
-        if (dir != null && dir.isDirectory()) {
+        if (dir == null) return Boolean.FALSE;
+        if (dir.isDirectory()) {
             String[] children = dir.list();
             for (String aChildren : children) {
                 Boolean success = recursiveDelete(new File(dir, aChildren));
@@ -28,5 +32,17 @@ public abstract class FileManager {
         }
 
         return dir.delete();
+    }
+
+    public static void writeStringToFile(String string, File file)
+            throws IOException {
+
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+
+        FileOutputStream outputStream = new FileOutputStream(file);
+        outputStream.write(string.getBytes(Charset.defaultCharset()));
+        outputStream.close();
     }
 }

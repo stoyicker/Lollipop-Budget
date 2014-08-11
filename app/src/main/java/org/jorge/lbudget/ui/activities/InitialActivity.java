@@ -14,11 +14,14 @@
 package org.jorge.lbudget.ui.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.jorge.lbudget.control.AccountManager;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.io.files.FileManager;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
 
@@ -26,18 +29,20 @@ public class InitialActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SQLiteDAO.setup(getApplicationContext());
-        flushCacheIfNecessary();
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Context appContext = getApplicationContext();
+        SQLiteDAO.setup(appContext);
+        flushCacheIfNecessary(appContext);
+        AccountManager.getInstance(appContext).parseAccounts();
+        Intent intent = new Intent(appContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         finishAfterTransition();
         startActivity(intent);
     }
 
-    private void flushCacheIfNecessary() {
+    private void flushCacheIfNecessary(Context _context) {
         File cacheDir;
-        int CACHE_SIZE_LIMIT_BYTES = 1048576;
-        if ((cacheDir = getApplicationContext().getCacheDir()).length() > CACHE_SIZE_LIMIT_BYTES) {
+        int CACHE_SIZE_LIMIT_BYTES = LBudgetUtils.getInt(_context, "cache_size_limit_bytes");
+        if ((cacheDir = _context.getCacheDir()).length() > CACHE_SIZE_LIMIT_BYTES) {
             FileManager.recursiveDelete(cacheDir);
         }
     }

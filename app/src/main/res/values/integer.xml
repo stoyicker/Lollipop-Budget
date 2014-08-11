@@ -15,4 +15,5 @@
     <integer name="db_version">1</integer>
     <integer name="amount_of_decimals_allowed">2</integer>
     <integer name="min_swipe_width_pixels">100</integer>
+    <integer name="cache_size_limit_bytes">1048576</integer>
 </resources>

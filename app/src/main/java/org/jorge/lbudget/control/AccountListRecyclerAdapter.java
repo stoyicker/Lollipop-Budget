@@ -26,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -53,13 +54,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     public void add(AccountDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
-        //TODO Add account to file
+        //TODO Add account to file (IMPORTANT TO DO IT HERE, BEFORE THE BACKUP REQUEST)
+        LBackupAgent.requestBackup(mContext);
     }
 
     public AccountDataModel remove(int position) {
         AccountDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        //TODO Remove account from file
+        //TODO Remove account from file (IMPORTANT TO DO IT HERE, BEFORE THE BACKUP REQUEST)
+        LBackupAgent.requestBackup(mContext);
         return ret;
     }
 
@@ -152,14 +155,17 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     private void setSelectedAccount(int position) {
-        selectedIndex = position;
-        //TODO Select account on file
+        if (AccountManager.getInstance(mContext).setSelectedAccount(items.get(selectedIndex))) {
+            selectedIndex = position;
+            LBackupAgent.requestBackup(mContext);
+        }
     }
 
     public static class AccountDataModel {
-        private final String accountName, accountCurrency;
+        private final String id, accountName, accountCurrency;
 
-        public AccountDataModel(String _accountName, String _accountCurrency) {
+        public AccountDataModel(String _id, String _accountName, String _accountCurrency) {
+            id = _id;
             accountName = _accountName;
             accountCurrency = _accountCurrency;
         }
@@ -170,6 +176,10 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
         public String getAccountName() {
             return accountName;
+        }
+
+        public String getId() {
+            return id;
         }
     }
 }
