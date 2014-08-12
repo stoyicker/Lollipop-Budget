@@ -15,7 +15,6 @@ package org.jorge.lbudget.ui.navbar;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.Button;
 
 import org.jorge.lbudget.utils.LBudgetUtils;
@@ -67,8 +66,12 @@ public class NavigationToolbarButton extends Button implements NavigationToolbar
         mOpenInitiated = Boolean.FALSE;
         if (mListener != null) {
             mListener.onCloseRequest();
-            setText(LBudgetUtils.getStringArray(getContext().getApplicationContext(), "navigation_items")[selectedItemPosition]);
+            updateTitle();
         }
+    }
+
+    public void updateTitle() {
+        setText(LBudgetUtils.getStringArray(getContext().getApplicationContext(), "navigation_items")[selectedItemPosition]);
     }
 
     public boolean hasBeenOpened() {

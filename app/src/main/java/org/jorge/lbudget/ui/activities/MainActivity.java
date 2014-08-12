@@ -175,6 +175,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         if (mNavigatedIndexesStack.size() > 1)
             mNavigatedIndexesStack.pop();
         mNavigationToolbarFragment.setSelectedIndex(mNavigatedIndexesStack.peek());
-        //TODO Refresh the list "selected" tick and the title
+        mNavigationToolbarButton.updateTitle();
+        //TODO Refresh the list "selected" tick
     }
 }
