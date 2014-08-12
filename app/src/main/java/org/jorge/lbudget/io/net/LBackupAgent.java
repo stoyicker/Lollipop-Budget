@@ -45,12 +45,6 @@ public class LBackupAgent extends BackupAgentHelper {
             FileBackupHelper database = new FileBackupHelper(appContext, databaseFile.getAbsolutePath());
             addHelper(DATABASE_BACKUP_KEY, database);
         }
-
-        File accountsFile = new File(appContext.getExternalFilesDir(null) + LBudgetUtils.getString(appContext, "symbol_file_separator") +LBudgetUtils.getString(appContext, "accounts_file_name"));
-        if (accountsFile.exists()) {
-            FileBackupHelper accountsFileBackupHelper = new FileBackupHelper(appContext, accountsFile.getAbsolutePath());
-            addHelper(ACCOUNTS_FILE_BACKUP_KEY, accountsFileBackupHelper);
-        }
         //The pictures are not synchronized because it would go beyond the Backup API 1 MB limit
     }
 
