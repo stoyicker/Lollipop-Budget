@@ -54,14 +54,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     public void add(AccountDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
-        //TODO Add account to file (IMPORTANT TO DO IT HERE, BEFORE THE BACKUP REQUEST)
+        AccountManager.getInstance(mContext).addAccount(item);
         LBackupAgent.requestBackup(mContext);
     }
 
     public AccountDataModel remove(int position) {
         AccountDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        //TODO Remove account from file (IMPORTANT TO DO IT HERE, BEFORE THE BACKUP REQUEST)
+        AccountManager.getInstance(mContext).removeAccount(ret);
         LBackupAgent.requestBackup(mContext);
         return ret;
     }

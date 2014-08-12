@@ -145,7 +145,7 @@ public class AccountManager {
         return Boolean.TRUE;
     }
 
-    private void addAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+    public void addAccount(AccountListRecyclerAdapter.AccountDataModel account) {
         File accountsFile = new File(mContext.getExternalFilesDir(null) + LBudgetUtils.getString(mContext, "accounts_file_name"));
         addAccountToList(account);
         final String accountNodeName = LBudgetUtils.getString(mContext, "account_node_name"), idAttr = LBudgetUtils.getString(mContext, "attribute_id_name"), nameAttr = LBudgetUtils.getString(mContext, "attribute_name_name"), currencyAttr = LBudgetUtils.getString(mContext, "attribute_currency_name"), selectedAttr = LBudgetUtils.getString(mContext, "attribute_selected_name");
@@ -158,6 +158,17 @@ public class AccountManager {
         } catch (IOException e) {
             //All checks should be performed earlier and, if something happens here, the account should not be added
             Log.e("debug", Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public void removeAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+        File accountsFile = new File(mContext.getExternalFilesDir(null) + LBudgetUtils.getString(mContext, "accounts_file_name"));
+        mAccountList.remove(account);
+        final String accountNodeName = LBudgetUtils.getString(mContext, "account_node_name"), idAttr = LBudgetUtils.getString(mContext, "attribute_id_name"), nameAttr = LBudgetUtils.getString(mContext, "attribute_name_name"), currencyAttr = LBudgetUtils.getString(mContext, "attribute_currency_name"), selectedAttr = LBudgetUtils.getString(mContext, "attribute_selected_name");
+        try {
+            XMLFileManager.removeElementFromIndex(accountNodeName, idAttr, account.getAccountId(), accountsFile);
+        } catch (IOException e) {
+            //No element, no file or whatever? No need to handle it here.
         }
     }
 }

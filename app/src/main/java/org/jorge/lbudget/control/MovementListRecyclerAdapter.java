@@ -205,7 +205,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 });
                                 view.startAnimation(fadeOut);
                             } else {
-                                //TODO onClick
+                                //TODO onClick (Movement)
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:
