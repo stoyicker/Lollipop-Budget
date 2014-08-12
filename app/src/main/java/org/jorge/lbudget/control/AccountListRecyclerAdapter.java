@@ -181,5 +181,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         public String getId() {
             return id;
         }
+
+        @Override
+        public int hashCode() {
+            return Integer.valueOf(getId());
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            return (o instanceof AccountDataModel && o.hashCode() == hashCode());
+        }
     }
 }

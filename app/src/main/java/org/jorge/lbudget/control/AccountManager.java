@@ -15,6 +15,7 @@ package org.jorge.lbudget.control;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.io.files.XMLFileManager;
@@ -23,6 +24,8 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
@@ -52,7 +55,7 @@ public class AccountManager {
         return selectedAccount;
     }
 
-    public void parseAccounts() {
+    public void parseAccounts(final Boolean addDefaultAccount) {
         CountDownLatch countDownLatch = new CountDownLatch(1);
         Executor parserTaskExecutor = Executors.newSingleThreadExecutor();
         new AsyncTask<CountDownLatch, Void, Void>() {
@@ -62,22 +65,28 @@ public class AccountManager {
                 File accountsFile = new File(mContext.getExternalFilesDir(null) + LBudgetUtils.getString(mContext, "accounts_file_name"));
                 if (!accountsFile.exists()) {
                     try {
-                        if (!FileManager.writeStringToFile(LBudgetUtils.getString(mContext, "default_accounts_file_contents").replace("{DEFAULT_ACCOUNT_NAME}", LBudgetUtils.getString(mContext, "default_account_name")), accountsFile)) {
-                            mAccountList.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", LBudgetUtils.getString(mContext, "default_account_name"), "USD"));
+                        if (!FileManager.writeStringToFile(LBudgetUtils.getString(mContext, "default_xml_file_contents"), accountsFile)) {
+                            if (addDefaultAccount) {//TODO Add default account to mAccountList ONLY
+                                mAccountList.add(new AccountListRecyclerAdapter.AccountDataModel(LBudgetUtils.getString(mContext, "default_account_id"), LBudgetUtils.getString(mContext, "default_account_name"), LBudgetUtils.getString(mContext, "default_account_currency")));
+                            }
                             countDownLatches[0].countDown();
                             return null;
+                        } else if (addDefaultAccount) {
+                            //TODO Add default account to file instead
                         }
                     } catch (IOException e) {
                         //The exception is handled by assigning a  single, new, and temporary default account
-                        mAccountList.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", LBudgetUtils.getString(mContext, "default_account_name"), "USD"));
+                        if (addDefaultAccount)
+                            mAccountList.add(new AccountListRecyclerAdapter.AccountDataModel(LBudgetUtils.getString(mContext, "default_account_id"), LBudgetUtils.getString(mContext, "default_account_name"), LBudgetUtils.getString(mContext, "default_account_currency")));
                         countDownLatches[0].countDown();
                         return null;
                     }
                 }
-                List<String> ids = XMLFileManager.getAllOfType("account", "id", accountsFile);
-                List<String> names = XMLFileManager.getAllOfType("account", "name", accountsFile);
-                List<String> currencies = XMLFileManager.getAllOfType("account", "currency", accountsFile);
-                List<String> selectedStates = XMLFileManager.getAllOfType("account", "selected", accountsFile);
+                final String accountNodeName = LBudgetUtils.getString(mContext, "account_node_name"), idAttr = LBudgetUtils.getString(mContext, "attribute_id_name"), nameAttr = LBudgetUtils.getString(mContext, "attribute_name_name"), currencyAttr = LBudgetUtils.getString(mContext, "attribute_currency_name"), selectedAttr = LBudgetUtils.getString(mContext, "attribute_selected_name");
+                List<String> ids = XMLFileManager.getAllOfType(accountNodeName, idAttr, accountsFile);
+                List<String> names = XMLFileManager.getAllOfType(accountNodeName, nameAttr, accountsFile);
+                List<String> currencies = XMLFileManager.getAllOfType(accountNodeName, currencyAttr, accountsFile);
+                List<String> selectedStates = XMLFileManager.getAllOfType(accountNodeName, selectedAttr, accountsFile);
                 int length = ids.size();
                 for (int i = 0; i < length; i++) {
                     AccountListRecyclerAdapter.AccountDataModel thisAccount = new AccountListRecyclerAdapter.AccountDataModel(ids.get(i), names.get(i), currencies.get(i));
@@ -99,17 +108,41 @@ public class AccountManager {
     }
 
     public Boolean setSelectedAccount(AccountListRecyclerAdapter.AccountDataModel newSelectedAccount) {
-        File accountsFile = new File(mContext.getExternalFilesDir(null)+LBudgetUtils.getString(mContext, "accounts_file_name"));
+        File accountsFile = new File(mContext.getExternalFilesDir(null) + LBudgetUtils.getString(mContext, "accounts_file_name"));
         List<String[]> nonSelected = new ArrayList<>(), selected = new ArrayList<>();
-        nonSelected.add(new String[]{"selected", "false"});
-        selected.add(new String[]{"selected", "true"});
+        final String accountNodeName = LBudgetUtils.getString(mContext, "account_node_name"), idAttr = LBudgetUtils.getString(mContext, "attribute_id_name"), selectedAttr = LBudgetUtils.getString(mContext, "attribute_selected_name");
+        nonSelected.add(new String[]{selectedAttr, "false"});
+        selected.add(new String[]{selectedAttr, "true"});
+        if (!accountsFile.exists()) {
+            parseAccounts(Boolean.FALSE);
+            addAccount(newSelectedAccount);
+            return Boolean.TRUE;
+        }
+        //TODO If file does exist but it has error --> Remove it, create new one and add this account
+        //TODO If file does exist but account does not --> Add the account
         try {
-            XMLFileManager.updateNodeInfo("account", "id", getSelectedAccount().getId(), accountsFile, nonSelected);
-            XMLFileManager.updateNodeInfo("account", "id", newSelectedAccount.getId(), accountsFile, selected);
+            XMLFileManager.updateNodeInfo(accountNodeName, idAttr, getSelectedAccount().getId(), accountsFile, nonSelected);
+            XMLFileManager.updateNodeInfo(accountNodeName, idAttr, newSelectedAccount.getId(), accountsFile, selected);
         } catch (IOException e) {
             return Boolean.FALSE;
         }
         this.selectedAccount = newSelectedAccount;
         return Boolean.TRUE;
+    }
+
+    private void addAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+        File accountsFile = new File(mContext.getExternalFilesDir(null) + LBudgetUtils.getString(mContext, "accounts_file_name"));
+        mAccountList.add(account);
+        final String accountNodeName = LBudgetUtils.getString(mContext, "account_node_name"), idAttr = LBudgetUtils.getString(mContext, "attribute_id_name"), nameAttr = LBudgetUtils.getString(mContext, "attribute_name_name"), currencyAttr = LBudgetUtils.getString(mContext, "attribute_currency_name"), selectedAttr = LBudgetUtils.getString(mContext, "attribute_selected_name");
+        List<String[]> attributes = new LinkedList<>();
+        attributes.add(new String[]{nameAttr, account.getAccountName()});
+        attributes.add(new String[]{currencyAttr, account.getAccountCurrency()});
+        attributes.add(new String[]{selectedAttr, "" + selectedAccount.equals(account)});
+        try {
+            XMLFileManager.addNode(accountNodeName, idAttr, account.getId(), accountsFile, attributes);
+        } catch (IOException e) {
+            //All checks should be performed earlier and, if something happens here, the account should not be added
+            Log.e("debug", Arrays.toString(e.getStackTrace()));
+        }
     }
 }

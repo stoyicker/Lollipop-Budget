@@ -21,7 +21,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -123,7 +122,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
             default:
                 throw new IllegalArgumentException("Menu with id " + selectedIndex + " not found.");
         }
-        getFragmentManager().beginTransaction().add(R.id.content_fragment_container, target).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().replace(R.id.content_fragment_container, target).addToBackStack(null).commit();
     }
 
     private Fragment findMovementListFragment() {
@@ -163,5 +162,12 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
 
     private void openSettings() {
         startActivity(new Intent(getApplicationContext(), SettingsPreferenceActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        //TODO Update navigation toolbar selection and title
     }
 }
