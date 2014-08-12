@@ -206,7 +206,7 @@ public abstract class XMLFileManager {
      *                            information must be retrieved from.
      * @return The value of the requested attribute for the requested node.
      */
-    public static String getAttribute(String type, String identifierAttribute, String identifierValue, String attributeName, Document doc) {
+    private static String getAttribute(String type, String identifierAttribute, String identifierValue, String attributeName, Document doc) {
         NodeList parent = doc.getElementsByTagName(type);
 
         for (int i = 0; i < parent.getLength(); i++) {
@@ -232,7 +232,7 @@ public abstract class XMLFileManager {
      * @param URI                 {@link String} The absolute URI to the inner XML file.
      * @return The value of the requested attribute for the requested node.
      */
-    public static String getAttribute(String type, String identifierAttribute, String identifierValue, String attributeName, String URI) {
+    private static String getAttribute(String type, String identifierAttribute, String identifierValue, String attributeName, String URI) {
         DocumentBuilder docBuilder;
         Document doc;
 

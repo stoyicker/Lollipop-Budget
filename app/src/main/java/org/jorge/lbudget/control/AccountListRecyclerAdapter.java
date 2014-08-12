@@ -178,13 +178,13 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             return accountName;
         }
 
-        public String getId() {
+        public String getAccountId() {
             return id;
         }
 
         @Override
         public int hashCode() {
-            return Integer.valueOf(getId());
+            return Integer.valueOf(getAccountId());
         }
 
         @Override
