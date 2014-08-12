@@ -17,6 +17,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import org.jorge.lbudget.control.AccountListRecyclerAdapter;
 import org.jorge.lbudget.control.MovementListRecyclerAdapter;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -63,5 +64,27 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             singleton = new SQLiteDAO(_context);
             mContext = _context;
         }
+    }
+
+    public static List<AccountListRecyclerAdapter.AccountDataModel> getAccounts() {
+        //TODO Return the list, sorted by id. Fix the table if there are none or more than one selected accounts
+        List<AccountListRecyclerAdapter.AccountDataModel> stubRet = new ArrayList<>();
+        stubRet.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", "cuentanombre", "EUR", Boolean.TRUE));
+        return stubRet;
+    }
+
+    public static Boolean addAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+        //TODO addAccount
+        return Boolean.TRUE;
+    }
+
+    public static Boolean removeAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+        //TODO removeAccount
+        return Boolean.TRUE;
+    }
+
+    public static Boolean setSelectedAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+        //TODO setSelectedAccount
+        return Boolean.TRUE;
     }
 }

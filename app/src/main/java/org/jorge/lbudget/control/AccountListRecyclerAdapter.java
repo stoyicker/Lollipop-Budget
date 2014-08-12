@@ -54,14 +54,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     public void add(AccountDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
-        AccountManager.getInstance(mContext).addAccount(item);
+        AccountManager.getInstance().addAccount(item);
         LBackupAgent.requestBackup(mContext);
     }
 
     public AccountDataModel remove(int position) {
         AccountDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        AccountManager.getInstance(mContext).removeAccount(ret);
+        AccountManager.getInstance().removeAccount(ret);
         LBackupAgent.requestBackup(mContext);
         return ret;
     }
@@ -76,7 +76,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         AccountDataModel item = items.get(i);
         viewHolder.accountNameView.setText(item.getAccountName());
         viewHolder.accountCurrencyView.setText(item.getAccountCurrency());
-        viewHolder.wholeView.setBackgroundResource(getSelectedIndex() == i ? R.color.selected_card_background : R.color.card_background);
+        viewHolder.wholeView.setBackgroundResource(item.isSelected() ? R.color.selected_card_background : R.color.card_background);
     }
 
     @Override
@@ -155,19 +155,19 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     private void setSelectedAccount(int position) {
-        if (AccountManager.getInstance(mContext).setSelectedAccount(items.get(selectedIndex))) {
-            selectedIndex = position;
-            LBackupAgent.requestBackup(mContext);
-        }
+        AccountManager.getInstance().setSelectedAccount(items.get(position));
+        LBackupAgent.requestBackup(mContext);
     }
 
     public static class AccountDataModel {
         private final String id, accountName, accountCurrency;
+        private boolean selected;
 
-        public AccountDataModel(String _id, String _accountName, String _accountCurrency) {
+        public AccountDataModel(String _id, String _accountName, String _accountCurrency, Boolean _selected) {
             id = _id;
             accountName = _accountName;
             accountCurrency = _accountCurrency;
+            selected = _selected;
         }
 
         public String getAccountCurrency() {
@@ -190,6 +190,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         @Override
         public boolean equals(Object o) {
             return (o instanceof AccountDataModel && o.hashCode() == hashCode());
+        }
+
+        public boolean isSelected() {
+            return selected;
+        }
+
+        private void setSelected(boolean selected) {
+            this.selected = selected;
         }
     }
 }

@@ -39,7 +39,7 @@ public class AccountListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mAccountsView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsView.setItemAnimator(new DefaultItemAnimator());
-        mAccountsView.setAdapter(new AccountListRecyclerAdapter(getActivity(), mContext, AccountManager.getInstance(mContext).getAccounts(), mAccountsView));
+        mAccountsView.setAdapter(new AccountListRecyclerAdapter(getActivity(), mContext, AccountManager.getInstance().getAccounts(), mAccountsView));
     }
 
     @Nullable

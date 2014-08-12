@@ -19,14 +19,12 @@
     <string name="symbol_parent_directory">..</string>
     <string name="database_directory_name">databases</string>
     <string name="picture_folder_name">pictures</string>
-    <string name="accounts_file_name">accounts.xml</string>
     <string name="camera_image_extension">.png</string>
-    <string name="db_name">LBudgetUtils_DB</string>
+    <string name="db_name">LBudget_DB</string>
     <string name="movement_color_red_identifier">red</string>
     <string name="movement_color_green_identifier">green</string>
     <string name="movement_color_blue_identifier">blue</string>
     <string name="default_account_id">1</string>
-    <string name="default_xml_file_contents"><![CDATA[<?xml version="1.0" encoding="utf-8"?>\n<root>\n</root>]]></string>
     <string name="account_node_name">account</string>
     <string name="attribute_id_name">id</string>
     <string name="attribute_name_name">name</string>

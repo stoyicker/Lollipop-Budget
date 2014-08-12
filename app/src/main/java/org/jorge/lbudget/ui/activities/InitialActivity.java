@@ -32,7 +32,7 @@ public class InitialActivity extends Activity {
         Context appContext = getApplicationContext();
         SQLiteDAO.setup(appContext);
         flushCacheIfNecessary(appContext);
-        AccountManager.getInstance(appContext).parseAccounts(Boolean.TRUE);
+        AccountManager.getInstance().setup();
         Intent intent = new Intent(appContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         finishAfterTransition();

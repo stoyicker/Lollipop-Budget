@@ -17,7 +17,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,10 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
 
     private NavigationToolbarButton mNavigationToolbarButton;
     private Context mContext;
+
+    public void setSelectedIndex(int i) {
+        mNavigationToolbarButton.setSelectedIndex(i);
+    }
 
     public static interface NavigationToolbarListener {
         public void onMenuSelected(int index);

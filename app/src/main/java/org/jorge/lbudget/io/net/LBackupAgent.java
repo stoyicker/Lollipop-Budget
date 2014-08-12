@@ -46,8 +46,8 @@ public class LBackupAgent extends BackupAgentHelper {
             addHelper(DATABASE_BACKUP_KEY, database);
         }
 
-        File accountsFile = new File(appContext.getExternalFilesDir(null) + LBudgetUtils.getString(appContext, "accounts_file_name"));
-        if (accountsFile != null && accountsFile.exists()) {
+        File accountsFile = new File(appContext.getExternalFilesDir(null) + LBudgetUtils.getString(appContext, "symbol_file_separator") +LBudgetUtils.getString(appContext, "accounts_file_name"));
+        if (accountsFile.exists()) {
             FileBackupHelper accountsFileBackupHelper = new FileBackupHelper(appContext, accountsFile.getAbsolutePath());
             addHelper(ACCOUNTS_FILE_BACKUP_KEY, accountsFileBackupHelper);
         }

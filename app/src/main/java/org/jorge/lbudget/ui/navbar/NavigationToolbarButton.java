@@ -15,6 +15,7 @@ package org.jorge.lbudget.ui.navbar;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.Button;
 
 import org.jorge.lbudget.utils.LBudgetUtils;

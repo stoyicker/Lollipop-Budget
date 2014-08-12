@@ -36,6 +36,7 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class MainActivity extends Activity implements NavigationToolbarFragment.NavigationToolbarListener {
 
@@ -44,10 +45,13 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     private Context mContext;
     private Fragment[] mContentFragments;
     private NavigationToolbarFragment mNavigationToolbarFragment;
+    private Stack<Integer> mNavigatedIndexesStack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mNavigatedIndexesStack = new Stack<>();
+        mNavigatedIndexesStack.push(0);
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
         mNavigationToolbarFragment = (NavigationToolbarFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_toolbar);
@@ -109,6 +113,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         adapter.notifyItemChanged(oldIndex);
         adapter.notifyItemChanged(selectedIndex);
         Fragment target;
+        mNavigatedIndexesStack.push(selectedIndex);
         switch (selectedIndex) {
             case 0:
                 target = findMovementListFragment();
@@ -167,7 +172,9 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-        //TODO Update navigation toolbar selection and title
+        if (mNavigatedIndexesStack.size() > 1)
+            mNavigatedIndexesStack.pop();
+        mNavigationToolbarFragment.setSelectedIndex(mNavigatedIndexesStack.peek());
+        //TODO Refresh the list "selected" tick and the title
     }
 }
