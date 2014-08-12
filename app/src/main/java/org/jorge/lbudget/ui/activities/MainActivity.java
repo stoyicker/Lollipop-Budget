@@ -172,10 +172,11 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        if (mNavigatedIndexesStack.size() > 1)
-            mNavigatedIndexesStack.pop();
+        RecyclerView.Adapter adapter = mNavigationMenuView.getAdapter();
+        if (mNavigatedIndexesStack.size() > 1){
+            adapter.notifyItemChanged(mNavigatedIndexesStack.pop());}
         mNavigationToolbarFragment.setSelectedIndex(mNavigatedIndexesStack.peek());
         mNavigationToolbarButton.updateTitle();
-        //TODO Refresh the list "selected" tick
+        adapter.notifyItemChanged(mNavigatedIndexesStack.peek());
     }
 }
