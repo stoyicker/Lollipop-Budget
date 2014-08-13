@@ -13,6 +13,7 @@
 
 package org.jorge.lbudget.control;
 
+import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 
 import java.util.List;

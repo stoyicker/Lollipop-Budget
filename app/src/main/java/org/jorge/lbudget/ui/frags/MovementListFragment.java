@@ -25,7 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.control.MovementListRecyclerAdapter;
+import org.jorge.lbudget.control.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 
 public class MovementListFragment extends Fragment {
@@ -38,7 +38,7 @@ public class MovementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mMovementsView, getActivity(), mContext, SQLiteDAO.loadAccountMovements()));
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mMovementsView, getActivity(), SQLiteDAO.loadAccountMovements()));
     }
 
     @Override
@@ -54,5 +54,11 @@ public class MovementListFragment extends Fragment {
         super.onAttach(activity);
         mContext = getActivity().getApplicationContext();
         MovementListRecyclerAdapter.updateMovementColors(mContext);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMovementsView.getAdapter().notifyDataSetChanged();
     }
 }

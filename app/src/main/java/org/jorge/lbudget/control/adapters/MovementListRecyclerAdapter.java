@@ -11,7 +11,7 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.control;
+package org.jorge.lbudget.control.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.control.AccountManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -50,11 +51,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private static int incomeColor, expenseColor;
     private Context mContext;
 
-    public MovementListRecyclerAdapter(RecyclerView recyclerView, Activity activity, Context context, List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
         this.items = items;
-        mContext = context;
+        mContext = activity.getApplicationContext();
         mActivity = activity;
-        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(context, "min_swipe_width_pixels");
+        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
         mRecyclerView = recyclerView;
     }
 

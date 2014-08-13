@@ -11,7 +11,7 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.control;
+package org.jorge.lbudget.control.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -26,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.control.AccountManager;
 import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
@@ -43,12 +44,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private final int itemLayout = R.layout.list_item_account_list;
     private static float x = 0;
 
-    public AccountListRecyclerAdapter(Activity activity, Context context, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
+    public AccountListRecyclerAdapter(Activity activity, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
         mActivity = activity;
-        mContext = context;
+        mContext = activity.getApplicationContext();
         items = accounts;
         mRecyclerView = _recyclerView;
-        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(context, "min_swipe_width_pixels");
+        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
     }
 
     public void add(AccountDataModel item, int position) {
@@ -181,7 +182,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             accountCurrencyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO onClick accountCurrencyButton
+                    //TODO onClick accountCurrencyButton, using mListener to update the currency
                 }
             });
             accountCurrencyButton.setOnTouchListener(listener);
