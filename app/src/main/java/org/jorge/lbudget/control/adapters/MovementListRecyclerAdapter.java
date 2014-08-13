@@ -158,12 +158,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //Required for onTouchListener to work.
-                }
-            });
+            itemView.setOnClickListener(null); //Required for onTouchListener.
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 private float x = 0;
 

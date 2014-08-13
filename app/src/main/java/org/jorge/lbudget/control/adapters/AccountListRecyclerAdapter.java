@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -113,15 +114,10 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         public ViewHolder(View itemView) {
             super(itemView);
             wholeView = itemView;
-            wholeView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    setSelectedAccount(getPosition());
-                }
-            });
             View.OnTouchListener listener = new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+                    Log.d("debug", "onTouch");
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
@@ -160,8 +156,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                     });
                                     wholeView.startAnimation(fadeOut);
                                 }
+                                return Boolean.TRUE;
+                            } else {
+                                x = 0;
+                                if (view.equals(wholeView)) {
+                                    setSelectedAccount(getPosition());
+                                    return Boolean.TRUE;
+                                }
                             }
-                            return Boolean.TRUE;
                         case MotionEvent.ACTION_DOWN:
                             x = motionEvent.getX();
                             return Boolean.TRUE;
@@ -175,6 +177,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 @Override
                 public void onClick(View view) {
                     //TODO onClick accountNameButton
+                    Log.d("debug", "onClick accountNameButton");
                 }
             });
             accountNameButton.setOnTouchListener(listener);
@@ -182,7 +185,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             accountCurrencyButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //TODO onClick accountCurrencyButton, using mListener to update the currency
+                    //TODO onClick accountCurrencyButton
+                    Log.d("debug", "onClick accountCurrencyButton");
                 }
             });
             accountCurrencyButton.setOnTouchListener(listener);
