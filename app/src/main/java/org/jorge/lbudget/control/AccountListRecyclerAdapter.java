@@ -81,7 +81,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
     @Override
     public int getItemCount() {
-        return 0;
+        return items.size();
     }
 
     public int getSelectedIndex() {
