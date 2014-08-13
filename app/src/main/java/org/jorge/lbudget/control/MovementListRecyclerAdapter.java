@@ -132,7 +132,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getTitle());
         long amount = item.getAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
-        viewHolder.movementAmountView.setText(MovementDataModel.printifyMoneyAmount(mContext, amount));
+        viewHolder.movementAmountView.setText(MovementDataModel.printifyMoneyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedAccount().getAccountCurrency());
         if (movementHasPicture(item)) {
             viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(item.getImagePath()));
             viewHolder.movementImageView.setVisibility(View.VISIBLE);
