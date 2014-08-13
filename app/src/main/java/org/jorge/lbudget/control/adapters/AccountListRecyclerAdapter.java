@@ -17,14 +17,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.control.AccountManager;
@@ -87,15 +87,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         AccountDataModel item = items.get(i);
-        viewHolder.accountNameButton.setText(item.getAccountName());
+        viewHolder.accountNameView.setText(item.getAccountName());
         if (item.isSelected()) {
             viewHolder.wholeView.setBackgroundResource(R.color.selected_card_background);
-            viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
-            viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextSelected);
+            viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
+            viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountNameTextSelected);
         } else {
             viewHolder.wholeView.setBackgroundResource(R.color.non_selected_card_background);
-            viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
-            viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextNonSelected);
+            viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
+            viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountNameTextNonSelected);
         }
     }
 
@@ -105,7 +105,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final Button accountNameButton;
+        private final EditText accountNameView;
         private final View wholeView;
 
         public ViewHolder(View itemView) {
@@ -114,7 +114,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             View.OnTouchListener listener = new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    Log.d("debug", "onTouch");
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
@@ -156,10 +155,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                 return Boolean.TRUE;
                             } else {
                                 x = 0;
-                                if (view.equals(wholeView)) {
-                                    setSelectedAccount(getPosition());
-                                    return Boolean.TRUE;
-                                }
+                                mActivity.findViewById(android.R.id.content).requestFocus();
+                                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
+                                        Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                                setSelectedAccount(getPosition());
+                                return Boolean.TRUE;
                             }
                         case MotionEvent.ACTION_DOWN:
                             x = motionEvent.getX();
@@ -169,15 +170,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 }
             };
             wholeView.setOnTouchListener(listener);
-            accountNameButton = (Button) itemView.findViewById(R.id.account_name_view);
-            accountNameButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //TODO onClick accountNameButton
-                    Log.d("debug", "onClick accountNameButton");
-                }
-            });
-            accountNameButton.setOnTouchListener(listener);
+            accountNameView = (EditText) itemView.findViewById(R.id.account_name_view);
         }
     }
 
