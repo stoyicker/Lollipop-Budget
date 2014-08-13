@@ -88,17 +88,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         AccountDataModel item = items.get(i);
         viewHolder.accountNameButton.setText(item.getAccountName());
-        viewHolder.accountCurrencyButton.setText(item.getAccountCurrency());
         if (item.isSelected()) {
             viewHolder.wholeView.setBackgroundResource(R.color.selected_card_background);
             viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
             viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextSelected);
-            viewHolder.accountCurrencyButton.setTextAppearance(mContext, R.style.AccountCurrencyTextSelected);
         } else {
             viewHolder.wholeView.setBackgroundResource(R.color.non_selected_card_background);
             viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
             viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextNonSelected);
-            viewHolder.accountCurrencyButton.setTextAppearance(mContext, R.style.AccountCurrencyTextNonSelected);
         }
     }
 
@@ -108,7 +105,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final Button accountNameButton, accountCurrencyButton;
+        private final Button accountNameButton;
         private final View wholeView;
 
         public ViewHolder(View itemView) {
@@ -181,31 +178,17 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 }
             });
             accountNameButton.setOnTouchListener(listener);
-            accountCurrencyButton = (Button) itemView.findViewById(R.id.account_currency_view);
-            accountCurrencyButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //TODO onClick accountCurrencyButton
-                    Log.d("debug", "onClick accountCurrencyButton");
-                }
-            });
-            accountCurrencyButton.setOnTouchListener(listener);
         }
     }
 
     public static class AccountDataModel {
-        private final String id, accountName, accountCurrency;
+        private final String id, accountName;
         private boolean selected;
 
-        public AccountDataModel(String _id, String _accountName, String _accountCurrency, Boolean _selected) {
+        public AccountDataModel(String _id, String _accountName, Boolean _selected) {
             id = _id;
             accountName = _accountName;
-            accountCurrency = _accountCurrency;
             selected = _selected;
-        }
-
-        public String getAccountCurrency() {
-            return accountCurrency;
         }
 
         public String getAccountName() {

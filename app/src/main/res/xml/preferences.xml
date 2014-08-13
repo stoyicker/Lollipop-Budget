@@ -15,6 +15,12 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
+        android:entries="@array/currency_codes"
+        android:entryValues="@array/currency_codes"
+        android:defaultValue="@string/currency_172"
+        android:key="@string/pref_key_currency_code"
+        android:title="@string/pref_title_currency_code" />
+    <ListPreference
         android:entries="@array/movement_color_entries"
         android:entryValues="@array/movement_color_identifiers"
         android:defaultValue="@string/movement_color_green_identifier"

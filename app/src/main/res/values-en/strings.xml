@@ -31,6 +31,5 @@
     <string name="movement_list_item_removal">Item removed</string>
     <string name="share_text_income">Got {MONEYPLACEHOLDER} </string>
     <string name="item_edit">Edit</string>
-    <string name="default_account_name">Default account</string>
-    <string name="default_currency_name">USD</string>
+    <string name="pref_title_currency_code">Currency</string>
 </resources>

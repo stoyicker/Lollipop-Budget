@@ -13,8 +13,13 @@
 
 package org.jorge.lbudget.control;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
 
@@ -63,5 +68,10 @@ public class AccountManager {
                 return acc;
         }
         throw new IllegalStateException("No account is selected");
+    }
+
+    public String getSelectedCurrency(Context _context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(_context);
+        return preferences.getString(LBudgetUtils.getString(_context, "pref_key_currency_code"), LBudgetUtils.getString(_context, "currency_172"));
     }
 }
