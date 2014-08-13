@@ -127,7 +127,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
             default:
                 throw new IllegalArgumentException("Menu with id " + selectedIndex + " not found.");
         }
-        getFragmentManager().beginTransaction().replace(R.id.content_fragment_container, target).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.fade_in_from_bottom, R.animator.fade_out_to_bottom, R.animator.fade_in_from_bottom, R.animator.fade_out_to_bottom).replace(R.id.content_fragment_container, target).addToBackStack(null).commit();
     }
 
     private Fragment findMovementListFragment() {
@@ -173,8 +173,9 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     public void onBackPressed() {
         super.onBackPressed();
         RecyclerView.Adapter adapter = mNavigationMenuView.getAdapter();
-        if (mNavigatedIndexesStack.size() > 1){
-            adapter.notifyItemChanged(mNavigatedIndexesStack.pop());}
+        if (mNavigatedIndexesStack.size() > 1) {
+            adapter.notifyItemChanged(mNavigatedIndexesStack.pop());
+        }
         mNavigationToolbarFragment.setSelectedIndex(mNavigatedIndexesStack.peek());
         mNavigationToolbarButton.updateTitle();
         adapter.notifyItemChanged(mNavigatedIndexesStack.peek());

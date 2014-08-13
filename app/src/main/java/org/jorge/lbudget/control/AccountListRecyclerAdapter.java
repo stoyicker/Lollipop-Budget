@@ -105,7 +105,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                             final float diff = motionEvent.getX() - x;
                             if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
                                 if (getSelectedIndex() != getPosition()) {
-                                    final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_left : R.anim.fade_out_right);
+                                    final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
                                     fadeOut.setAnimationListener(new Animation.AnimationListener() {
                                         @Override
                                         public void onAnimationStart(Animation animation) {
