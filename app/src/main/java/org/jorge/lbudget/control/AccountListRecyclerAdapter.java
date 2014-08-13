@@ -41,7 +41,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private final List<AccountDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_account_list;
-    private int selectedIndex = 0;
 
     public AccountListRecyclerAdapter(Activity activity, Context context, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
         mActivity = activity;
@@ -84,10 +83,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         return items.size();
     }
 
-    public int getSelectedIndex() {
-        return selectedIndex;
-    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final Button accountNameView, accountCurrencyView;
         private final View wholeView;
@@ -104,7 +99,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
                             if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
-                                if (getSelectedIndex() != getPosition()) {
+                                if (!items.get(getPosition()).isSelected()) {
                                     final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
                                     fadeOut.setAnimationListener(new Animation.AnimationListener() {
                                         @Override

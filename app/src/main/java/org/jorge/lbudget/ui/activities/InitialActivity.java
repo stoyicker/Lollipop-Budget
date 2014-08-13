@@ -50,4 +50,11 @@ public class InitialActivity extends Activity {
     @Override
     public void onBackPressed() {
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        finish();
+        startActivity(new Intent(getApplicationContext(), InitialActivity.class));
+    }
 }
