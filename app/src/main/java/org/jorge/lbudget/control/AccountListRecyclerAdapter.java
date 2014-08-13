@@ -41,6 +41,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private final List<AccountDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_account_list;
+    private static float x = 0;
 
     public AccountListRecyclerAdapter(Activity activity, Context context, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
         mActivity = activity;
@@ -65,6 +66,17 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         return ret;
     }
 
+    private void setSelectedAccount(int position) {
+        AccountDataModel oldSelectedAccount = AccountManager.getInstance().getSelectedAccount(), newSelectedAccount = items.get(position);
+        oldSelectedAccount.setSelected(Boolean.FALSE);
+        newSelectedAccount.setSelected(Boolean.TRUE);
+        int oldSelected = items.indexOf(oldSelectedAccount);
+        AccountManager.getInstance().setSelectedAccount(newSelectedAccount);
+        notifyItemChanged(position);
+        notifyItemChanged(oldSelected);
+        LBackupAgent.requestBackup(mContext);
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE));
@@ -80,6 +92,11 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
             viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextSelected);
             viewHolder.accountCurrencyButton.setTextAppearance(mContext, R.style.AccountCurrencyTextSelected);
+        } else {
+            viewHolder.wholeView.setBackgroundResource(R.color.non_selected_card_background);
+            viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
+            viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextNonSelected);
+            viewHolder.accountCurrencyButton.setTextAppearance(mContext, R.style.AccountCurrencyTextNonSelected);
         }
     }
 
@@ -95,11 +112,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         public ViewHolder(View itemView) {
             super(itemView);
             wholeView = itemView;
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-                private float x;
-
+            wholeView.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onTouch(final View view, MotionEvent motionEvent) {
+                public void onClick(View view) {
+                    setSelectedAccount(getPosition());
+                }
+            });
+            View.OnTouchListener listener = new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
@@ -113,7 +134,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
                                         @Override
                                         public void onAnimationEnd(Animation animation) {
-                                            view.setVisibility(View.GONE);
+                                            wholeView.setVisibility(View.GONE);
                                             final AccountDataModel movement = remove(getPosition());
                                             new UndoBar.Builder(mActivity)
                                                     .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
@@ -136,27 +157,35 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                         public void onAnimationRepeat(Animation animation) {
                                         }
                                     });
-                                    view.startAnimation(fadeOut);
+                                    wholeView.startAnimation(fadeOut);
                                 }
-                            } else {
-                                setSelectedAccount(getPosition());
                             }
-                            break;
+                            return Boolean.TRUE;
                         case MotionEvent.ACTION_DOWN:
                             x = motionEvent.getX();
-                            break;
+                            return Boolean.TRUE;
                     }
-                    return false;
+                    return Boolean.FALSE;
+                }
+            };
+            wholeView.setOnTouchListener(listener);
+            accountNameButton = (Button) itemView.findViewById(R.id.account_name_view);
+            accountNameButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO onClick accountNameButton
                 }
             });
-            accountNameButton = (Button) itemView.findViewById(R.id.account_name_view);
+            accountNameButton.setOnTouchListener(listener);
             accountCurrencyButton = (Button) itemView.findViewById(R.id.account_currency_view);
+            accountCurrencyButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //TODO onClick accountCurrencyButton
+                }
+            });
+            accountCurrencyButton.setOnTouchListener(listener);
         }
-    }
-
-    private void setSelectedAccount(int position) {
-        AccountManager.getInstance().setSelectedAccount(items.get(position));
-        LBackupAgent.requestBackup(mContext);
     }
 
     public static class AccountDataModel {

@@ -164,7 +164,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                 }
             });
             itemView.setOnTouchListener(new View.OnTouchListener() {
-                private float x;
+                private float x = 0;
 
                 @Override
                 public boolean onTouch(final View view, MotionEvent motionEvent) {
