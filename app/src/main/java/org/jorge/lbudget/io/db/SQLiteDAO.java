@@ -70,6 +70,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         //TODO Return the list, sorted by id. Fix the table if there are none or more than one selected accounts
         List<AccountListRecyclerAdapter.AccountDataModel> stubRet = new ArrayList<>();
         stubRet.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", "cuentanombre", "EUR", Boolean.TRUE));
+        stubRet.add(new AccountListRecyclerAdapter.AccountDataModel(2 + "", "cuentanoseleccionada", "USD", Boolean.FALSE));
         return stubRet;
     }
 

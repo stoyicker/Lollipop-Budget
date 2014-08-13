@@ -73,9 +73,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         AccountDataModel item = items.get(i);
-        viewHolder.accountNameView.setText(item.getAccountName());
-        viewHolder.accountCurrencyView.setText(item.getAccountCurrency());
-        viewHolder.wholeView.setBackgroundResource(item.isSelected() ? R.color.selected_card_background : R.color.card_background);
+        viewHolder.accountNameButton.setText(item.getAccountName());
+        viewHolder.accountCurrencyButton.setText(item.getAccountCurrency());
+        if (item.isSelected()) {
+            viewHolder.wholeView.setBackgroundResource(R.color.selected_card_background);
+            viewHolder.accountNameButton.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
+            viewHolder.accountNameButton.setTextAppearance(mContext, R.style.AccountNameTextSelected);
+            viewHolder.accountCurrencyButton.setTextAppearance(mContext, R.style.AccountCurrencyTextSelected);
+        }
     }
 
     @Override
@@ -84,7 +89,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final Button accountNameView, accountCurrencyView;
+        private final Button accountNameButton, accountCurrencyButton;
         private final View wholeView;
 
         public ViewHolder(View itemView) {
@@ -144,8 +149,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                     return false;
                 }
             });
-            accountNameView = (Button) itemView.findViewById(R.id.account_name_view);
-            accountCurrencyView = (Button) itemView.findViewById(R.id.account_currency_view);
+            accountNameButton = (Button) itemView.findViewById(R.id.account_name_view);
+            accountCurrencyButton = (Button) itemView.findViewById(R.id.account_currency_view);
         }
     }
 
