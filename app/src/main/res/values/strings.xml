@@ -26,11 +26,6 @@
     <string name="movement_color_green_identifier">green</string>
     <string name="movement_color_blue_identifier">blue</string>
     <string name="default_account_id">1</string>
-    <string name="account_node_name">account</string>
-    <string name="attribute_id_name">id</string>
-    <string name="attribute_name_name">name</string>
-    <string name="attribute_currency_name">currency</string>
-    <string name="attribute_selected_name">selected</string>
     <string name="currency_0">ADP</string>
     <string name="currency_1">AED</string>
     <string name="currency_2">AFA</string>
