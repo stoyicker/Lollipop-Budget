@@ -13,46 +13,17 @@
 
 package org.jorge.lbudget.ui.frags;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.widget.Toast;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.utils.LBudgetUtils;
 
 public class SettingsPreferenceFragment extends PreferenceFragment {
-
-    private Context mContext;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        mContext = activity.getApplicationContext();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
-
-        final Preference incomeColorPref = findPreference(LBudgetUtils.getString(mContext, "pref_key_movement_income_color")), expenseColorPref = findPreference(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"));
-        incomeColorPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                Toast.makeText(mContext, R.string.setting_updated_upon_restart, Toast.LENGTH_LONG).show();
-                return Boolean.TRUE;
-            }
-        });
-        expenseColorPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            @Override
-            public boolean onPreferenceChange(Preference preference, Object o) {
-                Toast.makeText(mContext, R.string.setting_updated_upon_restart, Toast.LENGTH_LONG).show();
-                return Boolean.TRUE;
-            }
-        });
     }
 }

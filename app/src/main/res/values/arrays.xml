@@ -32,219 +32,219 @@
         <item>@string/pref_key_movement_expense_color</item>
     </string-array>
     <string-array name="currency_codes">
-        <string name="currency_0">ADP</string>
-        <string name="currency_1">AED</string>
-        <string name="currency_2">AFA</string>
-        <string name="currency_3">AFN</string>
-        <string name="currency_4">ALK</string>
-        <string name="currency_5">ALL</string>
-        <string name="currency_6">ANG</string>
-        <string name="currency_7">AOA</string>
-        <string name="currency_8">AOK</string>
-        <string name="currency_9">AON</string>
-        <string name="currency_10">AOR</string>
-        <string name="currency_11">ARP</string>
-        <string name="currency_12">ARS</string>
-        <string name="currency_13">ARY</string>
-        <string name="currency_14">ATS</string>
-        <string name="currency_15">AUD</string>
-        <string name="currency_16">AWG</string>
-        <string name="currency_17">AYM</string>
-        <string name="currency_18">AZN</string>
-        <string name="currency_19">BAD</string>
-        <string name="currency_20">BAM</string>
-        <string name="currency_21">BBD</string>
-        <string name="currency_22">BEC</string>
-        <string name="currency_23">BEF</string>
-        <string name="currency_24">BGJ</string>
-        <string name="currency_25">BGK</string>
-        <string name="currency_26">BGL</string>
-        <string name="currency_27">BGN</string>
-        <string name="currency_28">BHD</string>
-        <string name="currency_29">BIF</string>
-        <string name="currency_30">BOB</string>
-        <string name="currency_31">BOP</string>
-        <string name="currency_32">BOV</string>
-        <string name="currency_33">BRE</string>
-        <string name="currency_34">BRL</string>
-        <string name="currency_35">BRN</string>
-        <string name="currency_36">BSD</string>
-        <string name="currency_37">BTN</string>
-        <string name="currency_38">BUK</string>
-        <string name="currency_39">BYB</string>
-        <string name="currency_40">BYR</string>
-        <string name="currency_41">BZD</string>
-        <string name="currency_42">CAD</string>
-        <string name="currency_43">CHC</string>
-        <string name="currency_44">CHE</string>
-        <string name="currency_45">CHF</string>
-        <string name="currency_46">CHW</string>
-        <string name="currency_47">CLP</string>
-        <string name="currency_48">CNX</string>
-        <string name="currency_49">COU</string>
-        <string name="currency_50">CSD</string>
-        <string name="currency_51">CSK</string>
-        <string name="currency_52">CUP</string>
-        <string name="currency_53">DDM</string>
-        <string name="currency_54">DKK</string>
-        <string name="currency_55">DOP</string>
-        <string name="currency_56">DZD</string>
-        <string name="currency_57">ERN</string>
-        <string name="currency_58">ESA</string>
-        <string name="currency_59">ESB</string>
-        <string name="currency_60">ESP</string>
-        <string name="currency_61">ETB</string>
-        <string name="currency_62">EUR</string>
-        <string name="currency_63">FIM</string>
-        <string name="currency_64">FJD</string>
-        <string name="currency_65">FKP</string>
-        <string name="currency_66">FRF</string>
-        <string name="currency_67">GBP</string>
-        <string name="currency_68">GEL</string>
-        <string name="currency_69">GHS</string>
-        <string name="currency_70">GIP</string>
-        <string name="currency_71">GMD</string>
-        <string name="currency_72">GNE</string>
-        <string name="currency_73">GQE</string>
-        <string name="currency_74">GWP</string>
-        <string name="currency_75">HKD</string>
-        <string name="currency_76">HUF</string>
-        <string name="currency_77">IDR</string>
-        <string name="currency_78">IEP</string>
-        <string name="currency_79">ILP</string>
-        <string name="currency_80">ILS</string>
-        <string name="currency_81">INR</string>
-        <string name="currency_82">IQD</string>
-        <string name="currency_83">ISJ</string>
-        <string name="currency_84">ITL</string>
-        <string name="currency_85">JMD</string>
-        <string name="currency_86">JOD</string>
-        <string name="currency_87">JPY</string>
-        <string name="currency_88">KGS</string>
-        <string name="currency_89">KYD</string>
-        <string name="currency_90">LAJ</string>
-        <string name="currency_91">LAK</string>
-        <string name="currency_92">LKR</string>
-        <string name="currency_93">LRD</string>
-        <string name="currency_94">LSL</string>
-        <string name="currency_95">LSM</string>
-        <string name="currency_96">LTT</string>
-        <string name="currency_97">LUL</string>
-        <string name="currency_98">LVL</string>
-        <string name="currency_99">MAD</string>
-        <string name="currency_100">MAF</string>
-        <string name="currency_101">MDL</string>
-        <string name="currency_102">MGA</string>
-        <string name="currency_103">MKD</string>
-        <string name="currency_104">MLF</string>
-        <string name="currency_105">MMK</string>
-        <string name="currency_106">MOP</string>
-        <string name="currency_107">MRO</string>
-        <string name="currency_108">MTL</string>
-        <string name="currency_109">MTP</string>
-        <string name="currency_110">MUR</string>
-        <string name="currency_111">MVQ</string>
-        <string name="currency_112">MXP</string>
-        <string name="currency_113">MXV</string>
-        <string name="currency_114">MYR</string>
-        <string name="currency_115">MZE</string>
-        <string name="currency_116">MZM</string>
-        <string name="currency_117">NGN</string>
-        <string name="currency_118">NIC</string>
-        <string name="currency_119">NIO</string>
-        <string name="currency_120">NOK</string>
-        <string name="currency_121">NZD</string>
-        <string name="currency_122">OMR</string>
-        <string name="currency_123">PAB</string>
-        <string name="currency_124">PGK</string>
-        <string name="currency_125">PHP</string>
-        <string name="currency_126">PKR</string>
-        <string name="currency_127">PLN</string>
-        <string name="currency_128">PLZ</string>
-        <string name="currency_129">PTE</string>
-        <string name="currency_130">PYG</string>
-        <string name="currency_131">QAR</string>
-        <string name="currency_132">RHD</string>
-        <string name="currency_133">ROK</string>
-        <string name="currency_134">ROL</string>
-        <string name="currency_135">RON</string>
-        <string name="currency_136">RSD</string>
-        <string name="currency_137">RUB</string>
-        <string name="currency_138">RUR</string>
-        <string name="currency_139">RWF</string>
-        <string name="currency_140">SAR</string>
-        <string name="currency_141">SBD</string>
-        <string name="currency_142">SCR</string>
-        <string name="currency_143">SDD</string>
-        <string name="currency_144">SDP</string>
-        <string name="currency_145">SGD</string>
-        <string name="currency_146">SHP</string>
-        <string name="currency_147">SIT</string>
-        <string name="currency_148">SKK</string>
-        <string name="currency_149">SLL</string>
-        <string name="currency_150">SOS</string>
-        <string name="currency_151">SRD</string>
-        <string name="currency_152">SRG</string>
-        <string name="currency_153">SSP</string>
-        <string name="currency_154">STD</string>
-        <string name="currency_155">SUR</string>
-        <string name="currency_156">SVC</string>
-        <string name="currency_157">SYP</string>
-        <string name="currency_158">SZL</string>
-        <string name="currency_159">THB</string>
-        <string name="currency_160">TJR</string>
-        <string name="currency_161">TJS</string>
-        <string name="currency_162">TMM</string>
-        <string name="currency_163">TMT</string>
-        <string name="currency_164">TND</string>
-        <string name="currency_165">TOP</string>
-        <string name="currency_166">TPE</string>
-        <string name="currency_167">TRL</string>
-        <string name="currency_168">TRY</string>
-        <string name="currency_169">UAK</string>
-        <string name="currency_170">UGW</string>
-        <string name="currency_171">UGX</string>
-        <string name="currency_172">USD</string>
-        <string name="currency_173">USN</string>
-        <string name="currency_174">USS</string>
-        <string name="currency_175">UYI</string>
-        <string name="currency_176">UYN</string>
-        <string name="currency_177">UYP</string>
-        <string name="currency_178">UYU</string>
-        <string name="currency_179">UZS</string>
-        <string name="currency_180">VEB</string>
-        <string name="currency_181">VEF</string>
-        <string name="currency_182">VNC</string>
-        <string name="currency_183">VND</string>
-        <string name="currency_184">XAF</string>
-        <string name="currency_185">XAU</string>
-        <string name="currency_186">XBA</string>
-        <string name="currency_187">XBB</string>
-        <string name="currency_188">XBC</string>
-        <string name="currency_189">XBD</string>
-        <string name="currency_190">XCD</string>
-        <string name="currency_191">XEU</string>
-        <string name="currency_192">XFO</string>
-        <string name="currency_193">XFU</string>
-        <string name="currency_194">XOF</string>
-        <string name="currency_195">XPD</string>
-        <string name="currency_196">XPF</string>
-        <string name="currency_197">XRE</string>
-        <string name="currency_198">XSU</string>
-        <string name="currency_199">XXX</string>
-        <string name="currency_200">YDD</string>
-        <string name="currency_201">YER</string>
-        <string name="currency_202">YUD</string>
-        <string name="currency_203">YUM</string>
-        <string name="currency_204">YUN</string>
-        <string name="currency_205">ZAL</string>
-        <string name="currency_206">ZAR</string>
-        <string name="currency_207">ZMK</string>
-        <string name="currency_208">ZRN</string>
-        <string name="currency_209">ZRZ</string>
-        <string name="currency_210">ZWC</string>
-        <string name="currency_211">ZWD</string>
-        <string name="currency_212">ZWN</string>
-        <string name="currency_213">ZWR</string>
+        <item>@string/currency_0</item>
+        <item>@string/currency_1</item>
+        <item>@string/currency_2</item>
+        <item>@string/currency_3</item>
+        <item>@string/currency_4</item>
+        <item>@string/currency_5</item>
+        <item>@string/currency_6</item>
+        <item>@string/currency_7</item>
+        <item>@string/currency_8</item>
+        <item>@string/currency_9</item>
+        <item>@string/currency_10</item>
+        <item>@string/currency_11</item>
+        <item>@string/currency_12</item>
+        <item>@string/currency_13</item>
+        <item>@string/currency_14</item>
+        <item>@string/currency_15</item>
+        <item>@string/currency_16</item>
+        <item>@string/currency_17</item>
+        <item>@string/currency_18</item>
+        <item>@string/currency_19</item>
+        <item>@string/currency_20</item>
+        <item>@string/currency_21</item>
+        <item>@string/currency_22</item>
+        <item>@string/currency_23</item>
+        <item>@string/currency_24</item>
+        <item>@string/currency_25</item>
+        <item>@string/currency_26</item>
+        <item>@string/currency_27</item>
+        <item>@string/currency_28</item>
+        <item>@string/currency_29</item>
+        <item>@string/currency_30</item>
+        <item>@string/currency_31</item>
+        <item>@string/currency_32</item>
+        <item>@string/currency_33</item>
+        <item>@string/currency_34</item>
+        <item>@string/currency_35</item>
+        <item>@string/currency_36</item>
+        <item>@string/currency_37</item>
+        <item>@string/currency_38</item>
+        <item>@string/currency_39</item>
+        <item>@string/currency_40</item>
+        <item>@string/currency_41</item>
+        <item>@string/currency_42</item>
+        <item>@string/currency_43</item>
+        <item>@string/currency_44</item>
+        <item>@string/currency_45</item>
+        <item>@string/currency_46</item>
+        <item>@string/currency_47</item>
+        <item>@string/currency_48</item>
+        <item>@string/currency_49</item>
+        <item>@string/currency_50</item>
+        <item>@string/currency_51</item>
+        <item>@string/currency_52</item>
+        <item>@string/currency_53</item>
+        <item>@string/currency_54</item>
+        <item>@string/currency_55</item>
+        <item>@string/currency_56</item>
+        <item>@string/currency_57</item>
+        <item>@string/currency_58</item>
+        <item>@string/currency_59</item>
+        <item>@string/currency_60</item>
+        <item>@string/currency_61</item>
+        <item>@string/currency_62</item>
+        <item>@string/currency_63</item>
+        <item>@string/currency_64</item>
+        <item>@string/currency_65</item>
+        <item>@string/currency_66</item>
+        <item>@string/currency_67</item>
+        <item>@string/currency_68</item>
+        <item>@string/currency_69</item>
+        <item>@string/currency_70</item>
+        <item>@string/currency_71</item>
+        <item>@string/currency_72</item>
+        <item>@string/currency_73</item>
+        <item>@string/currency_74</item>
+        <item>@string/currency_75</item>
+        <item>@string/currency_76</item>
+        <item>@string/currency_77</item>
+        <item>@string/currency_78</item>
+        <item>@string/currency_79</item>
+        <item>@string/currency_80</item>
+        <item>@string/currency_81</item>
+        <item>@string/currency_82</item>
+        <item>@string/currency_83</item>
+        <item>@string/currency_84</item>
+        <item>@string/currency_85</item>
+        <item>@string/currency_86</item>
+        <item>@string/currency_87</item>
+        <item>@string/currency_88</item>
+        <item>@string/currency_89</item>
+        <item>@string/currency_90</item>
+        <item>@string/currency_91</item>
+        <item>@string/currency_92</item>
+        <item>@string/currency_93</item>
+        <item>@string/currency_94</item>
+        <item>@string/currency_95</item>
+        <item>@string/currency_96</item>
+        <item>@string/currency_97</item>
+        <item>@string/currency_98</item>
+        <item>@string/currency_99</item>
+        <item>@string/currency_100</item>
+        <item>@string/currency_101</item>
+        <item>@string/currency_102</item>
+        <item>@string/currency_103</item>
+        <item>@string/currency_104</item>
+        <item>@string/currency_105</item>
+        <item>@string/currency_106</item>
+        <item>@string/currency_107</item>
+        <item>@string/currency_108</item>
+        <item>@string/currency_109</item>
+        <item>@string/currency_110</item>
+        <item>@string/currency_111</item>
+        <item>@string/currency_112</item>
+        <item>@string/currency_113</item>
+        <item>@string/currency_114</item>
+        <item>@string/currency_115</item>
+        <item>@string/currency_116</item>
+        <item>@string/currency_117</item>
+        <item>@string/currency_118</item>
+        <item>@string/currency_119</item>
+        <item>@string/currency_120</item>
+        <item>@string/currency_121</item>
+        <item>@string/currency_122</item>
+        <item>@string/currency_123</item>
+        <item>@string/currency_124</item>
+        <item>@string/currency_125</item>
+        <item>@string/currency_126</item>
+        <item>@string/currency_127</item>
+        <item>@string/currency_128</item>
+        <item>@string/currency_129</item>
+        <item>@string/currency_130</item>
+        <item>@string/currency_131</item>
+        <item>@string/currency_132</item>
+        <item>@string/currency_133</item>
+        <item>@string/currency_134</item>
+        <item>@string/currency_135</item>
+        <item>@string/currency_136</item>
+        <item>@string/currency_137</item>
+        <item>@string/currency_138</item>
+        <item>@string/currency_139</item>
+        <item>@string/currency_140</item>
+        <item>@string/currency_141</item>
+        <item>@string/currency_142</item>
+        <item>@string/currency_143</item>
+        <item>@string/currency_144</item>
+        <item>@string/currency_145</item>
+        <item>@string/currency_146</item>
+        <item>@string/currency_147</item>
+        <item>@string/currency_148</item>
+        <item>@string/currency_149</item>
+        <item>@string/currency_150</item>
+        <item>@string/currency_151</item>
+        <item>@string/currency_152</item>
+        <item>@string/currency_153</item>
+        <item>@string/currency_154</item>
+        <item>@string/currency_155</item>
+        <item>@string/currency_156</item>
+        <item>@string/currency_157</item>
+        <item>@string/currency_158</item>
+        <item>@string/currency_159</item>
+        <item>@string/currency_160</item>
+        <item>@string/currency_161</item>
+        <item>@string/currency_162</item>
+        <item>@string/currency_163</item>
+        <item>@string/currency_164</item>
+        <item>@string/currency_165</item>
+        <item>@string/currency_166</item>
+        <item>@string/currency_167</item>
+        <item>@string/currency_168</item>
+        <item>@string/currency_169</item>
+        <item>@string/currency_170</item>
+        <item>@string/currency_171</item>
+        <item>@string/currency_172</item>
+        <item>@string/currency_173</item>
+        <item>@string/currency_174</item>
+        <item>@string/currency_175</item>
+        <item>@string/currency_176</item>
+        <item>@string/currency_177</item>
+        <item>@string/currency_178</item>
+        <item>@string/currency_179</item>
+        <item>@string/currency_180</item>
+        <item>@string/currency_181</item>
+        <item>@string/currency_182</item>
+        <item>@string/currency_183</item>
+        <item>@string/currency_184</item>
+        <item>@string/currency_185</item>
+        <item>@string/currency_186</item>
+        <item>@string/currency_187</item>
+        <item>@string/currency_188</item>
+        <item>@string/currency_189</item>
+        <item>@string/currency_190</item>
+        <item>@string/currency_191</item>
+        <item>@string/currency_192</item>
+        <item>@string/currency_193</item>
+        <item>@string/currency_194</item>
+        <item>@string/currency_195</item>
+        <item>@string/currency_196</item>
+        <item>@string/currency_197</item>
+        <item>@string/currency_198</item>
+        <item>@string/currency_199</item>
+        <item>@string/currency_200</item>
+        <item>@string/currency_201</item>
+        <item>@string/currency_202</item>
+        <item>@string/currency_203</item>
+        <item>@string/currency_204</item>
+        <item>@string/currency_205</item>
+        <item>@string/currency_206</item>
+        <item>@string/currency_207</item>
+        <item>@string/currency_208</item>
+        <item>@string/currency_209</item>
+        <item>@string/currency_210</item>
+        <item>@string/currency_211</item>
+        <item>@string/currency_212</item>
+        <item>@string/currency_213</item>
     </string-array>
 </resources>

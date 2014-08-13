@@ -59,6 +59,7 @@ public class MovementListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        MovementListRecyclerAdapter.updateMovementColors(mContext);
         mMovementsView.getAdapter().notifyDataSetChanged();
     }
 }
