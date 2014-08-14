@@ -18,7 +18,6 @@ import android.content.Context;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -182,7 +181,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
                 @Override
                 public void onEditTextClose(String text) {
-                    Log.d("debug", "onEditTextCloseListener");
                     if (!TextUtils.isEmpty(text)) {
                         int position;
                         AccountDataModel accountDataModel = items.get(position = getPosition());

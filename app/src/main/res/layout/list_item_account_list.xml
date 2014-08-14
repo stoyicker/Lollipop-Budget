@@ -29,5 +29,11 @@
         style="@style/AccountNameTextNonSelected"
         android:drawableStart="@drawable/ic_edit_non_selected"
         android:inputType="textNoSuggestions"
+        android:nextFocusDown="@android:id/content"
+        android:nextFocusForward="@android:id/content"
+        android:nextFocusLeft="@android:id/content"
+        android:nextFocusRight="@android:id/content"
+        android:nextFocusUp="@android:id/content"
+        android:imeActionLabel="@string/ok"
         android:hint="@string/account_name_edit_text_hint" />
 </android.support.v7.widget.CardView>

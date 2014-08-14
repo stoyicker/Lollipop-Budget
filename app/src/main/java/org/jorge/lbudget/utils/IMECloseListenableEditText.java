@@ -21,9 +21,10 @@ public class IMECloseListenableEditText extends EditText {
                 if (onEditTextCloseListener != null) {
                     onEditTextCloseListener.onEditTextClose(textView.getText().toString());
                 }
+                textView.clearFocus();
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(
                         Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(IMECloseListenableEditText.this.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
                 return Boolean.FALSE;
             }
         });
@@ -37,9 +38,10 @@ public class IMECloseListenableEditText extends EditText {
                 if (onEditTextCloseListener != null) {
                     onEditTextCloseListener.onEditTextClose(textView.getText().toString());
                 }
+                textView.clearFocus();
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(
                         Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(IMECloseListenableEditText.this.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
                 return Boolean.FALSE;
             }
         });
@@ -53,9 +55,10 @@ public class IMECloseListenableEditText extends EditText {
                 if (onEditTextCloseListener != null) {
                     onEditTextCloseListener.onEditTextClose(textView.getText().toString());
                 }
+                textView.clearFocus();
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(
                         Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(IMECloseListenableEditText.this.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(textView.getWindowToken(), 0);
                 return Boolean.FALSE;
             }
         });

@@ -71,6 +71,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         List<AccountListRecyclerAdapter.AccountDataModel> stubRet = new ArrayList<>();
         stubRet.add(new AccountListRecyclerAdapter.AccountDataModel(1 + "", "cuentanombre", Boolean.TRUE));
         stubRet.add(new AccountListRecyclerAdapter.AccountDataModel(2 + "", "cuentanoseleccionada", Boolean.FALSE));
+        stubRet.add(new AccountListRecyclerAdapter.AccountDataModel(3 + "", "terceracuenta", Boolean.FALSE));
         return stubRet;
     }
 
