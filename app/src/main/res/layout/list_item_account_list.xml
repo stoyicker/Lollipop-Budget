@@ -20,7 +20,7 @@
     android:background="@color/non_selected_card_background"
     android:layout_marginBottom="@dimen/movement_card_view_bottom_margin">
 
-    <EditText
+    <org.jorge.lbudget.utils.IMECloseListenableEditText
         android:id="@+id/account_name_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

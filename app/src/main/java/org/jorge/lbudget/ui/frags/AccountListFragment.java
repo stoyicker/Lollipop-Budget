@@ -26,20 +26,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.control.AccountManager;
+import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
 
 public class AccountListFragment extends Fragment {
 
     private RecyclerView mAccountsView;
     private Context mContext;
+    private AccountListRecyclerAdapter mAdapter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAccountsView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsView.setItemAnimator(new DefaultItemAnimator());
-        mAccountsView.setAdapter(new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsView));
+        mAccountsView.setAdapter(mAdapter = new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsView));
     }
 
     @Nullable
@@ -53,6 +54,6 @@ public class AccountListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mContext = getActivity().getApplicationContext();
+        mContext = activity.getApplicationContext();
     }
 }

@@ -17,6 +17,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,12 +26,12 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.control.AccountManager;
 import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
+import org.jorge.lbudget.utils.IMECloseListenableEditText;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
@@ -92,10 +94,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             viewHolder.wholeView.setBackgroundResource(R.color.selected_card_background);
             viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
             viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountNameTextSelected);
+            viewHolder.accountNameView.setFocusable(Boolean.FALSE);
+            viewHolder.accountNameView.setFocusableInTouchMode(Boolean.FALSE);
         } else {
             viewHolder.wholeView.setBackgroundResource(R.color.non_selected_card_background);
             viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
             viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountNameTextNonSelected);
+            viewHolder.accountNameView.setFocusable(Boolean.TRUE);
+            viewHolder.accountNameView.setFocusableInTouchMode(Boolean.TRUE);
         }
     }
 
@@ -105,7 +111,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final EditText accountNameView;
+        private final IMECloseListenableEditText accountNameView;
         private final View wholeView;
 
         public ViewHolder(View itemView) {
@@ -114,6 +120,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             View.OnTouchListener listener = new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
+                            Context.INPUT_METHOD_SERVICE);
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
@@ -156,13 +164,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                             } else {
                                 x = 0;
                                 mActivity.findViewById(android.R.id.content).requestFocus();
-                                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
-                                        Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                 setSelectedAccount(getPosition());
                                 return Boolean.TRUE;
                             }
                         case MotionEvent.ACTION_DOWN:
+                            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                             x = motionEvent.getX();
                             return Boolean.TRUE;
                     }
@@ -170,18 +177,39 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 }
             };
             wholeView.setOnTouchListener(listener);
-            accountNameView = (EditText) itemView.findViewById(R.id.account_name_view);
+            accountNameView = (IMECloseListenableEditText) itemView.findViewById(R.id.account_name_view);
+            accountNameView.setOnEditTextCloseListener(new IMECloseListenableEditText.OnEditTextCloseListener() {
+
+                @Override
+                public void onEditTextClose(String text) {
+                    Log.d("debug", "onEditTextCloseListener");
+                    if (!TextUtils.isEmpty(text)) {
+                        int position;
+                        AccountDataModel accountDataModel = items.get(position = getPosition());
+                        accountDataModel.setAccountName(text);
+                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountId(), text);
+                        notifyItemChanged(position);
+                    }
+                    mActivity.findViewById(android.R.id.content).requestFocus();
+                }
+            });
         }
     }
 
     public static class AccountDataModel {
-        private final String id, accountName;
+        private final String id;
+
+        private String accountName;
         private boolean selected;
 
         public AccountDataModel(String _id, String _accountName, Boolean _selected) {
             id = _id;
             accountName = _accountName;
             selected = _selected;
+        }
+
+        public void setAccountName(String accountName) {
+            this.accountName = accountName;
         }
 
         public String getAccountName() {

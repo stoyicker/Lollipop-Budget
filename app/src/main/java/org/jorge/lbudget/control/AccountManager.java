@@ -74,4 +74,8 @@ public class AccountManager {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(_context);
         return preferences.getString(LBudgetUtils.getString(_context, "pref_key_currency_code"), LBudgetUtils.getString(_context, "currency_172"));
     }
+
+    public void setAccountName(String id, String newName) {
+        //TODO Set name in the database
+    }
 }
