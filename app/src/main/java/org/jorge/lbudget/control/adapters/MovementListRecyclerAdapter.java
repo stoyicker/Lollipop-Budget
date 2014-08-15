@@ -50,6 +50,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final int itemLayout = R.layout.list_item_movement_list;
     private static int incomeColor, expenseColor;
     private Context mContext;
+    private static float x = Float.MAX_VALUE;
 
     public MovementListRecyclerAdapter(RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
         this.items = items;
@@ -160,14 +161,13 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             super(itemView);
             itemView.setOnClickListener(null); //Required for onTouchListener.
             itemView.setOnTouchListener(new View.OnTouchListener() {
-                private float x = 0;
 
                 @Override
                 public boolean onTouch(final View view, MotionEvent motionEvent) {
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
-                            if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
+                            if (x != Float.MAX_VALUE && Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
                                 final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
                                 fadeOut.setAnimationListener(new Animation.AnimationListener() {
                                     @Override
@@ -201,6 +201,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 });
                                 view.startAnimation(fadeOut);
                             } else {
+                                x = Float.MAX_VALUE; //Reset x
                                 //TODO onClick (Movement)
                             }
                             break;

@@ -44,7 +44,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private final List<AccountDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_account_list;
-    private static float x = 0;
+    private static float x = Float.MAX_VALUE;
 
     public AccountListRecyclerAdapter(Activity activity, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
         mActivity = activity;
@@ -161,7 +161,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                 }
                                 return Boolean.TRUE;
                             } else {
-                                x = 0;
+                                x = Float.MAX_VALUE; //Reset x
                                 mActivity.findViewById(android.R.id.content).requestFocus();
                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                                 setSelectedAccount(getPosition());
