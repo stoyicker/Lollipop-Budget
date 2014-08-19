@@ -184,6 +184,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                     if (!TextUtils.isEmpty(text)) {
                         int position;
                         AccountDataModel accountDataModel = items.get(position = getPosition());
+                        for (AccountDataModel acc : items) {
+                            if (acc.getAccountName().contentEquals(text)) {
+                                accountDataModel.setAccountName(accountDataModel.getAccountName());
+                                return;
+                            }
+                        }
                         accountDataModel.setAccountName(text);
                         AccountManager.getInstance().setAccountName(accountDataModel.getAccountId(), text);
                         notifyItemChanged(position);

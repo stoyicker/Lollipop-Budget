@@ -17,6 +17,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+import org.jorge.lbudget.control.AccountManager;
 import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.control.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.utils.LBudgetUtils;
@@ -88,5 +89,9 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     public static Boolean setSelectedAccount(AccountListRecyclerAdapter.AccountDataModel account) {
         //TODO setSelectedAccount
         return Boolean.TRUE;
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
     }
 }
