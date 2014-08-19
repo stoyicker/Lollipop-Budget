@@ -33,6 +33,7 @@ import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.control.AccountManager;
+import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -177,18 +178,23 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         view.setVisibility(View.GONE);
-                                        final MovementDataModel movement = remove(getPosition());
+                                        int pos;
+                                        final MovementDataModel movement = items.remove(pos = getPosition());
+                                        notifyItemRemoved(pos);
                                         new UndoBar.Builder(mActivity)
                                                 .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
                                                 .setListener(new UndoBar.Listener() {
                                                     @Override
                                                     public void onHide() {
+                                                        //TODO Remove movement from db
+                                                        LBackupAgent.requestBackup(mContext);
                                                     }
 
                                                     @Override
                                                     public void onUndo(Parcelable token) {
                                                         int pos;
-                                                        add(movement, pos = getPosition());
+                                                        items.add(pos = getPosition(), movement);
+                                                        notifyItemInserted(pos);
                                                         mRecyclerView.smoothScrollToPosition(pos);
                                                     }
                                                 })

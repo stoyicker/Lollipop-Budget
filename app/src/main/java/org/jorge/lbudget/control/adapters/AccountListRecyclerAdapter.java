@@ -135,18 +135,23 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                         @Override
                                         public void onAnimationEnd(Animation animation) {
                                             wholeView.setVisibility(View.GONE);
-                                            final AccountDataModel movement = remove(getPosition());
+                                            int pos;
+                                            final AccountDataModel movement = items.remove(pos = getPosition());
+                                            notifyItemRemoved(pos);
                                             new UndoBar.Builder(mActivity)
                                                     .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
                                                     .setListener(new UndoBar.Listener() {
                                                         @Override
                                                         public void onHide() {
+                                                            AccountManager.getInstance().removeAccount(movement);
+                                                            LBackupAgent.requestBackup(mContext);
                                                         }
 
                                                         @Override
                                                         public void onUndo(Parcelable token) {
                                                             int pos;
-                                                            add(movement, pos = getPosition());
+                                                            items.add(pos = getPosition(), movement);
+                                                            notifyItemInserted(pos);
                                                             mRecyclerView.smoothScrollToPosition(pos);
                                                         }
                                                     })
