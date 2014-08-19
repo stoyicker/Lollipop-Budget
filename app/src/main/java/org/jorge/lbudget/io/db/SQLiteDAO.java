@@ -21,6 +21,7 @@ import android.database.sqlite.SQLiteException;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.control.adapters.MovementListRecyclerAdapter;
+import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.ArrayList;
@@ -121,6 +122,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.setTransactionSuccessful();
             db.endTransaction();
         }
+        LBackupAgent.requestBackup(mContext);
     }
 
     private ContentValues mapAccountToStorable(AccountListRecyclerAdapter.AccountDataModel account) {
