@@ -105,10 +105,10 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         final String textMime = "text/plain", fullMimes = textMime + "image/*";
-        final boolean hasPicture, isIncome = item.getAmount() >= 0;
+        final boolean hasPicture, isIncome = item.getMovementAmount() >= 0;
         intent.setType((hasPicture = movementHasPicture(item)) ? fullMimes : textMime);
-        intent.putExtra(Intent.EXTRA_TITLE, item.getTitle());
-        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyMoneyAmount(mContext, item.getAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
+        intent.putExtra(Intent.EXTRA_TITLE, item.getMovementTitle());
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyMoneyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
         if (hasPicture) {
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath())));
         }
@@ -131,8 +131,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         MovementDataModel item = items.get(i);
-        viewHolder.movementNameView.setText(item.getTitle());
-        long amount = item.getAmount();
+        viewHolder.movementNameView.setText(item.getMovementTitle());
+        long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(MovementDataModel.printifyMoneyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
         if (movementHasPicture(item)) {
@@ -143,7 +143,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     private boolean movementHasPicture(MovementDataModel item) {
         final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
-        File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
+        File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getMovementId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
         return target.exists();
     }
 
@@ -232,15 +232,15 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             return bigDecimal.toPlainString();
         }
 
-        public long getAmount() {
+        public long getMovementAmount() {
             return amount;
         }
 
-        public String getTitle() {
+        public String getMovementTitle() {
             return title;
         }
 
-        public int getId() {
+        public int getMovementId() {
             return id;
         }
 

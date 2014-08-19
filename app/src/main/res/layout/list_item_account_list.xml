@@ -34,6 +34,6 @@
         android:nextFocusLeft="@android:id/content"
         android:nextFocusRight="@android:id/content"
         android:nextFocusUp="@android:id/content"
-        android:imeActionLabel="@string/ok"
+        android:imeActionLabel="@android:string/ok"
         android:hint="@string/account_name_edit_text_hint" />
 </android.support.v7.widget.CardView>

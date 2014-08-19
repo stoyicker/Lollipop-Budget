@@ -34,4 +34,5 @@
     <string name="pref_title_currency_code">Currency</string>
     <string name="preferences_title_general">GENERAL</string>
     <string name="account_name_edit_text_hint">Account name</string>
+    <string name="default_account_name">Default account</string>
 </resources>

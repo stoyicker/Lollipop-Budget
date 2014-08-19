@@ -25,7 +25,6 @@
     <string name="movement_color_red_identifier">red</string>
     <string name="movement_color_green_identifier">green</string>
     <string name="movement_color_blue_identifier">blue</string>
-    <string name="default_account_id">1</string>
     <string name="currency_0">ADP</string>
     <string name="currency_1">AED</string>
     <string name="currency_2">AFA</string>
@@ -240,5 +239,12 @@
     <string name="currency_211">ZWD</string>
     <string name="currency_212">ZWN</string>
     <string name="currency_213">ZWR</string>
-    <string name="ok">Ok</string>
+    <string name="accounts_table_name">ACCOUNTS</string>
+    <string name="account_key_id">ACCOUNT_ID</string>
+    <string name="account_key_name">ACCOUNT_NAME</string>
+    <string name="account_key_selected">ACCOUNT_SELECTED</string>
+    <string name="movement_key_id">MOVEMENT_ID</string>
+    <string name="movement_key_title">MOVEMENT_TITLE</string>
+    <string name="movement_key_amount">MOVEMENT_AMOUNT</string>
+    <string name="account_table_name_prefix">ACCOUNT_</string>
 </resources>

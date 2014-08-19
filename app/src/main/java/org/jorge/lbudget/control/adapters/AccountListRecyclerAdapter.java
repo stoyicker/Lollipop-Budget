@@ -191,7 +191,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                             }
                         }
                         accountDataModel.setAccountName(text);
-                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountId(), text);
+                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountName(), text);
                         notifyItemChanged(position);
                     }
                     mActivity.findViewById(android.R.id.content).requestFocus();
@@ -201,12 +201,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public static class AccountDataModel {
-        private final String id;
+        private final int id;
 
         private String accountName;
         private boolean selected;
 
-        public AccountDataModel(String _id, String _accountName, Boolean _selected) {
+        public AccountDataModel(int _id, String _accountName, Boolean _selected) {
             id = _id;
             accountName = _accountName;
             selected = _selected;
@@ -220,13 +220,13 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             return accountName;
         }
 
-        public String getAccountId() {
+        public int getAccountId() {
             return id;
         }
 
         @Override
         public int hashCode() {
-            return Integer.valueOf(getAccountId());
+            return getAccountId();
         }
 
         @Override
