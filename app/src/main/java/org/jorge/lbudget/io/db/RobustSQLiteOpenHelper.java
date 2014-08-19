@@ -29,7 +29,6 @@ import java.util.List;
 
 public abstract class RobustSQLiteOpenHelper extends SQLiteOpenHelper {
     private static List<String> mTableNames = new LinkedList<>();
-    private static List<String> mIndexNames = new LinkedList<>();
 
     public RobustSQLiteOpenHelper(Context context, String name,
                                   CursorFactory factory, int version) {
@@ -38,10 +37,6 @@ public abstract class RobustSQLiteOpenHelper extends SQLiteOpenHelper {
 
     protected static void addTableName(String tableName) {
         mTableNames.add(tableName);
-    }
-
-    protected static void addIndexName(String indexName) {
-        mIndexNames.add(indexName);
     }
 
     @Override
@@ -107,8 +102,6 @@ public abstract class RobustSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     private void dropAllTablesWithPrefix(SQLiteDatabase db, String prefix) {
-        for (String indexName : mIndexNames)
-            db.execSQL("DROP INDEX IF EXISTS " + prefix + indexName);
         for (String tableName : mTableNames)
             db.execSQL("DROP TABLE IF EXISTS " + prefix + tableName);
     }
