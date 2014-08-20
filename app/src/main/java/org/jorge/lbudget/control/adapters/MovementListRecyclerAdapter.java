@@ -107,11 +107,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         final String textMime = "text/plain", fullMimes = textMime + "image/*";
         final boolean hasPicture, isIncome = item.getMovementAmount() >= 0;
-        intent.setType((hasPicture = movementHasPicture(item)) ? fullMimes : textMime);
+        intent.setType((hasPicture = new File(item.getImagePath(mContext)).exists()) ? fullMimes : textMime);
         intent.putExtra(Intent.EXTRA_TITLE, item.getMovementTitle());
-        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyMoneyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
         if (hasPicture) {
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath())));
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath(mContext))));
         }
 
         mActivity.startActivity(Intent.createChooser(intent, LBudgetUtils.getString(mContext, "share_dialog_title")));
@@ -135,17 +135,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getMovementTitle());
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
-        viewHolder.movementAmountView.setText(MovementDataModel.printifyMoneyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
-        if (movementHasPicture(item)) {
-            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(item.getImagePath()));
+        viewHolder.movementAmountView.setText(MovementDataModel.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        final String imagePath;
+        if (new File(imagePath = item.getImagePath(mContext)).exists()) {
+            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(imagePath));
             viewHolder.movementImageView.setVisibility(View.VISIBLE);
         }
-    }
-
-    private boolean movementHasPicture(MovementDataModel item) {
-        final String fileSeparator = LBudgetUtils.getString(mContext, "symbol_file_separator");
-        File target = new File(mContext.getExternalFilesDir(LBudgetUtils.getString(mContext, "picture_folder_name")) + fileSeparator + item.getMovementId() + LBudgetUtils.getString(mContext, "camera_image_extension"));
-        return target.exists();
     }
 
     @Override
@@ -230,7 +225,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         private final String title;
         private final long amount;
 
-        public static String printifyMoneyAmount(Context context, long amount) {
+        public static String printifyAmount(Context context, long amount) {
             final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
             double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
             BigDecimal bigDecimal = new BigDecimal(val);
@@ -256,9 +251,14 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             this.amount = amount;
         }
 
-        public String getImagePath() {
-            //TODO getImagePath
-            return null;
+        public String getImagePath(Context _context) {
+            final String fileSeparator = LBudgetUtils.getString(_context, "symbol_file_separator");
+            File target = new File(_context.getExternalFilesDir(LBudgetUtils.getString(_context, "picture_folder_name")) + fileSeparator + getMovementId() + LBudgetUtils.getString(_context, "camera_image_extension"));
+            return target.getAbsolutePath();
         }
     }
 }
+
+//TODO (Could be anywhere) MovementManager
+//TODO (Could be anywhere) Edit the layout, model and db as necessary to include the movement date
+//TODO (Could be anywhere) Use Picasso to load the movement image
