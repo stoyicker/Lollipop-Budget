@@ -18,7 +18,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.jorge.lbudget.control.AccountManager;
+import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.utils.LBudgetUtils;

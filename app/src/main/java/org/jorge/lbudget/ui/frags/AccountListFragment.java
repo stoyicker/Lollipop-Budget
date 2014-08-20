@@ -26,8 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.control.AccountManager;
-import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
+import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 
 public class AccountListFragment extends Fragment {
 

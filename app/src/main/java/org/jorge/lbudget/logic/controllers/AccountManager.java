@@ -11,13 +11,13 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.control;
+package org.jorge.lbudget.logic.controllers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import org.jorge.lbudget.control.adapters.AccountListRecyclerAdapter;
+import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -39,7 +39,7 @@ public class AccountManager {
     }
 
     public void setup() {
-        mAccountList = SQLiteDAO.getAccounts();
+        mAccountList = SQLiteDAO.getInstance().getAccounts();
     }
 
     public List<AccountListRecyclerAdapter.AccountDataModel> getAccounts() {
@@ -47,7 +47,7 @@ public class AccountManager {
     }
 
     public Boolean addAccount(AccountListRecyclerAdapter.AccountDataModel account) {
-        Boolean ret = SQLiteDAO.addAccount(account) && !mAccountList.contains(account);
+        Boolean ret = SQLiteDAO.getInstance().addAccount(account) && !mAccountList.contains(account);
         if (!mAccountList.contains(account)) {
             mAccountList.add(account);
         }
@@ -55,11 +55,11 @@ public class AccountManager {
     }
 
     public Boolean removeAccount(AccountListRecyclerAdapter.AccountDataModel account) {
-        return SQLiteDAO.removeAccount(account) && mAccountList.remove(account);
+        return SQLiteDAO.getInstance().removeAccount(account) && mAccountList.remove(account);
     }
 
     public Boolean setSelectedAccount(AccountListRecyclerAdapter.AccountDataModel newSelectedAccount) {
-        return SQLiteDAO.setSelectedAccount(newSelectedAccount);
+        return SQLiteDAO.getInstance().setSelectedAccount(newSelectedAccount);
     }
 
     public AccountListRecyclerAdapter.AccountDataModel getSelectedAccount() {
@@ -76,6 +76,6 @@ public class AccountManager {
     }
 
     public void setAccountName(String id, String newName) {
-        //TODO Set name in the database
+        SQLiteDAO.getInstance().setAccountName(id, newName);
     }
 }

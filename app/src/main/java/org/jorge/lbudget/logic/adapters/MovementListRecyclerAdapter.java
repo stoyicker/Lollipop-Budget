@@ -11,7 +11,7 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.control.adapters;
+package org.jorge.lbudget.logic.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -32,7 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.control.AccountManager;
+import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;

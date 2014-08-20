@@ -39,6 +39,10 @@ public abstract class RobustSQLiteOpenHelper extends SQLiteOpenHelper {
         mTableNames.add(tableName);
     }
 
+    protected static void removeTableName(String tableName) {
+        mTableNames.remove(tableName);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         dropAllTables(db);
