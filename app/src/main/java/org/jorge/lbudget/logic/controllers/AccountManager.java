@@ -16,6 +16,7 @@ package org.jorge.lbudget.logic.controllers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;

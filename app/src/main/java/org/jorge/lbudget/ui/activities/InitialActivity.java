@@ -18,9 +18,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.io.files.FileManager;
+import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
@@ -33,6 +34,7 @@ public class InitialActivity extends Activity {
         SQLiteDAO.setup(appContext);
         flushCacheIfNecessary(appContext);
         AccountManager.getInstance().setup();
+        MovementManager.getInstance().setup();
         Intent intent = new Intent(appContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         finishAfterTransition();

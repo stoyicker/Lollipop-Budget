@@ -19,6 +19,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.net.LBackupAgent;
@@ -35,7 +36,7 @@ import java.util.concurrent.Executors;
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     public static final Object[] DB_LOCK = new Object[0];
-    private final String ACCOUNTS_TABLE_NAME, ACCOUNT_KEY_ID, ACCOUNT_KEY_NAME, ACCOUNT_KEY_SELECTED, MOVEMENT_KEY_ID, MOVEMENT_KEY_TITLE, MOVEMENT_KEY_AMOUNT, MOVEMENT_KEY_EPOCH;
+    private final String ACCOUNTS_TABLE_NAME, ACCOUNT_KEY_ID, ACCOUNT_KEY_NAME, ACCOUNT_KEY_SELECTED, MOVEMENT_KEY_ID, MOVEMENT_KEY_TITLE, MOVEMENT_KEY_AMOUNT, MOVEMENT_KEY_EPOCH, ONE_AND_ONLY_ONE_SELECTED_TRIGGER_INSERT_NAME, ONE_AND_ONLY_ONE_SELECTED_TRIGGER_UPDATE_NAME;
     private static Context mContext;
     private static SQLiteDAO singleton;
     private static Executor BACKGROUND_OPS_EXECUTOR = Executors.newSingleThreadExecutor();
@@ -51,6 +52,8 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         MOVEMENT_KEY_TITLE = LBudgetUtils.getString(mContext, "movement_key_title");
         MOVEMENT_KEY_AMOUNT = LBudgetUtils.getString(mContext, "movement_key_amount");
         MOVEMENT_KEY_EPOCH = LBudgetUtils.getString(mContext, "movement_key_epoch");
+        ONE_AND_ONLY_ONE_SELECTED_TRIGGER_INSERT_NAME = LBudgetUtils.getString(mContext, "one_and_only_one_selected_account_trigger_insert_name");
+        ONE_AND_ONLY_ONE_SELECTED_TRIGGER_UPDATE_NAME = LBudgetUtils.getString(mContext, "one_and_only_one_selected_account_trigger_update_name");
     }
 
     @Override
@@ -236,16 +239,33 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("debug", "onCreate");
         super.onCreate(db);
+        final String createAccTableCmd = ("CREATE TABLE IF NOT EXISTS " + ACCOUNTS_TABLE_NAME + " ( " +
+                ACCOUNT_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
+                ACCOUNT_KEY_NAME + " TEXT UNIQUE ON CONFLICT IGNORE NOT NULL ON CONFLICT IGNORE, " +
+                ACCOUNT_KEY_SELECTED + " INTEGER NOT NULL ON CONFLICT IGNORE, " + //THIS IS IN MILLISECONDS
+                "CHECK (" + ACCOUNT_KEY_SELECTED + " = 0 OR " + ACCOUNT_KEY_SELECTED + " = 1) ON CONFLICT IGNORE" +
+                " ) ");
+        final String oneAndOnlyOneSelectedAccInsertTriggerCmd = "CREATE TRIGGER " + ONE_AND_ONLY_ONE_SELECTED_TRIGGER_INSERT_NAME + " " +
+                "AFTER INSERT ON " + ACCOUNTS_TABLE_NAME + " " +
+                "FOR EACH ROW " +
+                "BEGIN " +
+                "DELETE FROM " + ACCOUNTS_TABLE_NAME + " WHERE " + ACCOUNT_KEY_ID + " = NEW." + ACCOUNT_KEY_ID + "; " +
+                "END";
+        final String oneAndOnlyOneSelectedUpdateTriggerCmd = "CREATE TRIGGER " + ONE_AND_ONLY_ONE_SELECTED_TRIGGER_UPDATE_NAME + " " +
+                "AFTER UPDATE ON " + ACCOUNTS_TABLE_NAME + " " +
+                "FOR EACH ROW " +
+                "WHEN (SELECT(SUM(" + ACCOUNT_KEY_ID + ")) <> 1) " +
+                "BEGIN " +
+                "UPDATE " + ACCOUNTS_TABLE_NAME + " SET " + ACCOUNT_KEY_SELECTED + " = 0; " +
+                "UPDATE " + ACCOUNTS_TABLE_NAME + " SET " + ACCOUNT_KEY_SELECTED + " = 1 WHERE " + ACCOUNT_KEY_ID + " = NEW." + ACCOUNT_KEY_ID + "; " +
+                "END";
         synchronized (DB_LOCK) {
             db.beginTransaction();
-            final String createAccTableCmd = ("CREATE TABLE IF NOT EXISTS " + ACCOUNTS_TABLE_NAME + " ( " +
-                    ACCOUNT_KEY_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE ASC AUTOINCREMENT, " +
-                    ACCOUNT_KEY_NAME + " TEXT UNIQUE ON CONFLICT IGNORE NOT NULL ON CONFLICT IGNORE, " +
-                    ACCOUNT_KEY_SELECTED + " INTEGER NOT NULL ON CONFLICT IGNORE " + //THIS IS IN MILLISECONDS
-                    "CHECK ((" + ACCOUNT_KEY_SELECTED + " = 0 OR " + ACCOUNT_KEY_SELECTED + " = 1) AND (SELECT SUM(" + ACCOUNT_KEY_SELECTED + ") = 1)) ON CONFLICT IGNORE" +
-                    " ) ");
             db.execSQL(createAccTableCmd);
+            db.execSQL(oneAndOnlyOneSelectedAccInsertTriggerCmd);
+            db.execSQL(oneAndOnlyOneSelectedUpdateTriggerCmd);
             addTableName(ACCOUNTS_TABLE_NAME);
             AccountListRecyclerAdapter.AccountDataModel defaultAccDataModel;
             ContentValues defaultAcc = mapAccountToStorable(defaultAccDataModel = new AccountListRecyclerAdapter.AccountDataModel(LBudgetUtils.getInt(mContext, "default_account_id"), LBudgetUtils.getString(mContext, "default_account_name"), mContext.getResources().getBoolean(R.bool.default_account_selected)));
@@ -291,10 +311,10 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     private void createAccountTable(SQLiteDatabase db, int accountId) {
         final String accountTableName = LBudgetUtils.getString(mContext, "account_table_name_prefix") + accountId;
         final String createAccMovTableCmd = ("CREATE TABLE IF NOT EXISTS " + accountTableName + " ( " +
-                MOVEMENT_KEY_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE ASC AUTOINCREMENT, " +
+                MOVEMENT_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
                 MOVEMENT_KEY_TITLE + " TEXT, " +
-                MOVEMENT_KEY_AMOUNT + " INTEGER NOT NULL ON CONFLICT IGNORE " +
-                MOVEMENT_KEY_EPOCH + " INTEGER NOT NULL ON CONFLICT IGNORE " +
+                MOVEMENT_KEY_AMOUNT + " INTEGER NOT NULL ON CONFLICT IGNORE, " +
+                MOVEMENT_KEY_EPOCH + " INTEGER NOT NULL ON CONFLICT IGNORE, " +
                 "CHECK ((" + MOVEMENT_KEY_AMOUNT + " <> 0) AND ( " + MOVEMENT_KEY_EPOCH + " > 0)) ON CONFLICT IGNORE" +
                 " ) ");
         db.execSQL(createAccMovTableCmd);
