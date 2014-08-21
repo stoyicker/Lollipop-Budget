@@ -26,13 +26,14 @@
     <string name="pref_title_movement_expense_color">Expense color</string>
     <string name="action_share">Share</string>
     <string name="share_dialog_title">Share to…</string>
-    <string name="share_text_expense">Spent {MONEYPLACEHOLDER} </string>
+    <string name="share_text_income"><![CDATA[Got {MONEYPLACEHOLDER} ]]></string>
+    <string name="share_text_expense"><![CDATA[Spent {MONEYPLACEHOLDER} ]]></string>
     <string name="undo_bar_undo_uppercase">UNDO</string>
     <string name="movement_list_item_removal">Item removed</string>
-    <string name="share_text_income">Got {MONEYPLACEHOLDER} </string>
     <string name="item_edit">Edit</string>
     <string name="pref_title_currency_code">Currency</string>
     <string name="preferences_title_general">GENERAL</string>
     <string name="account_name_edit_text_hint">Account name</string>
     <string name="default_account_name">Default account</string>
+    <string name="one_and_only_one_selected_account_trigger_name">ONE_AND_ONLY_ONE_ACCOUNT_SELECTED_TRIGGER</string>
 </resources>

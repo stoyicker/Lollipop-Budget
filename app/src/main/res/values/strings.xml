@@ -25,6 +25,7 @@
     <string name="movement_color_red_identifier">red</string>
     <string name="movement_color_green_identifier">green</string>
     <string name="movement_color_blue_identifier">blue</string>
+    <string name="amount_placeholder">{MONEYPLACEHOLDER}</string>
     <string name="currency_0">ADP</string>
     <string name="currency_1">AED</string>
     <string name="currency_2">AFA</string>

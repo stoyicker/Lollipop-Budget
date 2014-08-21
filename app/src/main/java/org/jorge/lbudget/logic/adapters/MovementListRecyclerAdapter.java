@@ -115,7 +115,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         final boolean hasPicture, isIncome = item.getMovementAmount() >= 0;
         intent.setType((hasPicture = new File(item.getImagePath(mContext)).exists()) ? fullMimes : textMime);
         intent.putExtra(Intent.EXTRA_TITLE, item.getMovementTitle());
-        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace("{MONEYPLACEHOLDER}", MovementDataModel.printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace(LBudgetUtils.getString(mContext, "amount_placeholder"), MovementDataModel.printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
         if (hasPicture) {
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath(mContext))));
         }
