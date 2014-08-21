@@ -17,8 +17,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;

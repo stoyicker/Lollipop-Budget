@@ -32,8 +32,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.io.net.LBackupAgent;
+import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -89,16 +90,21 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         return context.getResources().getColor(retId);
     }
 
+    @SuppressWarnings("unused")
+    //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public void add(MovementDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
-        //TODO Add movement to db
+        MovementManager.getInstance().addMovement(item);
+        LBackupAgent.requestBackup(mContext);
     }
 
+    @SuppressWarnings("unused")
+    //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public MovementDataModel remove(int position) {
         MovementDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        //TODO Remove movement from db
+        removeMovementFromManager(ret);
         return ret;
     }
 
@@ -143,6 +149,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
     }
 
+    private void removeMovementFromManager(MovementDataModel movement) {
+        MovementManager.getInstance().removeMovement(movement);
+        LBackupAgent.requestBackup(mContext);
+    }
+
     @Override
     public int getItemCount() {
         return items.size();
@@ -181,8 +192,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                 .setListener(new UndoBar.Listener() {
                                                     @Override
                                                     public void onHide() {
-                                                        //TODO Remove movement from db
-                                                        LBackupAgent.requestBackup(mContext);
+                                                        removeMovementFromManager(movement);
                                                     }
 
                                                     @Override
@@ -203,7 +213,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 view.startAnimation(fadeOut);
                             } else {
                                 x = Float.MAX_VALUE; //Reset x
-                                //TODO onClick (Movement)
+                                //TODO onClick (Movement: Edit it) (Image: View in a modal dialog)
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:
@@ -222,8 +232,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     public static class MovementDataModel {
         private final int id; //The id will be used to find the image
-        private final String title;
-        private final long amount;
+        private String title;
+        private long amount, epoch;
 
         public static String printifyAmount(Context context, long amount) {
             final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
@@ -245,16 +255,21 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             return id;
         }
 
-        public MovementDataModel(int id, String info, long amount) {
+        public MovementDataModel(int id, String info, long amount, long epoch) {
             this.id = id;
             this.title = info;
             this.amount = amount;
+            this.epoch = epoch;
         }
 
         public String getImagePath(Context _context) {
             final String fileSeparator = LBudgetUtils.getString(_context, "symbol_file_separator");
             File target = new File(_context.getExternalFilesDir(LBudgetUtils.getString(_context, "picture_folder_name")) + fileSeparator + getMovementId() + LBudgetUtils.getString(_context, "camera_image_extension"));
             return target.getAbsolutePath();
+        }
+
+        public long getEpoch() {
+            return epoch;
         }
     }
 }

@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
-import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.logic.controllers.MovementManager;
 
 public class MovementListFragment extends Fragment {
 
@@ -38,7 +38,7 @@ public class MovementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mMovementsView, getActivity(), SQLiteDAO.getInstance().loadAccountMovements()));
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
     }
 
     @Override

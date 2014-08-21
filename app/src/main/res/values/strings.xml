@@ -246,5 +246,6 @@
     <string name="movement_key_id">MOVEMENT_ID</string>
     <string name="movement_key_title">MOVEMENT_TITLE</string>
     <string name="movement_key_amount">MOVEMENT_AMOUNT</string>
+    <string name="movement_key_epoch">MOVEMENT_EPOCH</string>
     <string name="account_table_name_prefix">ACCOUNT_</string>
 </resources>

@@ -29,14 +29,13 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     public static final Object[] DB_LOCK = new Object[0];
-    private final String ACCOUNTS_TABLE_NAME, ACCOUNT_KEY_ID, ACCOUNT_KEY_NAME, ACCOUNT_KEY_SELECTED, MOVEMENT_KEY_ID, MOVEMENT_KEY_TITLE, MOVEMENT_KEY_AMOUNT;
+    private final String ACCOUNTS_TABLE_NAME, ACCOUNT_KEY_ID, ACCOUNT_KEY_NAME, ACCOUNT_KEY_SELECTED, MOVEMENT_KEY_ID, MOVEMENT_KEY_TITLE, MOVEMENT_KEY_AMOUNT, MOVEMENT_KEY_EPOCH;
     private static Context mContext;
     private static SQLiteDAO singleton;
     private static Executor BACKGROUND_OPS_EXECUTOR = Executors.newSingleThreadExecutor();
@@ -44,13 +43,14 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     private SQLiteDAO(Context _context) {
         super(_context, LBudgetUtils.getString(_context, "db_name"), null, LBudgetUtils.getInt(_context, "db_version"));
         mContext = _context;
-        ACCOUNTS_TABLE_NAME = LBudgetUtils.getString(mContext, "accounts_table_name").toUpperCase(Locale.ENGLISH);
+        ACCOUNTS_TABLE_NAME = LBudgetUtils.getString(mContext, "accounts_table_name");
         ACCOUNT_KEY_ID = LBudgetUtils.getString(mContext, "account_key_id");
         ACCOUNT_KEY_NAME = LBudgetUtils.getString(mContext, "account_key_name");
         ACCOUNT_KEY_SELECTED = LBudgetUtils.getString(mContext, "account_key_selected");
         MOVEMENT_KEY_ID = LBudgetUtils.getString(mContext, "movement_key_id");
         MOVEMENT_KEY_TITLE = LBudgetUtils.getString(mContext, "movement_key_title");
         MOVEMENT_KEY_AMOUNT = LBudgetUtils.getString(mContext, "movement_key_amount");
+        MOVEMENT_KEY_EPOCH = LBudgetUtils.getString(mContext, "movement_key_epoch");
     }
 
     @Override
@@ -95,29 +95,39 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         return ret;
     }
 
-    public List<MovementListRecyclerAdapter.MovementDataModel> loadAccountMovements() {
+
+    /**
+     * Retrieves the movements of the selected account only before the instant the query to the database is performed.
+     *
+     * @return The requested movements.
+     */
+    public List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountMovementsToDate() {
         List<MovementListRecyclerAdapter.MovementDataModel> ret;
         SQLiteDatabase db = getReadableDatabase();
-        final String selectedAccMovTableName = LBudgetUtils.getString(mContext, "account_table_name_prefix") + AccountManager.getInstance().getSelectedAccount().getAccountId();
+        final String selectedAccMovTableName = generateSelectedAccountTableName();
         synchronized (DB_LOCK) {
             db.beginTransaction();
-            Cursor accMovements = db.query(selectedAccMovTableName, null, null, null, null, null, MOVEMENT_KEY_ID + " ASC");
+            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " > " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " ASC");
             ret = new ArrayList<>();
-            if (accMovements != null && accMovements.getCount() > 0) {
-                if (accMovements.moveToFirst()) {
+            if (allMovements != null && allMovements.getCount() > 0) {
+                if (allMovements.moveToFirst()) {
                     do {
-                        ret.add(mapStorableToMovement(accMovements));
-                        accMovements.moveToNext();
-                    } while (accMovements.isLast());
+                        ret.add(mapStorableToMovement(allMovements));
+                        allMovements.moveToNext();
+                    } while (allMovements.isLast());
                 }
             }
-            if (accMovements != null)
-                accMovements.close();
+            if (allMovements != null)
+                allMovements.close();
             db.setTransactionSuccessful();
             db.endTransaction();
         }
 
         return ret;
+    }
+
+    private String generateSelectedAccountTableName() {
+        return LBudgetUtils.getString(mContext, "account_table_name_prefix") + AccountManager.getInstance().getSelectedAccount().getAccountId();
     }
 
     public Boolean addAccount(final AccountListRecyclerAdapter.AccountDataModel account) {
@@ -140,6 +150,26 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         return Boolean.TRUE;
     }
 
+    public Boolean addMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
+        new AsyncTask<MovementListRecyclerAdapter.MovementDataModel, Void, Void>() {
+            @Override
+            protected Void doInBackground(MovementListRecyclerAdapter.MovementDataModel... movements) {
+                if (movements[0] == null)
+                    throw new IllegalArgumentException("A null movement cannot be added to the database.");
+                SQLiteDatabase db = getWritableDatabase();
+                final String selectedAccMovTableName = generateSelectedAccountTableName();
+                synchronized (DB_LOCK) {
+                    db.beginTransaction();
+                    db.insert(selectedAccMovTableName, null, mapMovementToStorable(movements[0]));
+                    db.setTransactionSuccessful();
+                    db.endTransaction();
+                }
+                return null;
+            }
+        }.executeOnExecutor(BACKGROUND_OPS_EXECUTOR, movement);
+        return Boolean.TRUE;
+    }
+
     public Boolean removeAccount(AccountListRecyclerAdapter.AccountDataModel account) {
         new AsyncTask<AccountListRecyclerAdapter.AccountDataModel, Void, Void>() {
             @Override
@@ -150,13 +180,34 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                 synchronized (DB_LOCK) {
                     db.beginTransaction();
                     db.delete(ACCOUNTS_TABLE_NAME, ACCOUNT_KEY_ID + " = " + accounts[0].getAccountId(), null);
-                    deleteAccountTable(getWritableDatabase(), accounts[0].getAccountId());
+                    deleteAccountTable(db, accounts[0].getAccountId());
                     db.setTransactionSuccessful();
                     db.endTransaction();
                 }
                 return null;
             }
         }.executeOnExecutor(BACKGROUND_OPS_EXECUTOR, account);
+        return Boolean.TRUE;
+    }
+
+    public Boolean removeMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
+        new AsyncTask<MovementListRecyclerAdapter.MovementDataModel, Void, Void>() {
+            @Override
+            protected Void doInBackground(MovementListRecyclerAdapter.MovementDataModel... movements) {
+                if (movements[0] == null)
+                    throw new IllegalArgumentException("A null movement cannot be removed from the database.");
+                SQLiteDatabase db = getWritableDatabase();
+                final String selectedAccMovTableName = generateSelectedAccountTableName();
+                synchronized (DB_LOCK) {
+                    db.beginTransaction();
+                    db.delete(selectedAccMovTableName, MOVEMENT_KEY_ID + " = " + movements[0].getMovementId(), null);
+                    deleteAccountTable(db, movements[0].getMovementId());
+                    db.setTransactionSuccessful();
+                    db.endTransaction();
+                }
+                return null;
+            }
+        }.executeOnExecutor(BACKGROUND_OPS_EXECUTOR, movement);
         return Boolean.TRUE;
     }
 
@@ -191,9 +242,9 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             final String createAccTableCmd = ("CREATE TABLE IF NOT EXISTS " + ACCOUNTS_TABLE_NAME + " ( " +
                     ACCOUNT_KEY_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE ASC AUTOINCREMENT, " +
                     ACCOUNT_KEY_NAME + " TEXT UNIQUE ON CONFLICT IGNORE NOT NULL ON CONFLICT IGNORE, " +
-                    ACCOUNT_KEY_SELECTED + " INTEGER NOT NULL ON CONFLICT IGNORE " +
+                    ACCOUNT_KEY_SELECTED + " INTEGER NOT NULL ON CONFLICT IGNORE " + //THIS IS IN MILLISECONDS
                     "CHECK ((" + ACCOUNT_KEY_SELECTED + " = 0 OR " + ACCOUNT_KEY_SELECTED + " = 1) AND (SELECT SUM(" + ACCOUNT_KEY_SELECTED + ") = 1)) ON CONFLICT IGNORE" +
-                    " ) ").toUpperCase(Locale.ENGLISH);
+                    " ) ");
             db.execSQL(createAccTableCmd);
             addTableName(ACCOUNTS_TABLE_NAME);
             AccountListRecyclerAdapter.AccountDataModel defaultAccDataModel;
@@ -223,11 +274,12 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         ret.put(MOVEMENT_KEY_ID, movement.getMovementId());
         ret.put(MOVEMENT_KEY_TITLE, movement.getMovementTitle());
         ret.put(MOVEMENT_KEY_AMOUNT, movement.getMovementAmount());
+        ret.put(MOVEMENT_KEY_EPOCH, movement.getEpoch());
         return ret;
     }
 
     private MovementListRecyclerAdapter.MovementDataModel mapStorableToMovement(Cursor cursor) {
-        return new MovementListRecyclerAdapter.MovementDataModel(cursor.getInt(0), cursor.getString(1), cursor.getLong(2));
+        return new MovementListRecyclerAdapter.MovementDataModel(cursor.getInt(0), cursor.getString(1), cursor.getLong(2), cursor.getLong(3));
     }
 
     /**
@@ -242,12 +294,13 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                 MOVEMENT_KEY_ID + " INTEGER PRIMARY KEY ON CONFLICT REPLACE ASC AUTOINCREMENT, " +
                 MOVEMENT_KEY_TITLE + " TEXT, " +
                 MOVEMENT_KEY_AMOUNT + " INTEGER NOT NULL ON CONFLICT IGNORE " +
-                "CHECK ((" + MOVEMENT_KEY_AMOUNT + " <> 0 ON CONFLICT IGNORE" +
-                " ) ").toUpperCase(Locale.ENGLISH);
+                MOVEMENT_KEY_EPOCH + " INTEGER NOT NULL ON CONFLICT IGNORE " +
+                "CHECK ((" + MOVEMENT_KEY_AMOUNT + " <> 0) AND ( " + MOVEMENT_KEY_EPOCH + " > 0)) ON CONFLICT IGNORE" +
+                " ) ");
         db.execSQL(createAccMovTableCmd);
         addTableName(accountTableName);
         //Set the initial index
-        db.insert(ACCOUNTS_TABLE_NAME, null, mapMovementToStorable(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.getInt(mContext, "default_movement_id") - 1, "", -1)));
+        db.insert(ACCOUNTS_TABLE_NAME, null, mapMovementToStorable(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.getInt(mContext, "default_movement_id") - 1, "", -1, 1)));
         db.delete(ACCOUNTS_TABLE_NAME, null, null);
     }
 
@@ -259,7 +312,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
      */
     private void deleteAccountTable(SQLiteDatabase db, int accountId) {
         final String accountTableName = LBudgetUtils.getString(mContext, "account_table_name_prefix") + accountId;
-        final String deleteAccMovTableCmd = ("DROP TABLE IF EXISTS " + accountTableName).toUpperCase(Locale.ENGLISH);
+        final String deleteAccMovTableCmd = ("DROP TABLE IF EXISTS " + accountTableName);
         db.execSQL(deleteAccMovTableCmd);
         removeTableName(accountTableName);
     }
