@@ -32,7 +32,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
@@ -96,7 +95,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         items.add(position, item);
         notifyItemInserted(position);
         MovementManager.getInstance().addMovement(item);
-        LBackupAgent.requestBackup(mContext);
     }
 
     @SuppressWarnings("unused")
@@ -151,7 +149,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     private void removeMovementFromManager(MovementDataModel movement) {
         MovementManager.getInstance().removeMovement(movement);
-        LBackupAgent.requestBackup(mContext);
     }
 
     @Override

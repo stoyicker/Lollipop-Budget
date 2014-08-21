@@ -60,7 +60,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         items.add(position, item);
         notifyItemInserted(position);
         AccountManager.getInstance().addAccount(item);
-        LBackupAgent.requestBackup(mContext);
     }
 
     @SuppressWarnings("unused")
@@ -80,7 +79,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         AccountManager.getInstance().setSelectedAccount(newSelectedAccount);
         notifyItemChanged(position);
         notifyItemChanged(oldSelected);
-        LBackupAgent.requestBackup(mContext);
     }
 
     @Override
@@ -109,7 +107,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
     private void removeAccountFromManager(AccountDataModel account) {
         AccountManager.getInstance().removeAccount(account);
-        LBackupAgent.requestBackup(mContext);
     }
 
     @Override

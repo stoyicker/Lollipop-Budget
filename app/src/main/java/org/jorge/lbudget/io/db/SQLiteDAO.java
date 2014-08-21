@@ -81,12 +81,14 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.beginTransaction();
             Cursor allAccounts = db.query(ACCOUNTS_TABLE_NAME, null, null, null, null, null, ACCOUNT_KEY_ID + " ASC");
             ret = new ArrayList<>();
-            if (allAccounts != null && allAccounts.getCount() > 0) {
-                if (allAccounts.moveToFirst()) {
-                    do {
-                        ret.add(mapStorableToAccount(allAccounts));
-                        allAccounts.moveToNext();
-                    } while (allAccounts.isLast());
+            Log.d("debug", "About to check if the account cursor is null or empty");
+            if (allAccounts != null && allAccounts.moveToFirst()) {
+                Log.d("debug", "It has something");
+                ret.add(mapStorableToAccount(allAccounts));
+                allAccounts.moveToNext();
+                while (!allAccounts.isLast()) {
+                    ret.add(mapStorableToAccount(allAccounts));
+                    allAccounts.moveToNext();
                 }
             }
             if (allAccounts != null)
@@ -112,12 +114,12 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.beginTransaction();
             Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " > " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " ASC");
             ret = new ArrayList<>();
-            if (allMovements != null && allMovements.getCount() > 0) {
-                if (allMovements.moveToFirst()) {
-                    do {
-                        ret.add(mapStorableToMovement(allMovements));
-                        allMovements.moveToNext();
-                    } while (allMovements.isLast());
+            if (allMovements != null && allMovements.moveToFirst()) {
+                ret.add(mapStorableToMovement(allMovements));
+                allMovements.moveToNext();
+                while (!allMovements.isLast()) {
+                    ret.add(mapStorableToMovement(allMovements));
+                    allMovements.moveToNext();
                 }
             }
             if (allMovements != null)
@@ -146,6 +148,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                     createAccountTable(getWritableDatabase(), accounts[0].getAccountId());
                     db.setTransactionSuccessful();
                     db.endTransaction();
+                    LBackupAgent.requestBackup(mContext);
                 }
                 return null;
             }
@@ -166,6 +169,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                     db.insert(selectedAccMovTableName, null, mapMovementToStorable(movements[0]));
                     db.setTransactionSuccessful();
                     db.endTransaction();
+                    LBackupAgent.requestBackup(mContext);
                 }
                 return null;
             }
@@ -186,6 +190,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                     deleteAccountTable(db, accounts[0].getAccountId());
                     db.setTransactionSuccessful();
                     db.endTransaction();
+                    LBackupAgent.requestBackup(mContext);
                 }
                 return null;
             }
@@ -207,6 +212,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                     deleteAccountTable(db, movements[0].getMovementId());
                     db.setTransactionSuccessful();
                     db.endTransaction();
+                    LBackupAgent.requestBackup(mContext);
                 }
                 return null;
             }
@@ -230,6 +236,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                     db.update(ACCOUNTS_TABLE_NAME, selectedCell, ACCOUNT_KEY_ID + " = " + accounts[0].getAccountId(), null);
                     db.setTransactionSuccessful();
                     db.endTransaction();
+                    LBackupAgent.requestBackup(mContext);
                 }
                 return null;
             }
@@ -239,7 +246,6 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d("debug", "onCreate");
         super.onCreate(db);
         final String createAccTableCmd = ("CREATE TABLE IF NOT EXISTS " + ACCOUNTS_TABLE_NAME + " ( " +
                 ACCOUNT_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
@@ -273,8 +279,8 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             createAccountTable(db, defaultAccDataModel.getAccountId());
             db.setTransactionSuccessful();
             db.endTransaction();
+            LBackupAgent.requestBackup(mContext);
         }
-        LBackupAgent.requestBackup(mContext);
     }
 
     private ContentValues mapAccountToStorable(AccountListRecyclerAdapter.AccountDataModel account) {
@@ -322,6 +328,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         //Set the initial index
         db.insert(ACCOUNTS_TABLE_NAME, null, mapMovementToStorable(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.getInt(mContext, "default_movement_id") - 1, "", -1, 1)));
         db.delete(ACCOUNTS_TABLE_NAME, null, null);
+        LBackupAgent.requestBackup(mContext);
     }
 
     /**
@@ -335,6 +342,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         final String deleteAccMovTableCmd = ("DROP TABLE IF EXISTS " + accountTableName);
         db.execSQL(deleteAccMovTableCmd);
         removeTableName(accountTableName);
+        LBackupAgent.requestBackup(mContext);
     }
 
     public void setAccountName(String id, String newName) {
@@ -346,6 +354,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.update(ACCOUNTS_TABLE_NAME, newNameContainer, ACCOUNT_KEY_ID + " = " + id, null);
             db.setTransactionSuccessful();
             db.endTransaction();
+            LBackupAgent.requestBackup(mContext);
         }
     }
 }
