@@ -27,7 +27,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.IMECloseListenableEditText;
@@ -193,12 +192,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                     if (!TextUtils.isEmpty(text)) {
                         int position;
                         AccountDataModel accountDataModel = items.get(position = getPosition());
-                        for (AccountDataModel acc : items) {
-                            if (acc.getAccountName().contentEquals(text)) {
-                                accountDataModel.setAccountName(accountDataModel.getAccountName());
-                                return;
-                            }
-                        }
                         accountDataModel.setAccountName(text);
                         AccountManager.getInstance().setAccountName(accountDataModel.getAccountName(), text);
                         notifyItemChanged(position);
