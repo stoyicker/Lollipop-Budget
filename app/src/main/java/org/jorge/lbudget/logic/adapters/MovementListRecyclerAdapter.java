@@ -17,7 +17,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -30,6 +29,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
@@ -134,7 +136,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int i) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int i) {
         MovementDataModel item = items.get(i);
         viewHolder.movementNameView.setText(item.getMovementTitle());
         long amount = item.getMovementAmount();
@@ -142,8 +144,17 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementAmountView.setText(MovementDataModel.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
         final String imagePath;
         if (new File(imagePath = item.getImagePath(mContext)).exists()) {
-            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(imagePath));
-            viewHolder.movementImageView.setVisibility(View.VISIBLE);
+            Picasso.with(mContext).load(imagePath).centerCrop().into(viewHolder.movementImageView, new Callback() {
+                @Override
+                public void onSuccess() {
+                    viewHolder.movementImageView.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onError() {
+                    Picasso.with(mContext).cancelRequest(viewHolder.movementImageView);
+                }
+            });
         }
     }
 
@@ -272,5 +283,5 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 }
 
 //TODO (Could be anywhere) MovementManager
-//TODO (Could be anywhere) Edit the layout, model and db as necessary to include the movement date
+//TODO (Could be anywhere) Edit the layout as necessary to include the movement date
 //TODO (Could be anywhere) Use Picasso to load the movement image
