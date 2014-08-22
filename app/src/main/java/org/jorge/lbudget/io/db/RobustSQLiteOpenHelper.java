@@ -106,8 +106,13 @@ public abstract class RobustSQLiteOpenHelper extends SQLiteOpenHelper {
     }
 
     private void dropAllTablesWithPrefix(SQLiteDatabase db, String prefix) {
-        for (String tableName : mTableNames)
+        List<String> deletedTables = new LinkedList<>();
+        for (String tableName : mTableNames) {
             db.execSQL("DROP TABLE IF EXISTS " + prefix + tableName);
+            deletedTables.add(prefix + tableName);
+        }
+        for (String tableName : deletedTables)
+            mTableNames.remove(tableName);
     }
 
     private void dropAllTables(SQLiteDatabase db) {
