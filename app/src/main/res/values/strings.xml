@@ -249,6 +249,4 @@
     <string name="movement_key_amount">MOVEMENT_AMOUNT</string>
     <string name="movement_key_epoch">MOVEMENT_EPOCH</string>
     <string name="account_table_name_prefix">ACCOUNT_</string>
-    <string name="one_and_only_one_selected_account_trigger_insert_name">ONE_AND_ONLY_ONE_ACCOUNT_SELECTED_INSERT_TRIGGER</string>
-    <string name="one_and_only_one_selected_account_trigger_update_name">ONE_AND_ONLY_ONE_ACCOUNT_SELECTED_UPDATE_TRIGGER</string>
 </resources>
