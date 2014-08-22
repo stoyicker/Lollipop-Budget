@@ -20,6 +20,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 public class SettingsPreferenceFragment extends PreferenceFragment {
@@ -44,6 +45,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 currencyPreference.setSummary((CharSequence) o);
+                LBackupAgent.requestBackup(mContext);
                 return Boolean.TRUE;
             }
         });
@@ -52,6 +54,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 incomeColorPreference.setSummary((CharSequence) o);
+                LBackupAgent.requestBackup(mContext);
                 return Boolean.TRUE;
             }
         });
@@ -60,6 +63,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
                 expenseColorPreference.setSummary((CharSequence) o);
+                LBackupAgent.requestBackup(mContext);
                 return Boolean.TRUE;
             }
         });
