@@ -19,7 +19,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.net.LBackupAgent;
@@ -61,14 +60,17 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         //No older versions have been released.
     }
 
-    public static void setup(Context _context) {
+    public synchronized static void setup(Context _context) {
         if (singleton == null) {
             singleton = new SQLiteDAO(_context);
             mContext = _context;
+            singleton.getReadableDatabase(); //Force the database creation
+        } else {
+            throw new IllegalStateException("SQLiteDAO.setup(Context) should only be called once.");
         }
     }
 
-    public static SQLiteDAO getInstance() {
+    public synchronized static SQLiteDAO getInstance() {
         if (singleton == null)
             throw new IllegalStateException("SQLiteDAO.setup(Context) must be called before trying to retrieve the instance.");
         return singleton;
@@ -81,9 +83,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.beginTransaction();
             Cursor allAccounts = db.query(ACCOUNTS_TABLE_NAME, null, null, null, null, null, ACCOUNT_KEY_ID + " ASC");
             ret = new ArrayList<>();
-            Log.d("debug", "About to check if the account cursor is null or empty");
             if (allAccounts != null && allAccounts.moveToFirst()) {
-                Log.d("debug", "It has something");
                 ret.add(mapStorableToAccount(allAccounts));
                 allAccounts.moveToNext();
                 while (!allAccounts.isLast()) {
@@ -112,7 +112,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         final String selectedAccMovTableName = generateSelectedAccountTableName();
         synchronized (DB_LOCK) {
             db.beginTransaction();
-            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " > " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " ASC");
+            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " > " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
             ret = new ArrayList<>();
             if (allMovements != null && allMovements.moveToFirst()) {
                 ret.add(mapStorableToMovement(allMovements));
@@ -250,12 +250,13 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         final String createAccTableCmd = ("CREATE TABLE IF NOT EXISTS " + ACCOUNTS_TABLE_NAME + " ( " +
                 ACCOUNT_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
                 ACCOUNT_KEY_NAME + " TEXT UNIQUE ON CONFLICT IGNORE NOT NULL ON CONFLICT IGNORE, " +
-                ACCOUNT_KEY_SELECTED + " INTEGER NOT NULL ON CONFLICT IGNORE, " + //THIS IS IN MILLISECONDS
+                ACCOUNT_KEY_SELECTED + " INTEGER NOT NULL ON CONFLICT IGNORE, " +
                 "CHECK (" + ACCOUNT_KEY_SELECTED + " = 0 OR " + ACCOUNT_KEY_SELECTED + " = 1) ON CONFLICT IGNORE" +
                 " ) ");
         final String oneAndOnlyOneSelectedAccInsertTriggerCmd = "CREATE TRIGGER " + ONE_AND_ONLY_ONE_SELECTED_TRIGGER_INSERT_NAME + " " +
                 "AFTER INSERT ON " + ACCOUNTS_TABLE_NAME + " " +
                 "FOR EACH ROW " +
+                "WHEN (SELECT(SUM(" + ACCOUNT_KEY_ID + ")) <> 1) " +
                 "BEGIN " +
                 "DELETE FROM " + ACCOUNTS_TABLE_NAME + " WHERE " + ACCOUNT_KEY_ID + " = NEW." + ACCOUNT_KEY_ID + "; " +
                 "END";
@@ -268,7 +269,6 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                 "UPDATE " + ACCOUNTS_TABLE_NAME + " SET " + ACCOUNT_KEY_SELECTED + " = 1 WHERE " + ACCOUNT_KEY_ID + " = NEW." + ACCOUNT_KEY_ID + "; " +
                 "END";
         synchronized (DB_LOCK) {
-            db.beginTransaction();
             db.execSQL(createAccTableCmd);
             db.execSQL(oneAndOnlyOneSelectedAccInsertTriggerCmd);
             db.execSQL(oneAndOnlyOneSelectedUpdateTriggerCmd);
@@ -277,8 +277,6 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             ContentValues defaultAcc = mapAccountToStorable(defaultAccDataModel = new AccountListRecyclerAdapter.AccountDataModel(LBudgetUtils.getInt(mContext, "default_account_id"), LBudgetUtils.getString(mContext, "default_account_name"), mContext.getResources().getBoolean(R.bool.default_account_selected)));
             db.insert(ACCOUNTS_TABLE_NAME, null, defaultAcc);
             createAccountTable(db, defaultAccDataModel.getAccountId());
-            db.setTransactionSuccessful();
-            db.endTransaction();
             LBackupAgent.requestBackup(mContext);
         }
     }
@@ -292,7 +290,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     }
 
     private AccountListRecyclerAdapter.AccountDataModel mapStorableToAccount(Cursor cursor) {
-        return new AccountListRecyclerAdapter.AccountDataModel(cursor.getInt(0), cursor.getString(1), cursor.getInt(2) > 0 ? Boolean.TRUE : Boolean.FALSE);
+        return new AccountListRecyclerAdapter.AccountDataModel(cursor.getInt(cursor.getColumnIndex(ACCOUNT_KEY_ID)), cursor.getString(cursor.getColumnIndex(ACCOUNT_KEY_NAME)), cursor.getInt(cursor.getColumnIndex(ACCOUNT_KEY_SELECTED)) > 0 ? Boolean.TRUE : Boolean.FALSE);
     }
 
     private ContentValues mapMovementToStorable(MovementListRecyclerAdapter.MovementDataModel movement) {
@@ -305,7 +303,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     }
 
     private MovementListRecyclerAdapter.MovementDataModel mapStorableToMovement(Cursor cursor) {
-        return new MovementListRecyclerAdapter.MovementDataModel(cursor.getInt(0), cursor.getString(1), cursor.getLong(2), cursor.getLong(3));
+        return new MovementListRecyclerAdapter.MovementDataModel(cursor.getInt(cursor.getColumnIndex(MOVEMENT_KEY_ID)), cursor.getString(cursor.getColumnIndex(MOVEMENT_KEY_TITLE)), cursor.getLong(cursor.getColumnIndex(MOVEMENT_KEY_AMOUNT)), cursor.getLong(cursor.getColumnIndex(MOVEMENT_KEY_EPOCH)));
     }
 
     /**
@@ -320,14 +318,14 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                 MOVEMENT_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
                 MOVEMENT_KEY_TITLE + " TEXT, " +
                 MOVEMENT_KEY_AMOUNT + " INTEGER NOT NULL ON CONFLICT IGNORE, " +
-                MOVEMENT_KEY_EPOCH + " INTEGER NOT NULL ON CONFLICT IGNORE, " +
+                MOVEMENT_KEY_EPOCH + " INTEGER NOT NULL ON CONFLICT IGNORE, " + //THIS IS IN MILLISECONDS
                 "CHECK ((" + MOVEMENT_KEY_AMOUNT + " <> 0) AND ( " + MOVEMENT_KEY_EPOCH + " > 0)) ON CONFLICT IGNORE" +
                 " ) ");
         db.execSQL(createAccMovTableCmd);
         addTableName(accountTableName);
         //Set the initial index
-        db.insert(ACCOUNTS_TABLE_NAME, null, mapMovementToStorable(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.getInt(mContext, "default_movement_id") - 1, "", -1, 1)));
-        db.delete(ACCOUNTS_TABLE_NAME, null, null);
+        db.insert(accountTableName, null, mapMovementToStorable(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.getInt(mContext, "default_movement_id") - 1, "", -1, 1)));
+        db.delete(accountTableName, null, null);
         LBackupAgent.requestBackup(mContext);
     }
 
