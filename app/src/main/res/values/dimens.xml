@@ -12,8 +12,6 @@
   -->
 
 <resources>
-    <dimen name="movement_card_info_width_weight">0.75</dimen>
-    <dimen name="movement_card_image_width_weight">0.25</dimen>
     <dimen name="elevation_navigation_toolbar">5dp</dimen>
     <dimen name="elevation_navigation_dropdown">4dp</dimen>
     <dimen name="elevation_fragment_content">4dp</dimen>

@@ -31,7 +31,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="@dimen/movement_card_info_width_weight">
+            android:layout_weight="0.75">
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -94,7 +94,7 @@
             android:id="@+id/movement_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="@dimen/movement_card_image_width_weight"
+            android:layout_weight="0.25"
             android:scaleType="centerCrop"
             android:paddingStart="@dimen/movement_image_padding_start"
             android:paddingEnd="@dimen/movement_image_padding_end"
