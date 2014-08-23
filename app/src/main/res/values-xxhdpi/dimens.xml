@@ -22,7 +22,7 @@
     <dimen name="movement_card_view_bottom_margin">8dp</dimen>
     <dimen name="movement_image_padding_start">8dp</dimen>
     <dimen name="movement_padding_end">4dp</dimen>
-    <dimen name="movement_text_vertical_padding">4dp</dimen>
+    <dimen name="movement_text_padding">4dp</dimen>
     <dimen name="text_size_movement_name">20sp</dimen>
     <dimen name="account_name_text_size">16sp</dimen>
     <dimen name="account_card_height">55dp</dimen>
