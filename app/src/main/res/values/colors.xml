@@ -33,4 +33,7 @@
     <color name="undo_bar_button_background">#DB555555</color>
     <color name="undo_bar_button_background_pressed">#858585</color>
     <color name="selected_card_background">@color/theme_color_primary</color>
+    <color name="floating_action_button_background_state_normal">@color/theme_color_primary_dark
+    </color>
+    <color name="floating_action_button_background_state_pressed">@color/theme_color_primary</color>
 </resources>

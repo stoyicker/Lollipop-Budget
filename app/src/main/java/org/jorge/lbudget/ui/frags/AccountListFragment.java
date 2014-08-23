@@ -26,8 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
+import org.jorge.lbudget.logic.controllers.AccountManager;
+
+import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public class AccountListFragment extends Fragment {
 
@@ -40,6 +42,12 @@ public class AccountListFragment extends Fragment {
         mAccountsView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsView.setItemAnimator(new DefaultItemAnimator());
         mAccountsView.setAdapter(new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsView));
+        view.findViewById(R.id.button_new_account).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logString("debug", "onClick!");
+            }
+        });
     }
 
     @Nullable
