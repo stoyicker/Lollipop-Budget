@@ -107,7 +107,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         final String selectedAccMovTableName = generateSelectedAccountTableName();
         synchronized (DB_LOCK) {
             db.beginTransaction();
-            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " > " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
+            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " <= " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
             ret = new ArrayList<>();
             if (allMovements != null && allMovements.moveToFirst()) {
                 ret.add(mapStorableToMovement(allMovements));
