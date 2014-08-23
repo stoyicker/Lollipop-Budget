@@ -37,7 +37,6 @@ public abstract class TimeUtils {
             throw new IllegalArgumentException("The time provided is either negative or situated in the future.");
         }
 
-        // TODO extend so that it considers years and months as well
         final long diff = now - time;
         String identifier, amount = "";
         if (diff < MINUTE_MILLIS) {

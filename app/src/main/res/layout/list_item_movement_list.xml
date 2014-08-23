@@ -98,8 +98,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.25"
             android:scaleType="centerCrop"
-            android:paddingStart="@dimen/movement_image_padding_start"
-            android:paddingEnd="@dimen/movement_image_padding_end"
+            android:layout_marginStart="@dimen/movement_image_padding_start"
+            android:layout_marginEnd="@dimen/movement_image_padding_end"
             android:visibility="gone"
             android:contentDescription="@string/movement_image_content_description" />
     </LinearLayout>

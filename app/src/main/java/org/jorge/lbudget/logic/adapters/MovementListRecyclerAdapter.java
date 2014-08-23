@@ -17,6 +17,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
@@ -30,9 +31,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
-
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
@@ -44,6 +42,8 @@ import org.jorge.lbudget.utils.TimeUtils;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
+
+import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
 
@@ -149,21 +149,16 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(MovementDataModel.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
         viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getEpoch(), mContext));
-        final String imagePath;
-        if (new File(imagePath = item.getImagePath(mContext)).exists()) {
-            Picasso.with(mContext).load(imagePath).centerCrop().into(viewHolder.movementImageView, new Callback() {
-                @Override
-                public void onSuccess() {
-                    viewHolder.movementImageView.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onError() {
-                    Picasso.with(mContext).cancelRequest(viewHolder.movementImageView);
-                }
-            });
+        final String imagePath = item.getImagePath(mContext);
+        logString("debug", "does " + imagePath + " exist?");
+        if (new File(imagePath).exists()) {
+            logString("debug", imagePath + " DOES exist");
+            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(imagePath));
+            viewHolder.movementImageView.setVisibility(View.VISIBLE);
         }
     }
+
+    //TODO Remove the image file of a movement when deleted
 
     private void removeMovementFromManager(MovementDataModel movement) {
         MovementManager.getInstance().removeMovement(movement);
@@ -293,5 +288,3 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
     }
 }
-
-//TODO (Could be anywhere) Edit the layout as necessary to include the movement date
