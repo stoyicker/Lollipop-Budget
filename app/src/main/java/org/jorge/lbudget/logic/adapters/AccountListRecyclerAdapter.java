@@ -28,6 +28,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.IMECloseListenableEditText;
 import org.jorge.lbudget.utils.LBudgetUtils;
@@ -44,16 +45,17 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_account_list;
     private static float x = Float.MAX_VALUE;
+    private final UndoBarShowStateListener undoBarShowStateListener;
 
-    public AccountListRecyclerAdapter(Activity activity, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
+    public AccountListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener, Activity activity, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
         mActivity = activity;
         mContext = activity.getApplicationContext();
         items = accounts;
         mRecyclerView = _recyclerView;
         MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
+        undoBarShowStateListener = _undoBarShowStateListener;
     }
 
-    @SuppressWarnings("unused")
     //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public void add(AccountDataModel item, int position) {
         items.add(position, item);
@@ -61,12 +63,11 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         AccountManager.getInstance().addAccount(item);
     }
 
-    @SuppressWarnings("unused")
     //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public AccountDataModel remove(int position) {
         AccountDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        removeAccountFromManager(ret);
+        AccountManager.getInstance().removeAccount(ret);
         return ret;
     }
 
@@ -104,13 +105,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         }
     }
 
-    private void removeAccountFromManager(AccountDataModel account) {
-        AccountManager.getInstance().removeAccount(account);
-    }
-
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void createNewAccount() {
+        int lengthPriorToInsert = getItemCount();
+        add(new AccountDataModel(items.get(lengthPriorToInsert - 1).getAccountId() + 1, "", Boolean.FALSE), lengthPriorToInsert);
+        mRecyclerView.smoothScrollToPosition(lengthPriorToInsert);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -142,12 +145,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                             int pos;
                                             final AccountDataModel account = items.remove(pos = getPosition());
                                             notifyItemRemoved(pos);
+                                            undoBarShowStateListener.onShowUndoBar();
                                             new UndoBar.Builder(mActivity)
                                                     .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
                                                     .setListener(new UndoBar.Listener() {
                                                         @Override
                                                         public void onHide() {
-                                                            removeAccountFromManager(account);
+                                                            AccountManager.getInstance().removeAccount(account);
+                                                            undoBarShowStateListener.onHideUndoBar();
                                                         }
 
                                                         @Override
@@ -156,6 +161,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                                             items.add(pos = getPosition(), account);
                                                             notifyItemInserted(pos);
                                                             mRecyclerView.smoothScrollToPosition(pos);
+                                                            undoBarShowStateListener.onHideUndoBar();
                                                         }
                                                     })
                                                     .show();

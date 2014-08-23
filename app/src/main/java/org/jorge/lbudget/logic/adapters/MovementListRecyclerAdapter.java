@@ -36,6 +36,7 @@ import com.squareup.picasso.Picasso;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
+import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -54,13 +55,15 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private static int incomeColor, expenseColor;
     private Context mContext;
     private static float x = Float.MAX_VALUE;
+    private final UndoBarShowStateListener undoBarShowStateListener;
 
-    public MovementListRecyclerAdapter(RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
         this.items = items;
         mContext = activity.getApplicationContext();
         mActivity = activity;
         MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
         mRecyclerView = recyclerView;
+        undoBarShowStateListener = _undoBarShowStateListener;
     }
 
     public static void updateMovementColors(Context context) {
@@ -195,12 +198,14 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                         int pos;
                                         final MovementDataModel movement = items.remove(pos = getPosition());
                                         notifyItemRemoved(pos);
+                                        undoBarShowStateListener.onShowUndoBar();
                                         new UndoBar.Builder(mActivity)
                                                 .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
                                                 .setListener(new UndoBar.Listener() {
                                                     @Override
                                                     public void onHide() {
                                                         removeMovementFromManager(movement);
+                                                        undoBarShowStateListener.onHideUndoBar();
                                                     }
 
                                                     @Override
@@ -209,6 +214,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                         items.add(pos = getPosition(), movement);
                                                         notifyItemInserted(pos);
                                                         mRecyclerView.smoothScrollToPosition(pos);
+                                                        undoBarShowStateListener.onHideUndoBar();
                                                     }
                                                 })
                                                 .show();

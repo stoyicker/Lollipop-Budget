@@ -29,28 +29,37 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.ui.utils.FloatingActionButton;
+import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
 
-import static org.jorge.lbudget.devutils.DevUtils.logString;
-
-public class AccountListFragment extends Fragment {
+public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
 
     private RecyclerView mAccountsRecyclerView;
     private Context mContext;
+    private FloatingActionButton newAccountButton;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAccountsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mAccountsRecyclerView.setAdapter(new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
-        FloatingActionButton newAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
+        final AccountListRecyclerAdapter mAdapter;
+        mAccountsRecyclerView.setAdapter(mAdapter = new AccountListRecyclerAdapter(this, getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
+        newAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
         newAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                logString("debug", "onClick!");
+                mAdapter.createNewAccount();
             }
         });
         newAccountButton.attachToRecyclerView(mAccountsRecyclerView);
+    }
+
+    public void onShowUndoBar() {
+        newAccountButton.setEnabled(Boolean.FALSE);
+    }
+
+    public void onHideUndoBar() {
+        newAccountButton.setEnabled(Boolean.TRUE);
     }
 
     @Nullable

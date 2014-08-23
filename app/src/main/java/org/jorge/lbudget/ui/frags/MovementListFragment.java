@@ -27,8 +27,9 @@ import android.view.ViewGroup;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.MovementManager;
+import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
 
-public class MovementListFragment extends Fragment {
+public class MovementListFragment extends Fragment implements UndoBarShowStateListener {
 
     private RecyclerView mMovementsView;
     private Context mContext;
@@ -38,7 +39,7 @@ public class MovementListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
     }
 
     @Override
@@ -61,5 +62,15 @@ public class MovementListFragment extends Fragment {
         super.onResume();
         MovementListRecyclerAdapter.updateMovementColors(mContext);
         mMovementsView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void onShowUndoBar() {
+        //TODO Disable the button
+    }
+
+    @Override
+    public void onHideUndoBar() {
+        //TODO Enable the button
     }
 }
