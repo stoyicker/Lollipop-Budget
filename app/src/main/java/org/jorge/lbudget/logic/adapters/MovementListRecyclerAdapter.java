@@ -39,6 +39,7 @@ import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.utils.TimeUtils;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -145,6 +146,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(MovementDataModel.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getEpoch(), mContext));
         final String imagePath;
         if (new File(imagePath = item.getImagePath(mContext)).exists()) {
             Picasso.with(mContext).load(imagePath).centerCrop().into(viewHolder.movementImageView, new Callback() {
@@ -171,7 +173,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView movementNameView, movementAmountView;
+        private final TextView movementNameView, movementAmountView, movementEpochView;
         private final ImageView movementImageView;
         private final View movementTypeView;
 
@@ -241,6 +243,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             movementAmountView = (TextView) itemView.findViewById(R.id.movement_amount_view);
             movementImageView = (ImageView) itemView.findViewById(R.id.movement_image_view);
             movementTypeView = itemView.findViewById(R.id.movement_type_view);
+            movementEpochView = (TextView) itemView.findViewById(R.id.movement_epoch_view);
         }
     }
 

@@ -38,7 +38,7 @@
         <item name="android:textColor">@color/navigation_toolbar_menu_item</item>
     </style>
 
-    <style name="MovementNameTextStyle">
+    <style name="MovementInfoTextStyle">
         <item name="android:textSize">@dimen/text_size_movement_name</item>
     </style>
 

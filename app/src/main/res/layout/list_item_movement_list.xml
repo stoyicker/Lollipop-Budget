@@ -31,16 +31,35 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.75">
+            android:layout_weight="@dimen/movement_card_info_width_weight">
 
-            <TextView
-                android:id="@+id/movement_name_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/MovementNameTextStyle"
-                android:paddingTop="@dimen/movement_text_vertical_padding"
-                android:paddingBottom="@dimen/movement_text_vertical_padding"
-                android:background="@android:color/transparent" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/movement_name_view"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    style="@style/MovementInfoTextStyle"
+                    android:paddingTop="@dimen/movement_text_vertical_padding"
+                    android:paddingBottom="@dimen/movement_text_vertical_padding"
+                    android:background="@android:color/transparent" />
+
+                <TextView
+                    android:id="@+id/movement_epoch_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    style="@style/MovementInfoTextStyle"
+                    android:paddingTop="@dimen/movement_text_vertical_padding"
+                    android:paddingBottom="@dimen/movement_text_vertical_padding"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/movement_type_view"
@@ -75,7 +94,7 @@
             android:id="@+id/movement_image_view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
+            android:layout_weight="@dimen/movement_card_image_width_weight"
             android:scaleType="centerCrop"
             android:paddingStart="@dimen/movement_image_padding_start"
             android:paddingEnd="@dimen/movement_image_padding_end"
