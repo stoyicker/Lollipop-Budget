@@ -59,7 +59,6 @@ public class FloatingActionButton extends ImageButton {
         public void onScrollStateChanged(int scrollState) {
         }
 
-        //MAYBE This works by using dy instead of getListViewScrollY(), and thus the RecyclerView can be referred to as ViewGroup instead
         @Override
         public void onScrolled(int dx, int dy) {
             int newScrollY = getListViewScrollY();

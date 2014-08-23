@@ -28,33 +28,36 @@ import android.view.ViewGroup;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.ui.utils.FloatingActionButton;
 
 import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public class AccountListFragment extends Fragment {
 
-    private RecyclerView mAccountsView;
+    private RecyclerView mAccountsRecyclerView;
     private Context mContext;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mAccountsView.setLayoutManager(new LinearLayoutManager(mContext));
-        mAccountsView.setItemAnimator(new DefaultItemAnimator());
-        mAccountsView.setAdapter(new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsView));
-        view.findViewById(R.id.button_new_account).setOnClickListener(new View.OnClickListener() {
+        mAccountsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
+        mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mAccountsRecyclerView.setAdapter(new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
+        FloatingActionButton newAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
+        newAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 logString("debug", "onClick!");
             }
         });
+        newAccountButton.attachToRecyclerView(mAccountsRecyclerView);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_account_list, container, Boolean.FALSE);
-        mAccountsView = (RecyclerView) ret.findViewById(R.id.account_list_view);
+        mAccountsRecyclerView = (RecyclerView) ret.findViewById(R.id.account_list_view);
         return ret;
     }
 
