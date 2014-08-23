@@ -36,4 +36,5 @@
     <color name="floating_action_button_background_state_normal">@color/theme_color_primary_dark
     </color>
     <color name="floating_action_button_background_state_pressed">@color/theme_color_primary</color>
+    <color name="movement_epoch_color">#6E8E99</color>
 </resources>

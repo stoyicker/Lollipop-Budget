@@ -26,4 +26,5 @@
     <dimen name="text_size_movement_name">20sp</dimen>
     <dimen name="account_name_text_size">16sp</dimen>
     <dimen name="account_card_height">55dp</dimen>
+    <dimen name="movement_epoch_text_size">12sp</dimen>
 </resources>
