@@ -76,7 +76,7 @@ public class AccountManager {
         return preferences.getString(LBudgetUtils.getString(_context, "pref_key_currency_code"), LBudgetUtils.getString(_context, "currency_172"));
     }
 
-    public void setAccountName(String id, String newName) {
+    public void setAccountName(int id, String newName) {
         SQLiteDAO.getInstance().setAccountName(id, newName);
     }
 }

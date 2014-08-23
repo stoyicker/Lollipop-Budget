@@ -56,14 +56,13 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         undoBarShowStateListener = _undoBarShowStateListener;
     }
 
-    //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public void add(AccountDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
         AccountManager.getInstance().addAccount(item);
     }
 
-    //If they are not used, ProGuard will take them out, but they're not disturbing here.
+    //If not used, ProGuard will take it out, but they're not disturbing here.
     public AccountDataModel remove(int position) {
         AccountDataModel ret = items.remove(position);
         notifyItemRemoved(position);
@@ -111,8 +110,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public void createNewAccount() {
-        int lengthPriorToInsert = getItemCount();
-        add(new AccountDataModel(items.get(lengthPriorToInsert - 1).getAccountId() + 1, "", Boolean.FALSE), lengthPriorToInsert);
+        int lengthPriorToInsert = getItemCount(), newId = items.get(lengthPriorToInsert - 1).getAccountId() + 1;
+        add(new AccountDataModel(newId, LBudgetUtils.getString(mContext, "new_account_default_name") + newId, Boolean.FALSE), lengthPriorToInsert);
         mRecyclerView.smoothScrollToPosition(lengthPriorToInsert);
     }
 
@@ -199,7 +198,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                         int position;
                         AccountDataModel accountDataModel = items.get(position = getPosition());
                         accountDataModel.setAccountName(text);
-                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountName(), text);
+                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountId(), text);
                         notifyItemChanged(position);
                     }
                     mActivity.findViewById(android.R.id.content).requestFocus();

@@ -321,7 +321,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         LBackupAgent.requestBackup(mContext);
     }
 
-    public void setAccountName(String id, String newName) {
+    public void setAccountName(int id, String newName) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues newNameContainer = new ContentValues();
         newNameContainer.put(ACCOUNT_KEY_NAME, newName);
