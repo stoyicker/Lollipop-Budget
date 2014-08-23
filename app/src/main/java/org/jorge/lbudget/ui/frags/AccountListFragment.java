@@ -33,14 +33,13 @@ public class AccountListFragment extends Fragment {
 
     private RecyclerView mAccountsView;
     private Context mContext;
-    private AccountListRecyclerAdapter mAdapter;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAccountsView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsView.setItemAnimator(new DefaultItemAnimator());
-        mAccountsView.setAdapter(mAdapter = new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsView));
+        mAccountsView.setAdapter(new AccountListRecyclerAdapter(getActivity(), AccountManager.getInstance().getAccounts(), mAccountsView));
     }
 
     @Nullable

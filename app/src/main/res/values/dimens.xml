@@ -24,4 +24,8 @@
     <dimen name="undo_bar_divider_margin">8dp</dimen>
     <dimen name="undo_bar_button_drawable_padding">12dp</dimen>
     <dimen name="undo_bar_button_corner_radius">24dp</dimen>
+    <dimen name="fab_size_normal">56dp</dimen>
+    <dimen name="fab_size_mini">40dp</dimen>
+    <dimen name="fab_shadow_size">8dp</dimen>
+    <dimen name="fab_mini_shadow_size">6dp</dimen>
 </resources>
