@@ -33,33 +33,32 @@
             android:layout_height="match_parent"
             android:layout_weight="0.75">
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/movement_name_view"
-                    android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
                     style="@style/MovementInfoTextStyle"
                     android:paddingTop="@dimen/movement_text_vertical_padding"
                     android:paddingBottom="@dimen/movement_text_vertical_padding"
+                    android:layout_alignParentStart="true"
                     android:background="@android:color/transparent" />
 
                 <TextView
                     android:id="@+id/movement_epoch_view"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="end"
                     style="@style/MovementInfoTextStyle"
                     android:paddingTop="@dimen/movement_text_vertical_padding"
                     android:paddingBottom="@dimen/movement_text_vertical_padding"
+                    android:layout_alignParentEnd="true"
                     android:background="@android:color/transparent" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:id="@+id/movement_type_view"

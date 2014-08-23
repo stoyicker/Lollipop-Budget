@@ -110,8 +110,6 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " <= " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
             ret = new ArrayList<>();
             if (allMovements != null && allMovements.moveToFirst()) {
-                ret.add(mapStorableToMovement(allMovements));
-                allMovements.moveToNext();
                 do {
                     ret.add(mapStorableToMovement(allMovements));
                 } while (allMovements.moveToNext());
