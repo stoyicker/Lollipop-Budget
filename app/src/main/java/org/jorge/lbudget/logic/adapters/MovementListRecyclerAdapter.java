@@ -282,6 +282,4 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     }
 }
 
-//TODO (Could be anywhere) MovementManager
 //TODO (Could be anywhere) Edit the layout as necessary to include the movement date
-//TODO (Could be anywhere) Use Picasso to load the movement image
