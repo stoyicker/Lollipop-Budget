@@ -39,7 +39,7 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
     }
 
     @Override

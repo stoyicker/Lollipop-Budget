@@ -57,14 +57,16 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private Context mContext;
     private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
+    private View mEmptyView;
 
-    public MovementListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
         this.items = items;
         mContext = activity.getApplicationContext();
         mActivity = activity;
         MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
         mRecyclerView = recyclerView;
         undoBarShowStateListener = _undoBarShowStateListener;
+        mEmptyView = emptyView;
     }
 
     public static void updateMovementColors(Context context) {
@@ -169,6 +171,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
     @Override
     public int getItemCount() {
+        mEmptyView.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
         return items.size();
     }
 
