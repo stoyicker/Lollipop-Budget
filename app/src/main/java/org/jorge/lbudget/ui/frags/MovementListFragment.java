@@ -43,14 +43,14 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
         final MovementListRecyclerAdapter mAdapter;
         mMovementsView.setAdapter(mAdapter = new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
-        mNewMovementButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
-        mNewMovementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAdapter.createNewMovement();
-            }
-        });
-        mNewMovementButton.attachToRecyclerView(mMovementsView);
+//        mNewMovementButton = (FloatingActionButton) view.findViewById(R.id.button_new_account); TODO Uncomment when the button is added
+//        mNewMovementButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mAdapter.createNewMovement(); TODO Uncomment when the button is added
+//            }
+//        });
+//        mNewMovementButton.attachToRecyclerView(mMovementsView); TODO Uncomment when the button is added
     }
 
     @Override
@@ -77,11 +77,11 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
 
     @Override
     public void onShowUndoBar() {
-        mNewMovementButton.setEnabled(Boolean.FALSE);
+//        mNewMovementButton.setEnabled(Boolean.FALSE); TODO Uncomment when the button is added
     }
 
     @Override
     public void onHideUndoBar() {
-        mNewMovementButton.setEnabled(Boolean.TRUE);
+//        mNewMovementButton.setEnabled(Boolean.TRUE); TODO Uncomment when the button is added
     }
 }
