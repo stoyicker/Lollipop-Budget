@@ -44,8 +44,6 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.jorge.lbudget.devutils.DevUtils.logString;
-
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
 
     private final float MIN_SWIPE_WIDTH_PIXELS;
@@ -147,9 +145,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementAmountView.setText(MovementDataModel.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
         viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getEpoch(), mContext));
         final String imagePath = item.getImagePath(mContext);
-        logString("debug", "does " + imagePath + " exist?");
         if (new File(imagePath).exists()) {
-            logString("debug", imagePath + " DOES exist");
             viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(imagePath));
             viewHolder.movementImageView.setVisibility(View.VISIBLE);
         }
