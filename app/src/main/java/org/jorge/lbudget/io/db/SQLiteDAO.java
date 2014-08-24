@@ -95,16 +95,19 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         return ret;
     }
 
+    public List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountMovementsToDate() {
+        return getAccountMovementsToDate(AccountManager.getInstance().getSelectedAccount());
+    }
 
     /**
      * Retrieves the movements of the selected account only before the instant the query to the database is performed.
      *
      * @return The requested movements.
      */
-    public List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountMovementsToDate() {
+    public List<MovementListRecyclerAdapter.MovementDataModel> getAccountMovementsToDate(AccountListRecyclerAdapter.AccountDataModel account) {
         List<MovementListRecyclerAdapter.MovementDataModel> ret;
         SQLiteDatabase db = getReadableDatabase();
-        final String selectedAccMovTableName = generateSelectedAccountTableName();
+        final String selectedAccMovTableName = generateAccountTableName(account);
         synchronized (DB_LOCK) {
             db.beginTransaction();
             Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " <= " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
@@ -125,7 +128,11 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     }
 
     private String generateSelectedAccountTableName() {
-        return LBudgetUtils.getString(mContext, "account_table_name_prefix") + AccountManager.getInstance().getSelectedAccount().getAccountId();
+        return generateAccountTableName(AccountManager.getInstance().getSelectedAccount());
+    }
+
+    private String generateAccountTableName(AccountListRecyclerAdapter.AccountDataModel account) {
+        return LBudgetUtils.getString(mContext, "account_table_name_prefix") + account.getAccountId();
     }
 
     public Boolean addAccount(final AccountListRecyclerAdapter.AccountDataModel account) {
