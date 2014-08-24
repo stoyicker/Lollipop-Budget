@@ -14,6 +14,7 @@
 package org.jorge.lbudget.logic.controllers;
 
 import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 
 import java.util.List;
@@ -39,6 +40,10 @@ public class MovementManager {
 
     public List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountMovementsToDate() {
         return mMovementList;
+    }
+
+    public List<MovementListRecyclerAdapter.MovementDataModel> getAccountMovementsToDate(AccountListRecyclerAdapter.AccountDataModel account) {
+        return SQLiteDAO.getInstance().getAccountMovementsToDate(account);
     }
 
     public Boolean addMovement(MovementListRecyclerAdapter.MovementDataModel movement) {

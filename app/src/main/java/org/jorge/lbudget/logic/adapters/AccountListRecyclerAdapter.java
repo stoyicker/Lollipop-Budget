@@ -29,13 +29,13 @@ import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.utils.IMECloseListenableEditText;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
-import java.util.Random;
 
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter.ViewHolder> {
 
@@ -260,9 +260,11 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         }
 
         public long calculateBalance() {
-            //TODO calculateBalance()
-            Random rand = new Random();
-            return rand.nextInt(123456789) + 1;
+            long ret = 0;
+            List<MovementListRecyclerAdapter.MovementDataModel> movementsToDate = MovementManager.getInstance().getAccountMovementsToDate(this);
+            for (MovementListRecyclerAdapter.MovementDataModel movementDataModel : movementsToDate)
+                ret += movementDataModel.getMovementAmount();
+            return ret;
         }
     }
 }
