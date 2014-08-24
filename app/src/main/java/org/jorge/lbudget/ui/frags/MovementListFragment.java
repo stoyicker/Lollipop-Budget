@@ -27,7 +27,7 @@ import android.view.ViewGroup;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.MovementManager;
-import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
+import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 
 public class MovementListFragment extends Fragment implements UndoBarShowStateListener {
 

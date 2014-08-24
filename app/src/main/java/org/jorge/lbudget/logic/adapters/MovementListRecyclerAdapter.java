@@ -34,8 +34,8 @@ import android.widget.TextView;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
-import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
+import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.utils.LBudgetUtils;
 import org.jorge.lbudget.utils.TimeUtils;
 
@@ -158,7 +158,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
     }
 
-    //TODO Remove the image file of a movement when deleted
+    //TODO (CB anywhere) Remove the image file of a movement when deleted
 
     private void removeMovementFromManager(MovementDataModel movement) {
         MovementManager.getInstance().removeMovement(movement);
@@ -227,7 +227,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 view.startAnimation(fadeOut);
                             } else {
                                 x = Float.MAX_VALUE; //Reset x
-                                //TODO onClick (Movement: Edit it) (Image: View in a modal dialog)
+                                //TODO (CB anywhere) onClick (Movement: Edit it) (Image: View in a modal dialog)
+                                //TODO (CB anywhere) Ripple effect for the FAB in the accounts
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:

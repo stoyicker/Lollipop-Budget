@@ -29,7 +29,7 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.ui.utils.FloatingActionButton;
-import org.jorge.lbudget.ui.utils.UndoBarShowStateListener;
+import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 
 public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
 

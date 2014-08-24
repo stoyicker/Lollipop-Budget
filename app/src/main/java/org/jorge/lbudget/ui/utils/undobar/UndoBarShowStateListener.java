@@ -11,7 +11,7 @@
  * along with LBudget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.utils;
+package org.jorge.lbudget.ui.utils.undobar;
 
 public interface UndoBarShowStateListener {
 
