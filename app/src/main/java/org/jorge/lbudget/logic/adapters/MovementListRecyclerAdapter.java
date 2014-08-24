@@ -97,16 +97,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         return context.getResources().getColor(retId);
     }
 
-    @SuppressWarnings("unused")
-    //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public void add(MovementDataModel item, int position) {
         items.add(position, item);
         notifyItemInserted(position);
         MovementManager.getInstance().addMovement(item);
     }
 
-    @SuppressWarnings("unused")
-    //If they are not used, ProGuard will take them out, but they're not disturbing here.
     public MovementDataModel remove(int position) {
         MovementDataModel ret = items.remove(position);
         notifyItemRemoved(position);
@@ -228,7 +224,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                             } else {
                                 x = Float.MAX_VALUE; //Reset x
                                 //TODO (CB anywhere) onClick (Movement: Edit it) (Image: View in a modal dialog)
-                                //TODO (CB anywhere) Ripple effect for the FAB in the accounts
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:
