@@ -35,7 +35,7 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
 
     private RecyclerView mAccountsRecyclerView;
     private Context mContext;
-    private FloatingActionButton newAccountButton;
+    private FloatingActionButton mNewAccountButton;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -44,22 +44,22 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
         mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         final AccountListRecyclerAdapter mAdapter;
         mAccountsRecyclerView.setAdapter(mAdapter = new AccountListRecyclerAdapter(this, getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
-        newAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
-        newAccountButton.setOnClickListener(new View.OnClickListener() {
+        mNewAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
+        mNewAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAdapter.createNewAccount();
             }
         });
-        newAccountButton.attachToRecyclerView(mAccountsRecyclerView);
+        mNewAccountButton.attachToRecyclerView(mAccountsRecyclerView);
     }
 
     public void onShowUndoBar() {
-        newAccountButton.setEnabled(Boolean.FALSE);
+        mNewAccountButton.setEnabled(Boolean.FALSE);
     }
 
     public void onHideUndoBar() {
-        newAccountButton.setEnabled(Boolean.TRUE);
+        mNewAccountButton.setEnabled(Boolean.TRUE);
     }
 
     @Nullable

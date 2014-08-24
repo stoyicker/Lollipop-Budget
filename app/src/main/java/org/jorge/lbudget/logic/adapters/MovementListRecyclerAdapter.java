@@ -166,6 +166,10 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         return items.size();
     }
 
+    public void createNewMovement() {
+        //TODO Create new movement
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView movementNameView, movementAmountView, movementEpochView;
         private final ImageView movementImageView;
@@ -223,7 +227,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 view.startAnimation(fadeOut);
                             } else {
                                 x = Float.MAX_VALUE; //Reset x
-                                //TODO (CB anywhere) onClick (Movement: Edit it) (Image: View in a modal dialog)
+                                //TODO (CB anywhere) onClick (Movement: Edit it) (Image: View in a modal dialog with the possibility of taking a new one)
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:

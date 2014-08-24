@@ -27,19 +27,30 @@ import android.view.ViewGroup;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.MovementManager;
+import org.jorge.lbudget.ui.utils.FloatingActionButton;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 
 public class MovementListFragment extends Fragment implements UndoBarShowStateListener {
 
     private RecyclerView mMovementsView;
     private Context mContext;
+    private FloatingActionButton mNewMovementButton;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        mMovementsView.setAdapter(new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
+        final MovementListRecyclerAdapter mAdapter;
+        mMovementsView.setAdapter(mAdapter = new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
+        mNewMovementButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
+        mNewMovementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAdapter.createNewMovement();
+            }
+        });
+        mNewMovementButton.attachToRecyclerView(mMovementsView);
     }
 
     @Override
@@ -66,11 +77,11 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
 
     @Override
     public void onShowUndoBar() {
-        //TODO Disable the button
+        mNewMovementButton.setEnabled(Boolean.FALSE);
     }
 
     @Override
     public void onHideUndoBar() {
-        //TODO Enable the button
+        mNewMovementButton.setEnabled(Boolean.TRUE);
     }
 }
