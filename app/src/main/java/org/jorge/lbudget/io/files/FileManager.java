@@ -20,19 +20,19 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 public abstract class FileManager {
-    public static Boolean recursiveDelete(File dir) {
-        if (dir == null) return Boolean.FALSE;
-        if (dir.isDirectory()) {
-            String[] children = dir.list();
+    public static Boolean recursiveDelete(File file) {
+        if (file == null || !file.exists()) return Boolean.FALSE;
+        if (file.isDirectory()) {
+            String[] children = file.list();
             for (String aChildren : children) {
-                Boolean success = recursiveDelete(new File(dir, aChildren));
+                Boolean success = recursiveDelete(new File(file, aChildren));
                 if (!success) {
                     return false;
                 }
             }
         }
 
-        return dir.delete();
+        return file.delete();
     }
 
     public static String readFileAsString(File target)

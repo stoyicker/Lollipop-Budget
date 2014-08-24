@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
@@ -106,7 +107,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public MovementDataModel remove(int position) {
         MovementDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        removeMovementFromManager(ret);
+        removeMovementFromPersistence(ret);
         return ret;
     }
 
@@ -154,10 +155,9 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
     }
 
-    //TODO (CB anywhere) Remove the image file of a movement when deleted
-
-    private void removeMovementFromManager(MovementDataModel movement) {
+    private void removeMovementFromPersistence(MovementDataModel movement) {
         MovementManager.getInstance().removeMovement(movement);
+        FileManager.recursiveDelete(new File(movement.getImagePath(mContext)));
     }
 
     @Override
@@ -200,7 +200,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                 .setListener(new UndoBar.Listener() {
                                                     @Override
                                                     public void onHide() {
-                                                        removeMovementFromManager(movement);
+                                                        removeMovementFromPersistence(movement);
                                                         undoBarShowStateListener.onHideUndoBar();
                                                     }
 

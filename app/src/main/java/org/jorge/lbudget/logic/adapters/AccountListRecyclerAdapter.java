@@ -28,8 +28,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
-import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
+import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.utils.IMECloseListenableEditText;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -66,7 +66,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     public AccountDataModel remove(int position) {
         AccountDataModel ret = items.remove(position);
         notifyItemRemoved(position);
-        AccountManager.getInstance().removeAccount(ret);
+        removeAccountFromPersistence(ret);
         return ret;
     }
 
@@ -102,6 +102,10 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             viewHolder.accountNameView.setFocusable(Boolean.TRUE);
             viewHolder.accountNameView.setFocusableInTouchMode(Boolean.TRUE);
         }
+    }
+
+    private void removeAccountFromPersistence(AccountDataModel account) {
+        AccountManager.getInstance().removeAccount(account);
     }
 
     @Override
@@ -150,7 +154,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                                     .setListener(new UndoBar.Listener() {
                                                         @Override
                                                         public void onHide() {
-                                                            AccountManager.getInstance().removeAccount(account);
+                                                            removeAccountFromPersistence(account);
                                                             undoBarShowStateListener.onHideUndoBar();
                                                         }
 
