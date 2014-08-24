@@ -13,10 +13,6 @@
 
 apply plugin: 'com.android.application'
 
-repositories {
-    mavenCentral()
-}
-
 android {
     compileSdkVersion 'android-L'
     buildToolsVersion "20.0.0"
