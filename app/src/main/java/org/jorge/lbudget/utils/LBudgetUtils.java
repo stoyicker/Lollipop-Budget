@@ -21,7 +21,6 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.TypedValue;
 
 import org.jorge.lbudget.R;
@@ -32,6 +31,14 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 
 public abstract class LBudgetUtils {
+
+    public static String printifyAmount(Context context, long amount) {
+        final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
+        double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
+        BigDecimal bigDecimal = new BigDecimal(val);
+        bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
+        return bigDecimal.toPlainString();
+    }
 
     public static int dpToPx(Resources res, int dp) {
         return (int) TypedValue

@@ -41,7 +41,6 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 import org.jorge.lbudget.utils.TimeUtils;
 
 import java.io.File;
-import java.math.BigDecimal;
 import java.util.List;
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
@@ -116,7 +115,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         final boolean hasPicture, isIncome = item.getMovementAmount() >= 0;
         intent.setType((hasPicture = new File(item.getImagePath(mContext)).exists()) ? fullMimes : textMime);
         intent.putExtra(Intent.EXTRA_TITLE, item.getMovementTitle());
-        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace(LBudgetUtils.getString(mContext, "amount_placeholder"), MovementDataModel.printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace(LBudgetUtils.getString(mContext, "amount_placeholder"), LBudgetUtils.printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
         if (hasPicture) {
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath(mContext))));
         }
@@ -142,7 +141,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getMovementTitle());
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
-        viewHolder.movementAmountView.setText(MovementDataModel.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        viewHolder.movementAmountView.setText(LBudgetUtils.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
         viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getEpoch(), mContext));
         final String imagePath = item.getImagePath(mContext);
         if (new File(imagePath).exists()) {
@@ -245,14 +244,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         private final int id; //The id will be used to find the image
         private String title;
         private long amount, epoch;
-
-        public static String printifyAmount(Context context, long amount) {
-            final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
-            double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
-            BigDecimal bigDecimal = new BigDecimal(val);
-            bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
-            return bigDecimal.toPlainString();
-        }
 
         public long getMovementAmount() {
             return amount;

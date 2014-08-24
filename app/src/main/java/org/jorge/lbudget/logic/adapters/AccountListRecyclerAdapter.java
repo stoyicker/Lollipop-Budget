@@ -25,6 +25,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.AccountManager;
@@ -34,6 +35,7 @@ import org.jorge.lbudget.utils.IMECloseListenableEditText;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
+import java.util.Random;
 
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter.ViewHolder> {
 
@@ -92,16 +94,19 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         if (item.isSelected()) {
             viewHolder.wholeView.setBackgroundResource(R.color.selected_card_background);
             viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
-            viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountNameTextSelected);
+            viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountTextSelected);
             viewHolder.accountNameView.setFocusable(Boolean.FALSE);
             viewHolder.accountNameView.setFocusableInTouchMode(Boolean.FALSE);
+            viewHolder.balanceView.setTextAppearance(mContext, R.style.AccountTextSelected);
         } else {
             viewHolder.wholeView.setBackgroundResource(R.color.non_selected_card_background);
             viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
-            viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountNameTextNonSelected);
+            viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountTextNonSelected);
             viewHolder.accountNameView.setFocusable(Boolean.TRUE);
             viewHolder.accountNameView.setFocusableInTouchMode(Boolean.TRUE);
+            viewHolder.balanceView.setTextAppearance(mContext, R.style.AccountTextSelected);
         }
+        viewHolder.balanceView.setText(LBudgetUtils.printifyAmount(mContext, item.calculateBalance()) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
     }
 
     private void removeAccountFromPersistence(AccountDataModel account) {
@@ -122,6 +127,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     public class ViewHolder extends RecyclerView.ViewHolder {
         private final IMECloseListenableEditText accountNameView;
         private final View wholeView;
+        private final TextView balanceView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -208,6 +214,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                     mActivity.findViewById(android.R.id.content).requestFocus();
                 }
             });
+            balanceView = (TextView) itemView.findViewById(R.id.balance_view);
         }
     }
 
@@ -250,6 +257,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
         private void setSelected(boolean selected) {
             this.selected = selected;
+        }
+
+        public long calculateBalance() {
+            //TODO calculateBalance()
+            Random rand = new Random();
+            return rand.nextInt(123456789) + 1;
         }
     }
 }
