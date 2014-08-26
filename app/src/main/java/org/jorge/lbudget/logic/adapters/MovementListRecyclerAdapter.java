@@ -132,6 +132,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                 sendShareIntent(items.get(i));
             }
         });
+        v.findViewById(R.id.movement_image_view).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO Edit the image
+            }
+        });
         return new ViewHolder(v);
     }
 
@@ -222,7 +228,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 view.startAnimation(fadeOut);
                             } else {
                                 x = Float.MAX_VALUE; //Reset x
-                                //TODO (CB anywhere) onClick (Movement: Edit it) (Image: View in a modal dialog with the possibility of taking a new one)
+                                //TODO Edit the movement
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:
