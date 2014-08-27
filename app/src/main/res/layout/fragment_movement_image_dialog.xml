@@ -33,9 +33,9 @@
 
         <ImageView
             android:id="@+id/movement_image_dialog_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scaleType="centerInside"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/movement_image_content_description" />
 
         <ImageButton
