@@ -103,15 +103,19 @@ public class MovementImageDialogFragment extends DialogFragment {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                     Uri.fromFile(pathAsFile));
             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            FileManager.recursiveDelete(oldPathAsFile);
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+        final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
+        final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+            FileManager.recursiveDelete(oldPathAsFile);
             dismiss();
+        } else {
+            if (!oldPathAsFile.renameTo(new File(path)))
+                throw new IllegalStateException("Couldn't rename the original image back to the original name");
         }
     }
 }
