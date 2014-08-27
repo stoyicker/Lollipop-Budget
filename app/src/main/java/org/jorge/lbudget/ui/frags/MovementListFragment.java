@@ -29,8 +29,9 @@ import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.FloatingActionButton;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
-public class MovementListFragment extends Fragment implements UndoBarShowStateListener {
+public class MovementListFragment extends Fragment implements UndoBarShowStateListener, MovementListRecyclerAdapter.MovementImageClickListener {
 
     private RecyclerView mMovementsView;
     private Context mContext;
@@ -42,7 +43,7 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
         final MovementListRecyclerAdapter mAdapter;
-        mMovementsView.setAdapter(mAdapter = new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate()));
+        mMovementsView.setAdapter(mAdapter = new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate(), this));
         mNewMovementButton = (FloatingActionButton) view.findViewById(R.id.button_new_movement);
         mNewMovementButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,5 +84,15 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
     @Override
     public void onHideUndoBar() {
         mNewMovementButton.setEnabled(Boolean.TRUE);
+    }
+
+    @Override
+    public void onMovementImageClick(MovementListRecyclerAdapter.MovementDataModel movement) {
+        showMovementImageDialog(movement);
+    }
+
+    private void showMovementImageDialog(MovementListRecyclerAdapter.MovementDataModel movement) {
+        MovementImageDialogFragment dialogFragment = MovementImageDialogFragment.newInstance(mContext, movement);
+        dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "movement_image_content_description"));
     }
 }

@@ -14,7 +14,6 @@
 package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -41,8 +40,6 @@ public class MovementImageDialogFragment extends DialogFragment {
         args.putString(KEY_MOVEMENT_IMAGE_PATH, movement.getImagePath(_context));
         ret.setArguments(args);
 
-        ret.setRetainInstance(Boolean.TRUE);
-
         return ret;
     }
 
@@ -54,23 +51,23 @@ public class MovementImageDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-        builder.setView(R.layout.fragment_movement_image_dialog).setTitle(getArguments().getString(KEY_MOVEMENT_TITLE));
-
-        return builder.create();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movement_image_dialog, container);
-        Dialog dialog = getDialog();
+
+        final Dialog dialog = getDialog();
         dialog.setTitle(getArguments().getString(KEY_MOVEMENT_TITLE));
-        ((ImageView) dialog.findViewById(R.id.movement_image_dialog_view)).setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
+        dialog.setCanceledOnTouchOutside(Boolean.TRUE);
+
+        ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
+        try {
+            imageView.setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
+        } catch (OutOfMemoryError ignored) { //Too much of an image for you to handle
+            imageView.setVisibility(View.GONE);
+            view.findViewById(R.id.image_error_alternative).setVisibility(View.VISIBLE);
+        }
         return view;
     }
 }
+
+//TODO Refresh the movement if the image is new

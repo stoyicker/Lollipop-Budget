@@ -55,10 +55,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private Context mContext;
     private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
+    private final MovementImageClickListener movementImageClickListener;
     private View mEmptyView;
 
-    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items) {
+    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items, MovementImageClickListener movementImageClickListener) {
         this.items = items;
+        this.movementImageClickListener = movementImageClickListener;
         mContext = activity.getApplicationContext();
         mActivity = activity;
         MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
@@ -135,7 +137,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         v.findViewById(R.id.movement_image_view).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO Edit the image
+                movementImageClickListener.onMovementImageClick(items.get(i));
             }
         });
         return new ViewHolder(v);
@@ -151,8 +153,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getEpoch(), mContext));
         final String imagePath = item.getImagePath(mContext);
         if (new File(imagePath).exists()) {
-            viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(imagePath));
-            viewHolder.movementImageView.setVisibility(View.VISIBLE);
+            try {
+                viewHolder.movementImageView.setImageDrawable(Drawable.createFromPath(imagePath));
+                viewHolder.movementImageView.setVisibility(View.VISIBLE);
+            } catch (OutOfMemoryError ignored) {
+                //Too much of an image for you to handle
+            }
         }
     }
 
@@ -279,5 +285,9 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         public long getEpoch() {
             return epoch;
         }
+    }
+
+    public interface MovementImageClickListener {
+        public void onMovementImageClick(MovementDataModel movement);
     }
 }

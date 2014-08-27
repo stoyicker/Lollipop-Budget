@@ -13,23 +13,39 @@
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/movement_image_dialog_view"
+    <TextView
+        android:id="@+id/image_error_alternative"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/movement_image_content_description" />
+        android:text="@string/image_too_large_alt_message"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
-    <ImageButton
-        android:id="@+id/movement_picture_snap_button"
-        android:layout_alignParentBottom="true"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_action_camera"
-        android:scaleType="centerInside"
-        android:background="@color/transparent_black"
-        android:contentDescription="@string/picture_snap_content_description" />
-</RelativeLayout>
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/movement_image_dialog_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:contentDescription="@string/movement_image_content_description" />
+
+        <ImageButton
+            android:id="@+id/movement_picture_snap_button"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_camera"
+            android:scaleType="centerInside"
+            android:background="@color/transparent_black"
+            android:contentDescription="@string/picture_snap_content_description" />
+    </RelativeLayout>
+</LinearLayout>
