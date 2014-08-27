@@ -39,7 +39,7 @@
             android:contentDescription="@string/movement_image_content_description" />
 
         <ImageButton
-            android:id="@+id/movement_picture_snap_button"
+            android:id="@+id/button_movement_picture_snap"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

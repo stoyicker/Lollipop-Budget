@@ -13,9 +13,11 @@
 
 package org.jorge.lbudget.ui.frags;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,7 @@ import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 public class MovementImageDialogFragment extends DialogFragment {
 
     private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
+    private Context mContext;
 
     public static MovementImageDialogFragment newInstance(Context _context, MovementListRecyclerAdapter.MovementDataModel movement) {
         MovementImageDialogFragment ret = new MovementImageDialogFragment();
@@ -39,6 +42,13 @@ public class MovementImageDialogFragment extends DialogFragment {
         ret.setArguments(args);
 
         return ret;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        mContext = activity.getApplicationContext();
     }
 
     @Override
@@ -58,6 +68,11 @@ public class MovementImageDialogFragment extends DialogFragment {
             imageView.setVisibility(View.GONE);
             view.findViewById(R.id.image_error_alternative).setVisibility(View.VISIBLE);
         }
+
+        if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+            view.findViewById(R.id.button_movement_picture_snap).setVisibility(View.GONE);
+        }
+
         return view;
     }
 }
