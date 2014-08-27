@@ -47,7 +47,7 @@ public class UndoBarView extends MaxWidthLinearLayout {
         super.onFinishInflate();
 
         mMessage = (TextView) findViewById(R.id.message);
-        mButton = findViewById(R.id.button);
+        mButton = findViewById(R.id.button_undo_bar);
     }
 
     void setMessage(CharSequence message) {

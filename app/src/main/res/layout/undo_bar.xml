@@ -22,7 +22,7 @@
         style="@style/UndoBarMessageStyle" />
 
     <LinearLayout
-        android:id="@+id/button"
+        android:id="@+id/button_undo_bar"
         style="@style/UndoBarButtonWrapperStyle">
 
         <View style="@style/UndoBarDividerStyle" />

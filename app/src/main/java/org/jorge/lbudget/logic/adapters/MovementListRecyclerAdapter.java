@@ -128,7 +128,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
-        v.findViewById(R.id.movement_button_share).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.button_share_movement).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendShareIntent(items.get(i));

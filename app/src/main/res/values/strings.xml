@@ -20,7 +20,7 @@
     <string name="symbol_parent_directory">..</string>
     <string name="database_directory_name">databases</string>
     <string name="picture_folder_name">pictures</string>
-    <string name="camera_image_extension">.png</string>
+    <string name="camera_image_extension">.jpeg</string>
     <string name="db_name">LBudget_DB</string>
     <string name="movement_color_red_identifier">red</string>
     <string name="movement_color_green_identifier">green</string>
@@ -249,4 +249,5 @@
     <string name="movement_key_amount">MOVEMENT_AMOUNT</string>
     <string name="movement_key_epoch">MOVEMENT_EPOCH</string>
     <string name="account_table_name_prefix">ACCOUNT_</string>
+    <string name="old_image_name_appendix">-old</string>
 </resources>

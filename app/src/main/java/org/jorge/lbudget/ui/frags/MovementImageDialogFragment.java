@@ -17,20 +17,28 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
+import org.jorge.lbudget.utils.LBudgetUtils;
+
+import java.io.File;
 
 public class MovementImageDialogFragment extends DialogFragment {
 
     private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
+    private static final int REQUEST_TAKE_PHOTO = 1;
     private Context mContext;
 
     public static MovementImageDialogFragment newInstance(Context _context, MovementListRecyclerAdapter.MovementDataModel movement) {
@@ -73,8 +81,37 @@ public class MovementImageDialogFragment extends DialogFragment {
             view.findViewById(R.id.button_movement_picture_snap).setVisibility(View.GONE);
         }
 
+        view.findViewById(R.id.button_movement_picture_snap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takeNewMovementPicture();
+            }
+        });
+
         return view;
     }
-}
 
-//TODO Refresh the movement if the image is new
+    private void takeNewMovementPicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
+            final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
+            File pathAsFile = new File(path), oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
+            if (!pathAsFile.renameTo(oldPathAsFile)) {
+                dismiss();
+                return;
+            }
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                    Uri.fromFile(pathAsFile));
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            FileManager.recursiveDelete(oldPathAsFile);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+            dismiss();
+        }
+    }
+}
