@@ -37,5 +37,6 @@
     </color>
     <color name="floating_action_button_background_state_pressed">@color/theme_color_primary</color>
     <color name="movement_epoch_color">#6E8E99</color>
-    <color name="transparent_black">#80000000</color>
+    <color name="transparent_black">#40000000</color>
+    <color name="movement_image_dialog_background">@android:color/white</color>
 </resources>

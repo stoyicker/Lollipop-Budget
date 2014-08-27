@@ -16,6 +16,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:paddingTop="@dimen/movement_image_view_padding_top"
     android:orientation="vertical">
 
     <TextView
@@ -34,18 +35,19 @@
         <ImageView
             android:id="@+id/movement_image_dialog_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
             android:contentDescription="@string/movement_image_content_description" />
 
         <ImageButton
             android:id="@+id/button_movement_picture_snap"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
+            android:layout_alignBottom="@id/movement_image_dialog_view"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_camera"
             android:scaleType="centerInside"
-            android:background="@color/transparent_black"
+            android:background="@drawable/snap_button_background"
             android:contentDescription="@string/picture_snap_content_description" />
     </RelativeLayout>
 </FrameLayout>
