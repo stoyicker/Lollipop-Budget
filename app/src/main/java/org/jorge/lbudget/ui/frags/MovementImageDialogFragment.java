@@ -13,7 +13,6 @@
 
 package org.jorge.lbudget.ui.frags;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -30,7 +29,6 @@ import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 public class MovementImageDialogFragment extends DialogFragment {
 
     private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
-    private Context mContext;
 
     public static MovementImageDialogFragment newInstance(Context _context, MovementListRecyclerAdapter.MovementDataModel movement) {
         MovementImageDialogFragment ret = new MovementImageDialogFragment();
@@ -44,20 +42,14 @@ public class MovementImageDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        mContext = activity.getApplicationContext();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_movement_image_dialog, container);
 
         final Dialog dialog = getDialog();
-        dialog.setTitle(getArguments().getString(KEY_MOVEMENT_TITLE));
-        dialog.setCanceledOnTouchOutside(Boolean.TRUE);
+        if (dialog != null) {
+            dialog.setTitle(getArguments().getString(KEY_MOVEMENT_TITLE));
+        }
 
         ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
         try {
