@@ -28,4 +28,5 @@
     <dimen name="account_card_height">55dp</dimen>
     <dimen name="movement_epoch_text_size">12sp</dimen>
     <dimen name="text_view_barrier_margin">4dp</dimen>
+    <dimen name="movement_card_height">90dp</dimen>
 </resources>
