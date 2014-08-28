@@ -23,6 +23,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,13 @@ public class MovementImageDialogFragment extends DialogFragment {
 
         final Dialog dialog = getDialog();
         if (dialog != null) {
-            dialog.setTitle(getArguments().getString(KEY_MOVEMENT_TITLE));
+            dialog.getWindow().getAttributes().windowAnimations = R.style.AnimatedMovementPanelAnimationStyle;
+            final String movementTitle = getArguments().getString(KEY_MOVEMENT_TITLE);
+            if (!TextUtils.isEmpty(movementTitle)) {
+                dialog.setTitle(movementTitle);
+            } else {
+                setStyle(STYLE_NO_TITLE, 0);
+            }
         }
 
         ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
