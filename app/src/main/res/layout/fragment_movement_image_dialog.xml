@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_camera"
             android:scaleType="centerInside"
-            android:background="@drawable/snap_button_background"
+            android:background="@drawable/snap_button_background_ripple"
             android:contentDescription="@string/picture_snap_content_description" />
     </RelativeLayout>
 </FrameLayout>
