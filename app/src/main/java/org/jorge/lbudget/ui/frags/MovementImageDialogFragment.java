@@ -65,7 +65,7 @@ public class MovementImageDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movement_image_dialog, container);
+        View ret = inflater.inflate(R.layout.fragment_dialog_movement_image, container);
 
         final Dialog dialog = getDialog();
         if (dialog != null) {
@@ -78,27 +78,27 @@ public class MovementImageDialogFragment extends DialogFragment {
             }
         }
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
+        ImageView imageView = (ImageView) ret.findViewById(R.id.movement_image_dialog_view);
         try {
             imageView.setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
             new PhotoViewAttacher(imageView);
         } catch (OutOfMemoryError ignored) { //Too much of an image for you to handle
             imageView.setVisibility(View.GONE);
-            view.findViewById(R.id.image_error_alternative).setVisibility(View.VISIBLE);
+            ret.findViewById(R.id.image_error_alternative).setVisibility(View.VISIBLE);
         }
 
         if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            view.findViewById(R.id.button_movement_picture_snap).setVisibility(View.GONE);
+            ret.findViewById(R.id.button_movement_picture_snap).setVisibility(View.GONE);
         }
 
-        view.findViewById(R.id.button_movement_picture_snap).setOnClickListener(new View.OnClickListener() {
+        ret.findViewById(R.id.button_movement_picture_snap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 takeNewMovementPicture();
             }
         });
 
-        return view;
+        return ret;
     }
 
     private void takeNewMovementPicture() {
