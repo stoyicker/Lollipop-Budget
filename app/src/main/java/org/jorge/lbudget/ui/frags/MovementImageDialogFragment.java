@@ -43,7 +43,6 @@ public class MovementImageDialogFragment extends DialogFragment {
     private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
     private static final int REQUEST_TAKE_PHOTO = 1;
     private Context mContext;
-    PhotoViewAttacher mAttacher;
 
     public static MovementImageDialogFragment newInstance(Context _context, MovementListRecyclerAdapter.MovementDataModel movement) {
         MovementImageDialogFragment ret = new MovementImageDialogFragment();
@@ -82,7 +81,7 @@ public class MovementImageDialogFragment extends DialogFragment {
         ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
         try {
             imageView.setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
-            mAttacher = new PhotoViewAttacher(imageView);
+            new PhotoViewAttacher(imageView);
         } catch (OutOfMemoryError ignored) { //Too much of an image for you to handle
             imageView.setVisibility(View.GONE);
             view.findViewById(R.id.image_error_alternative).setVisibility(View.VISIBLE);
