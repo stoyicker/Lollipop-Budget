@@ -132,7 +132,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
 
     private Fragment findMovementListFragment() {
         if (mContentFragments[0] == null)
-            mContentFragments[0] = new MovementListFragment();
+            mContentFragments[0] = Fragment.instantiate(mContext, MovementListFragment.class.getName());
         return mContentFragments[0];
     }
 
@@ -142,7 +142,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
 
     private Fragment findAccountListFragment() {
         if (mContentFragments[2] == null)
-            mContentFragments[2] = new AccountListFragment();
+            mContentFragments[2] = Fragment.instantiate(mContext, AccountListFragment.class.getName());
         return mContentFragments[2];
     }
 

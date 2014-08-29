@@ -14,6 +14,7 @@
 package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -52,6 +53,12 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
             }
         });
         mNewMovementButton.attachToRecyclerView(mMovementsView);
+        mNewMovementButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMovementRegistrarDialog();
+            }
+        });
     }
 
     @Override
@@ -93,6 +100,11 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
 
     private void showMovementImageDialog(MovementListRecyclerAdapter.MovementDataModel movement) {
         MovementImageDialogFragment dialogFragment = MovementImageDialogFragment.newInstance(mContext, movement);
-        dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "movement_image_content_description"));
+        dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "movement_image_dialog_name"));
+    }
+
+    private void showMovementRegistrarDialog() {
+        DialogFragment dialogFragment = (DialogFragment) Fragment.instantiate(mContext, NewMovementDialogFragment.class.getName());
+        dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "new_movement_dialog_name"));
     }
 }

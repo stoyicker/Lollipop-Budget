@@ -51,4 +51,5 @@
     <string name="time_ago_years">{TIMEPLACEHOLDER} ago</string>
     <string name="picture_snap_content_description">Take a picture</string>
     <string name="image_too_large_alt_message">This image is too big. Sorry about that!</string>
+    <string name="register_movement_dialog_title">Register</string>
 </resources>

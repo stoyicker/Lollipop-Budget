@@ -250,4 +250,6 @@
     <string name="movement_key_epoch">MOVEMENT_EPOCH</string>
     <string name="account_table_name_prefix">ACCOUNT_</string>
     <string name="old_image_name_appendix">-old</string>
+    <string name="new_movement_dialog_name">NEW_MOVEMENT_DIALOG</string>
+    <string name="movement_image_dialog_name">MOVEMENT_IMAGE_DIALOG</string>
 </resources>
