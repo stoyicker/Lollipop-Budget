@@ -62,48 +62,9 @@ public class MovementImageDialogFragment extends DialogFragment {
         mContext = activity.getApplicationContext();
     }
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        View ret = inflater.inflate(R.layout.fragment_dialog_movement_image, container);
-//
-//        final Dialog dialog = getDialog();
-//        if (dialog != null) {
-//            dialog.getWindow().getAttributes().windowAnimations = R.style.AnimatedMovementPanelAnimationStyle;
-//            final String movementTitle = getArguments().getString(KEY_MOVEMENT_TITLE);
-//            if (!TextUtils.isEmpty(movementTitle)) {
-//                dialog.setTitle(movementTitle);
-//            } else {
-//                setStyle(STYLE_NO_TITLE, 0);
-//            }
-//        }
-//
-//        ImageView imageView = (ImageView) ret.findViewById(R.id.movement_image_dialog_view);
-//        try {
-//            imageView.setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
-//            new PhotoViewAttacher(imageView);
-//        } catch (OutOfMemoryError ignored) { //Too much of an image for you to handle
-//            imageView.setVisibility(View.GONE);
-//            ret.findViewById(R.id.image_error_alternative).setVisibility(View.VISIBLE);
-//        }
-//
-//        if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-//            ret.findViewById(R.id.button_movement_picture_snap).setVisibility(View.GONE);
-//        }
-//
-//        ret.findViewById(R.id.button_movement_picture_snap).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                takeNewMovementPicture();
-//            }
-//        });
-//
-//        return ret;
-//    }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_dialog_movement_image, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_movement_image, null);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
         try {
