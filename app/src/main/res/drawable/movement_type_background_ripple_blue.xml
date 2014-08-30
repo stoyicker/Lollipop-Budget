@@ -2,7 +2,8 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="@color/transparent_black">
     <item>
-        <shape android:shape="oval">
+        <shape android:shape="rectangle">
+            <corners android:radius="2dp" />
             <solid android:color="@color/movement_color_blue" />
         </shape>
     </item>
