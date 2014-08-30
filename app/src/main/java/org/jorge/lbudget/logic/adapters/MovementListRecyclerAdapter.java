@@ -38,7 +38,7 @@ import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.utils.LBudgetUtils;
-import org.jorge.lbudget.utils.TimeUtils;
+import org.jorge.lbudget.utils.LBudgetTimeUtils;
 
 import java.io.File;
 import java.util.List;
@@ -152,7 +152,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(LBudgetUtils.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
-        viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getMovementEpoch(), mContext));
+        viewHolder.movementEpochView.setText(LBudgetTimeUtils.getTimeAgo(item.getMovementEpoch(), mContext));
         final String imagePath = item.getImagePath(mContext);
         if (new File(imagePath).exists()) {
             try {

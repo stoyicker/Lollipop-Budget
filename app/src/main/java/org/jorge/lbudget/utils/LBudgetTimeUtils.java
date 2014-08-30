@@ -17,7 +17,7 @@ import android.content.Context;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public abstract class TimeUtils {
+public abstract class LBudgetTimeUtils {
     private static final long SECOND_MILLIS = 1000;
     private static final long MINUTE_MILLIS = 60 * SECOND_MILLIS;
     private static final long HOUR_MILLIS = 60 * MINUTE_MILLIS;
@@ -68,5 +68,10 @@ public abstract class TimeUtils {
             amount = ((int) diff / YEAR_MILLIS) + "";
         }
         return LBudgetUtils.getString(context, identifier).replace(LBudgetUtils.getString(context, "time_ago_placeholder"), amount);
+    }
+
+    public static int getEpochAsISO8601(long epoch) {
+        //TODO getEpochAsISO8601
+        return 0;
     }
 }

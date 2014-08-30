@@ -24,11 +24,13 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.utils.LBudgetTimeUtils;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.getMovementColorFromPreferences;
@@ -99,6 +101,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 expenseButton.setVisibility(View.GONE);
                 incomeButton.setVisibility(View.VISIBLE);
             }
+            ((EditText) view.findViewById(R.id.movement_detail_date_view)).setText(LBudgetTimeUtils.getEpochAsISO8601(args.getLong(KEY_MOVEMENT_EPOCH)));
         }
 
         //TODO Give proper state to the buttons and use the default Android L shape
