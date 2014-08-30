@@ -13,6 +13,7 @@
 
 package org.jorge.lbudget.utils;
 
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +23,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewAnimationUtils;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.devutils.DevUtils;
@@ -148,5 +151,13 @@ public abstract class LBudgetUtils {
     public static int pixelsAsDp(Context context, int sizeInPx) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (sizeInPx * scale + 0.5f);
+    }
+
+    public static ValueAnimator createStandardCircularReveal(View v) {
+        return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, 0, v.getWidth());
+    }
+
+    public static ValueAnimator createStandardCircularHide(View v) {
+        return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, v.getWidth(), 0);
     }
 }

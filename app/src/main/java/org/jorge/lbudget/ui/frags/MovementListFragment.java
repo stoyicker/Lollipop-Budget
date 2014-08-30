@@ -97,7 +97,7 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
     }
 
     private void showCreateMovementDialog() {
-        DialogFragment dialogFragment = (DialogFragment) Fragment.instantiate(mContext, MovementDetailDialogFragment.class.getName());
+        final DialogFragment dialogFragment = (DialogFragment) Fragment.instantiate(mContext, MovementDetailDialogFragment.class.getName());
         dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "new_movement_dialog_name"));
     }
 

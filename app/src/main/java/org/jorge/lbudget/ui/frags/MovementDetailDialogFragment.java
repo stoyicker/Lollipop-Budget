@@ -76,7 +76,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
         final String dialogTitle;
         final DialogInterface.OnClickListener onPositiveButtonClickListener;
         final Button expenseButton = (Button) view.findViewById(R.id.movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R.id.movement_detail_type_income_view);
-        Long epoch = 0L;
+        Long epoch = System.currentTimeMillis();
 
         ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
 
