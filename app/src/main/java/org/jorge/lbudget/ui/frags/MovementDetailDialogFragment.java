@@ -76,6 +76,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
         final String dialogTitle;
         final DialogInterface.OnClickListener onPositiveButtonClickListener;
         final Button expenseButton = (Button) view.findViewById(R.id.movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R.id.movement_detail_type_income_view);
+        Long epoch = 0L;
 
         ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
 
@@ -101,8 +102,10 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 expenseButton.setVisibility(View.GONE);
                 incomeButton.setVisibility(View.VISIBLE);
             }
-            ((EditText) view.findViewById(R.id.movement_detail_date_view)).setText(LBudgetTimeUtils.getEpochAsISO8601(args.getLong(KEY_MOVEMENT_EPOCH)));
+            epoch = args.getLong(KEY_MOVEMENT_EPOCH);
         }
+
+        ((EditText) view.findViewById(R.id.movement_detail_date_view)).setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));
 
         //TODO Give proper state to the buttons and use the default Android L shape
         setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext, "pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier")));

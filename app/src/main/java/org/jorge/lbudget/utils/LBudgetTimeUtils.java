@@ -2,6 +2,9 @@ package org.jorge.lbudget.utils;
 
 import android.content.Context;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /*
  * Copyright 2012 Google Inc.
  *
@@ -70,8 +73,7 @@ public abstract class LBudgetTimeUtils {
         return LBudgetUtils.getString(context, identifier).replace(LBudgetUtils.getString(context, "time_ago_placeholder"), amount);
     }
 
-    public static int getEpochAsISO8601(long epoch) {
-        //TODO getEpochAsISO8601
-        return 0;
+    public static String getEpochAsISO8601(Context context, Long epoch) {
+        return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format")).format(new Date(epoch));
     }
 }
