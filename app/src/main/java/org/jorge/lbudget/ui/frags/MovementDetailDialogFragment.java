@@ -26,7 +26,7 @@ import android.view.View;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
-public class NewMovementDialogFragment extends DialogFragment {
+public class MovementDetailDialogFragment extends DialogFragment {
 
     private Context mContext;
 
@@ -39,7 +39,7 @@ public class NewMovementDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_new_movement, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_movement_detail, null);
 
         final String dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
         if (TextUtils.isEmpty(dialogTitle))
@@ -54,7 +54,7 @@ public class NewMovementDialogFragment extends DialogFragment {
         ).setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        NewMovementDialogFragment.this.dismiss();
+                        MovementDetailDialogFragment.this.dismiss();
                     }
                 }
         ).create();

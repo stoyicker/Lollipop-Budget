@@ -252,4 +252,5 @@
     <string name="old_image_name_appendix">-old</string>
     <string name="new_movement_dialog_name">NEW_MOVEMENT_DIALOG</string>
     <string name="movement_image_dialog_name">MOVEMENT_IMAGE_DIALOG</string>
+    <string name="amount_numeric_none">0,00</string>
 </resources>

@@ -52,4 +52,7 @@
     <string name="picture_snap_content_description">Take a picture</string>
     <string name="image_too_large_alt_message">This image is too big. Sorry about that!</string>
     <string name="register_movement_dialog_title">Register</string>
+    <string name="expense_name">Expense</string>
+    <string name="income_name">Income</string>
+    <string name="movement_name_view_hint">Description</string>
 </resources>
