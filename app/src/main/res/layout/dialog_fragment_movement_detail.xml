@@ -76,17 +76,32 @@
             android:gravity="center_horizontal|bottom"
             android:layout_width="wrap_content"
             android:layout_toEndOf="@+id/movement_detail_amount_view"
-            android:layout_alignBottom="@+id/movement_detail_type_view"
+            android:layout_alignBottom="@+id/movement_detail_types_view"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/movement_detail_type_view"
+        <FrameLayout
+            android:id="@+id/movement_detail_types_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="@string/expense_name"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginEnd="@dimen/edittext_compensation_margin" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/edit_text_compensation_margin">
+
+            <Button
+                android:id="@+id/movement_detail_type_income_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/income_name"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/movement_detail_type_expense_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/expense_name"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+        </FrameLayout>
     </RelativeLayout>
 </LinearLayout>

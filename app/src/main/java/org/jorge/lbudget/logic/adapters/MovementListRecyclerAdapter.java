@@ -84,7 +84,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         expenseColor = getMovementColorFromPreferences(context, "pref_key_movement_expense_color", newColor.length <= 0 ? LBudgetUtils.getString(context, "movement_color_red_identifier") : newColor[0]);
     }
 
-    private static int getMovementColorFromPreferences(Context context, String prefName, String defaultColor) {
+    public static int getMovementColorFromPreferences(Context context, String prefName, String defaultColor) {
         int retId = -1;
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final String prefKey = LBudgetUtils.getString(context, prefName);

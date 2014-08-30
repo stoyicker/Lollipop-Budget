@@ -23,12 +23,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.utils.LBudgetUtils;
+
+import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.getMovementColorFromPreferences;
 
 public class MovementDetailDialogFragment extends DialogFragment {
 
@@ -70,6 +73,9 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
         final String dialogTitle;
         final DialogInterface.OnClickListener onPositiveButtonClickListener;
+        final Button expenseButton = (Button) view.findViewById(R.id.movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R.id.movement_detail_type_income_view);
+
+        ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
 
         if (args == null) {
             dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
@@ -89,9 +95,31 @@ public class MovementDetailDialogFragment extends DialogFragment {
                     throw new UnsupportedOperationException("Not yet implemented.");
                 }
             };
+            if (args.getLong(KEY_MOVEMENT_AMOUNT) > 0) {
+                expenseButton.setVisibility(View.GONE);
+                incomeButton.setVisibility(View.VISIBLE);
+            }
         }
 
-        ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
+        //TODO Give proper state to the buttons and use the default Android L shape
+        setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext, "pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier")));
+        setMovementTypeButtonBackground(expenseButton, getMovementColorFromPreferences(mContext, "pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier")));
+
+        expenseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                expenseButton.setVisibility(View.GONE);
+                incomeButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        incomeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                incomeButton.setVisibility(View.GONE);
+                expenseButton.setVisibility(View.VISIBLE);
+            }
+        });
 
         if (TextUtils.isEmpty(dialogTitle))
             setStyle(STYLE_NO_TITLE, 0);
@@ -110,5 +138,22 @@ public class MovementDetailDialogFragment extends DialogFragment {
         ret.getWindow().getAttributes().windowAnimations = R.style.AnimatedMovementPanelAnimationStyle;
 
         return ret;
+    }
+
+    private void setMovementTypeButtonBackground(Button button, int movementColorFromPreferences) {
+        final int MOVEMENT_COLOR_RED = mContext.getResources().getColor(R.color.movement_color_red), MOVEMENT_COLOR_GREEN = mContext.getResources().getColor(R.color.movement_color_green), MOVEMENT_COLOR_BLUE = mContext.getResources().getColor(R.color.movement_color_blue);
+
+        int background;
+
+        if (movementColorFromPreferences == MOVEMENT_COLOR_RED) {
+            background = R.drawable.movement_type_background_ripple_red;
+        } else if (movementColorFromPreferences == MOVEMENT_COLOR_GREEN) {
+            background = R.drawable.movement_type_background_ripple_green;
+        } else if (movementColorFromPreferences == MOVEMENT_COLOR_BLUE) {
+            background = R.drawable.movement_type_background_ripple_blue;
+        } else
+            throw new IllegalStateException("Unrecognized movement color found when rendering the movement type button.");
+
+        button.setBackgroundResource(background);
     }
 }
