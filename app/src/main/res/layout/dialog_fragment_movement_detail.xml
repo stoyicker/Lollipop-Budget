@@ -74,7 +74,6 @@
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:gravity="center_horizontal|bottom"
-            android:text="SEK"
             android:layout_width="wrap_content"
             android:layout_toEndOf="@+id/movement_detail_amount_view"
             android:layout_alignBottom="@+id/movement_detail_type_view"

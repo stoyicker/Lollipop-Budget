@@ -23,9 +23,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
+import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 public class MovementDetailDialogFragment extends DialogFragment {
@@ -88,6 +90,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 }
             };
         }
+
+        ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
 
         if (TextUtils.isEmpty(dialogTitle))
             setStyle(STYLE_NO_TITLE, 0);
