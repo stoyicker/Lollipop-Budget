@@ -55,5 +55,5 @@
     <string name="edit_movement_dialog_title">Edit</string>
     <string name="expense_name">Expense</string>
     <string name="income_name">Income</string>
-    <string name="movement_name_view_hint">Description</string>
+    <string name="movement_detail_name_view_hint">Description</string>
 </resources>

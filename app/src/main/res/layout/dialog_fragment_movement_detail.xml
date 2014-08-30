@@ -14,39 +14,40 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/dialog_fragment_padding">
 
-    <TextView
-        android:id="@+id/new_movement_view_date"
+    <EditText
+        android:id="@+id/movement_detail_date_view"
+        android:editable="false"
         android:layout_marginTop="@dimen/movement_detail_dialog_top_padding"
+        android:hint="@string/iso_8601_date_format"
+        android:layout_width="wrap_content"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:hint="@string/iso_8601_date_format"
-        android:text="2014-08-27"
-        android:layout_width="wrap_content"
         android:nextFocusLeft="@null"
         android:nextFocusUp="@null"
-        android:nextFocusDown="@+id/new_movement_name_view"
-        android:nextFocusForward="@+id/new_movement_name_view"
-        android:nextFocusRight="@+id/new_movement_name_view"
+        android:nextFocusDown="@+id/movement_detail_name_view"
+        android:nextFocusForward="@+id/movement_detail_name_view"
+        android:nextFocusRight="@+id/movement_detail_name_view"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/edittext_compensation_margin" />
+        tools:ignore="Deprecated,TextFields" />
 
     <EditText
-        android:id="@+id/new_movement_name_view"
-        android:hint="@string/movement_name_view_hint"
+        android:id="@+id/movement_detail_name_view"
+        android:hint="@string/movement_detail_name_view_hint"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:nextFocusLeft="@null"
         android:nextFocusUp="@null"
-        android:nextFocusDown="@+id/new_movement_amount_view"
-        android:nextFocusForward="@+id/new_movement_amount_view"
-        android:nextFocusRight="@+id/new_movement_amount_view"
+        android:nextFocusDown="@+id/movement_detail_amount_view"
+        android:nextFocusForward="@+id/movement_detail_amount_view"
+        android:nextFocusRight="@+id/movement_detail_amount_view"
         android:inputType="text" />
 
     <RelativeLayout
@@ -54,33 +55,33 @@
         android:layout_height="wrap_content">
 
         <EditText
-            android:id="@+id/new_movement_amount_view"
+            android:id="@+id/movement_detail_amount_view"
             android:hint="@string/amount_numeric_none"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:nextFocusLeft="@+id/new_movement_name_view"
-            android:nextFocusUp="@+id/new_movement_name_view"
+            android:nextFocusLeft="@+id/movement_detail_name_view"
+            android:nextFocusUp="@+id/movement_detail_name_view"
             android:nextFocusDown="@null"
             android:nextFocusForward="@null"
             android:nextFocusRight="@null"
             android:inputType="number" />
 
         <TextView
-            android:id="@+id/new_movement_currency_view"
+            android:id="@+id/movement_detail_currency_view"
             android:focusable="false"
             android:focusableInTouchMode="false"
             android:gravity="center_horizontal|bottom"
             android:text="SEK"
             android:layout_width="wrap_content"
-            android:layout_toEndOf="@+id/new_movement_amount_view"
-            android:layout_alignBottom="@+id/new_movement_type_view"
+            android:layout_toEndOf="@+id/movement_detail_amount_view"
+            android:layout_alignBottom="@+id/movement_detail_type_view"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/new_movement_type_view"
+            android:id="@+id/movement_detail_type_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
