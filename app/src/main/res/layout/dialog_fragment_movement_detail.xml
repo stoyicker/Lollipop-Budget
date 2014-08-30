@@ -18,6 +18,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     android:padding="@dimen/dialog_fragment_padding">
 
     <EditText
@@ -30,9 +32,9 @@
         android:focusableInTouchMode="false"
         android:nextFocusLeft="@null"
         android:nextFocusUp="@null"
-        android:nextFocusDown="@+id/movement_detail_name_view"
-        android:nextFocusForward="@+id/movement_detail_name_view"
-        android:nextFocusRight="@+id/movement_detail_name_view"
+        android:nextFocusDown="@+id/movement_detail_title_view"
+        android:nextFocusForward="@+id/movement_detail_title_view"
+        android:nextFocusRight="@+id/movement_detail_title_view"
         android:layout_height="wrap_content"
         tools:ignore="Deprecated,TextFields" />
 
@@ -62,8 +64,8 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:nextFocusLeft="@+id/movement_detail_name_view"
-            android:nextFocusUp="@+id/movement_detail_name_view"
+            android:nextFocusLeft="@+id/movement_detail_title_view"
+            android:nextFocusUp="@+id/movement_detail_title_view"
             android:nextFocusDown="@null"
             android:nextFocusForward="@null"
             android:nextFocusRight="@null"

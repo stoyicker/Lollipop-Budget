@@ -107,7 +107,6 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
         ((EditText) view.findViewById(R.id.movement_detail_date_view)).setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));
 
-        //TODO Give proper state to the buttons and use the default Android L shape
         setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext, "pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier")));
         setMovementTypeButtonBackground(expenseButton, getMovementColorFromPreferences(mContext, "pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier")));
 
