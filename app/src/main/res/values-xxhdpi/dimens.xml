@@ -29,4 +29,7 @@
     <dimen name="movement_epoch_text_size">12sp</dimen>
     <dimen name="text_view_barrier_margin">4dp</dimen>
     <dimen name="movement_card_height">90dp</dimen>
+    <dimen name="dialog_fragment_padding">4dp</dimen>
+    <dimen name="edittext_compensation_margin">10dp</dimen>
+    <dimen name="movement_detail_dialog_top_padding">12dp</dimen>
 </resources>

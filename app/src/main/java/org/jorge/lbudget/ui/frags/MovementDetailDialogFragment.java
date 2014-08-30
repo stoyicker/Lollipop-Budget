@@ -66,23 +66,33 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
 
-        final String dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
+        final String dialogTitle;
+        final DialogInterface.OnClickListener onPositiveButtonClickListener;
+
+        if (args == null) {
+            dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
+            onPositiveButtonClickListener =
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            //TODO Save the movement
+                            throw new UnsupportedOperationException("Not yet implemented.");
+                        }
+                    };
+        } else {
+            dialogTitle = LBudgetUtils.getString(mContext, "edit_movement_dialog_title");
+            onPositiveButtonClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    //TODO Edit the movement
+                    throw new UnsupportedOperationException("Not yet implemented.");
+                }
+            };
+        }
+
         if (TextUtils.isEmpty(dialogTitle))
             setStyle(STYLE_NO_TITLE, 0);
 
-        Dialog ret = new AlertDialog.Builder(getActivity()).setView(view).setTitle(dialogTitle).setPositiveButton(android.R.string.ok, args == null ?
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                //TODO Save the movement
-                                throw new UnsupportedOperationException("Not yet implemented.");
-                            }
-                        } : new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //TODO Edit the movement
-                        throw new UnsupportedOperationException("Not yet implemented.");
-                    }
-                }
+        Dialog ret = new AlertDialog.Builder(getActivity()).setView(view).setTitle(dialogTitle).setPositiveButton(android.R.string.ok, onPositiveButtonClickListener
         ).setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
