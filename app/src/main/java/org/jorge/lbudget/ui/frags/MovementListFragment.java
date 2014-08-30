@@ -32,7 +32,7 @@ import org.jorge.lbudget.ui.utils.FloatingActionButton;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
-public class MovementListFragment extends Fragment implements UndoBarShowStateListener, MovementListRecyclerAdapter.MovementImageClickListener {
+public class MovementListFragment extends Fragment implements UndoBarShowStateListener, MovementListRecyclerAdapter.MovementImageClickListener, MovementListRecyclerAdapter.MovementEditRequestListener {
 
     private RecyclerView mMovementsView;
     private Context mContext;
@@ -43,20 +43,13 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         super.onViewCreated(view, savedInstanceState);
         mMovementsView.setLayoutManager(new LinearLayoutManager(mContext));
         mMovementsView.setItemAnimator(new DefaultItemAnimator());
-        final MovementListRecyclerAdapter mAdapter;
-        mMovementsView.setAdapter(mAdapter = new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate(), this));
+        mMovementsView.setAdapter(new MovementListRecyclerAdapter(view.findViewById(android.R.id.empty), this, mMovementsView, getActivity(), MovementManager.getInstance().getSelectedAccountMovementsToDate(), this, this));
         mNewMovementButton = (FloatingActionButton) view.findViewById(R.id.button_new_movement);
-        mNewMovementButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAdapter.createNewMovement();
-            }
-        });
         mNewMovementButton.attachToRecyclerView(mMovementsView);
         mNewMovementButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMovementRegistrarDialog();
+                showCreateMovementDialog();
             }
         });
     }
@@ -103,8 +96,18 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "movement_image_dialog_name"));
     }
 
-    private void showMovementRegistrarDialog() {
+    private void showCreateMovementDialog() {
         DialogFragment dialogFragment = (DialogFragment) Fragment.instantiate(mContext, MovementDetailDialogFragment.class.getName());
         dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "new_movement_dialog_name"));
+    }
+
+    private void showEditMovementDialog(MovementListRecyclerAdapter.MovementDataModel movement) {
+        DialogFragment dialogFragment = MovementDetailDialogFragment.newInstance(movement);
+        dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "edit_movement_dialog_name"));
+    }
+
+    @Override
+    public void onMovementEditRequested(MovementListRecyclerAdapter.MovementDataModel movement) {
+        showEditMovementDialog(movement);
     }
 }

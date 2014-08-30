@@ -281,7 +281,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         ret.put(MOVEMENT_KEY_ID, movement.getMovementId());
         ret.put(MOVEMENT_KEY_TITLE, movement.getMovementTitle());
         ret.put(MOVEMENT_KEY_AMOUNT, movement.getMovementAmount());
-        ret.put(MOVEMENT_KEY_EPOCH, movement.getEpoch());
+        ret.put(MOVEMENT_KEY_EPOCH, movement.getMovementEpoch());
         return ret;
     }
 

@@ -52,13 +52,14 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_movement_list;
     private static int incomeColor, expenseColor;
-    private Context mContext;
+    private final Context mContext;
     private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
     private final MovementImageClickListener movementImageClickListener;
     private View mEmptyView;
+    private final MovementEditRequestListener mMovementEditRequestListener;
 
-    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items, MovementImageClickListener movementImageClickListener) {
+    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items, MovementImageClickListener movementImageClickListener, MovementEditRequestListener movementEditRequestListener) {
         this.items = items;
         this.movementImageClickListener = movementImageClickListener;
         mContext = activity.getApplicationContext();
@@ -67,6 +68,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         mRecyclerView = recyclerView;
         undoBarShowStateListener = _undoBarShowStateListener;
         mEmptyView = emptyView;
+        mMovementEditRequestListener = movementEditRequestListener;
     }
 
     public static void updateMovementColors(Context context) {
@@ -150,7 +152,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
         viewHolder.movementAmountView.setText(LBudgetUtils.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
-        viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getEpoch(), mContext));
+        viewHolder.movementEpochView.setText(TimeUtils.getTimeAgo(item.getMovementEpoch(), mContext));
         final String imagePath = item.getImagePath(mContext);
         if (new File(imagePath).exists()) {
             try {
@@ -171,10 +173,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public int getItemCount() {
         mEmptyView.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
         return items.size();
-    }
-
-    public void createNewMovement() {
-        //TODO Create new movement
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -234,7 +232,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                 view.startAnimation(fadeOut);
                             } else {
                                 x = Float.MAX_VALUE; //Reset x
-                                //TODO Edit the movement
+                                mMovementEditRequestListener.onMovementEditRequested(items.get(getPosition()));
                             }
                             break;
                         case MotionEvent.ACTION_DOWN:
@@ -282,12 +280,16 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             return target.getAbsolutePath();
         }
 
-        public long getEpoch() {
+        public long getMovementEpoch() {
             return epoch;
         }
     }
 
     public interface MovementImageClickListener {
         public void onMovementImageClick(MovementDataModel movement);
+    }
+
+    public interface MovementEditRequestListener {
+        public void onMovementEditRequested(MovementListRecyclerAdapter.MovementDataModel movement);
     }
 }
