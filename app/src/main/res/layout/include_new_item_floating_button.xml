@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ This file is part of LBudget.
+  ~ LBudget is free software: you can redistribute it and/or modify
+  ~ it under the terms of version 3 of the GNU General Public License as published by
+  ~ the Free Software Foundation
+  ~ LBudget is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
+  -->
+<org.jorge.lbudget.ui.utils.FloatingActionButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/button_new_item"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_margin="@dimen/fab_button_margin"
+    android:src="@drawable/ic_action_add"
+    android:scaleType="centerInside"
+    fab:fab_colorNormal="@color/floating_action_button_background_state_normal"
+    fab:fab_colorPressed="@color/floating_action_button_background_state_pressed"
+    fab:fab_type="normal"
+    fab:fab_shadow="true" />

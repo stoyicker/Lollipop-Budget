@@ -44,7 +44,7 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
         mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         final AccountListRecyclerAdapter mAdapter;
         mAccountsRecyclerView.setAdapter(mAdapter = new AccountListRecyclerAdapter(this, getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
-        mNewAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_account);
+        mNewAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_item);
         mNewAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

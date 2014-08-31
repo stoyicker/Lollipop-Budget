@@ -13,7 +13,6 @@
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,18 +22,7 @@
         android:layout_height="match_parent"
         android:background="@color/content_fragment_background" />
 
-    <org.jorge.lbudget.ui.utils.FloatingActionButton
-        android:id="@+id/button_new_movement"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_button_margin"
-        android:src="@drawable/ic_action_add"
-        android:scaleType="centerInside"
-        fab:fab_colorNormal="@color/floating_action_button_background_state_normal"
-        fab:fab_colorPressed="@color/floating_action_button_background_state_pressed"
-        fab:fab_type="normal"
-        fab:fab_shadow="true" />
+    <include layout="@layout/include_new_item_floating_button" />
 
     <TextView
         android:id="@android:id/empty"

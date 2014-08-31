@@ -248,7 +248,7 @@ public final class UndoBar {
         ViewGroup rootView = (ViewGroup) activity.findViewById(android.R.id.content);
         UndoBarView undoBarView = (UndoBarView) rootView.findViewById(R.id.undoBar);
         if (undoBarView == null) {
-            undoBarView = (UndoBarView) LayoutInflater.from(activity).inflate(R.layout.undo_bar, rootView, false);
+            undoBarView = (UndoBarView) LayoutInflater.from(activity).inflate(R.layout.other_ui_undo_bar, rootView, false);
             rootView.addView(undoBarView);
         }
         return undoBarView;
