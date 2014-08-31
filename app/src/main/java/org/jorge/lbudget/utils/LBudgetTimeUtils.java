@@ -2,6 +2,7 @@ package org.jorge.lbudget.utils;
 
 import android.content.Context;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -75,5 +76,13 @@ public abstract class LBudgetTimeUtils {
 
     public static String getEpochAsISO8601(Context context, Long epoch) {
         return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format")).format(new Date(epoch));
+    }
+
+    public static Long ISO8601AsEpoch(Context context, String iso8601) {
+        try {
+            return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format")).parse(iso8601).getTime();
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }

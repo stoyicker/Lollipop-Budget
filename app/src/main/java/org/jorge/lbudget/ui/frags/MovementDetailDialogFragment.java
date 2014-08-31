@@ -71,11 +71,12 @@ public class MovementDetailDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_movement_detail, null);
 
-        Bundle args = getArguments();
+        final Bundle args = getArguments();
 
         final String dialogTitle;
         final DialogInterface.OnClickListener onPositiveButtonClickListener;
         final Button expenseButton = (Button) view.findViewById(R.id.movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R.id.movement_detail_type_income_view);
+        final EditText dateView = (EditText) view.findViewById(R.id.movement_detail_date_view), titleView = (EditText) view.findViewById(R.id.movement_detail_title_view), amountView = (EditText) view.findViewById(R.id.movement_detail_amount_view);
         Long epoch = System.currentTimeMillis();
 
         ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
@@ -94,8 +95,11 @@ public class MovementDetailDialogFragment extends DialogFragment {
             onPositiveButtonClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    //TODO Edit the movement
-                    throw new UnsupportedOperationException("Not yet implemented.");
+                    Long amount = (Long.valueOf(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                    String epochAs8601, title = titleView.getText().toString();
+                    if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.getEpochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
+                        MovementDetailDialogFragment.this.updateMovement(LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601), title, amount);
+                    }
                 }
             };
             if (args.getLong(KEY_MOVEMENT_AMOUNT) > 0) {
@@ -103,11 +107,11 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 incomeButton.setVisibility(View.VISIBLE);
             }
             epoch = args.getLong(KEY_MOVEMENT_EPOCH);
-            ((EditText) view.findViewById(R.id.movement_detail_title_view)).setText(args.getString(KEY_MOVEMENT_TITLE));
-            ((EditText) view.findViewById(R.id.movement_detail_amount_view)).setText(String.valueOf(Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
+            titleView.setText(args.getString(KEY_MOVEMENT_TITLE));
+            amountView.setText(String.valueOf(Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
         }
 
-        ((EditText) view.findViewById(R.id.movement_detail_date_view)).setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));
+        dateView.setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));
 
         setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext, "pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier")));
         setMovementTypeButtonBackground(expenseButton, getMovementColorFromPreferences(mContext, "pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier")));
@@ -145,6 +149,11 @@ public class MovementDetailDialogFragment extends DialogFragment {
         ret.getWindow().getAttributes().windowAnimations = R.style.AnimatedMovementPanelAnimationStyle;
 
         return ret;
+    }
+
+    private void updateMovement(Long newEpoch, String title, Long amount) {
+        //TODO Update movement
+        throw new UnsupportedOperationException("Not yet implemented.");
     }
 
     private void setMovementTypeButtonBackground(Button button, int movementColorFromPreferences) {
