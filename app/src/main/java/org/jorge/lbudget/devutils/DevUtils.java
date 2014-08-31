@@ -16,6 +16,8 @@ package org.jorge.lbudget.devutils;
 import android.content.Context;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lbudget.BuildConfig;
 
 import java.io.File;
@@ -50,7 +52,7 @@ public abstract class DevUtils {
             outputStreamWriter.write(data);
             outputStreamWriter.close();
         } catch (IOException e) {
-            e.printStackTrace(System.err);
+            Crashlytics.logException(e);
         }
     }
 

@@ -86,7 +86,7 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
             mCallback = (NavigationToolbarListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement NavigationToolbarListener");
+                    + " must implement " + NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener.class.getName());
         }
     }
 }

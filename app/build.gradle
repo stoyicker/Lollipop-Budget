@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        maven { url 'http://download.crashlytics.com/maven' }
+    }
+
+    dependencies {
+        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.11.4'
+    }
+}
 /*
  * This file is part of LBudget.
  * LBudget is free software: you can redistribute it and/or modify
@@ -12,6 +21,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'crashlytics'
 
 repositories {
     mavenCentral()

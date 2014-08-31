@@ -2,6 +2,8 @@ package org.jorge.lbudget.utils;
 
 import android.content.Context;
 
+import com.crashlytics.android.Crashlytics;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -82,6 +84,7 @@ public abstract class LBudgetTimeUtils {
         try {
             return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format")).parse(iso8601).getTime();
         } catch (ParseException e) {
+            Crashlytics.logException(e);
             return null;
         }
     }

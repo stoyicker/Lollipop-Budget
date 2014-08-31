@@ -26,8 +26,9 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.devutils.DevUtils;
 import org.jorge.lbudget.ui.activities.InitialActivity;
 
 import java.lang.reflect.Field;
@@ -64,7 +65,7 @@ public abstract class LBudgetUtils {
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getStringArray(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            DevUtils.showTrace("debug", e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -79,7 +80,7 @@ public abstract class LBudgetUtils {
             if (context != null)
                 ret = context.getString(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            DevUtils.showTrace("debug", e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -92,7 +93,7 @@ public abstract class LBudgetUtils {
             Field resourceField = R.drawable.class.getDeclaredField(variableName);
             ret = resourceField.getInt(resourceField);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            DevUtils.showTrace("debug", e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -128,7 +129,7 @@ public abstract class LBudgetUtils {
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getInteger(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            DevUtils.showTrace("debug", e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -142,7 +143,7 @@ public abstract class LBudgetUtils {
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getColor(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            DevUtils.showTrace("debug", e);
+            Crashlytics.logException(e);
         }
 
         return ret;
