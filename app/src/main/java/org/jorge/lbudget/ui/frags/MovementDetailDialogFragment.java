@@ -138,7 +138,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 }
         ).create();
 
-        ret.setCanceledOnTouchOutside(Boolean.FALSE);
+        ret.setCanceledOnTouchOutside(args != null);
 
         ret.getWindow().getAttributes().windowAnimations = R.style.AnimatedMovementPanelAnimationStyle;
 
