@@ -66,7 +66,7 @@ public class MovementImageDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_movement_image, null);
 
-        ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_dialog_view);
+        ImageView imageView = (ImageView) view.findViewById(R.id.movement_image_showcase_view);
         try {
             imageView.setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
             new PhotoViewAttacher(imageView);
@@ -76,10 +76,10 @@ public class MovementImageDialogFragment extends DialogFragment {
         }
 
         if (!mContext.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
-            view.findViewById(R.id.button_movement_picture_snap).setVisibility(View.GONE);
+            view.findViewById(R.id.button_movement_image_snap).setVisibility(View.GONE);
         }
 
-        view.findViewById(R.id.button_movement_picture_snap).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_movement_image_snap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 takeNewMovementPicture();

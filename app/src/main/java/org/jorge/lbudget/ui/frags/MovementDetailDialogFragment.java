@@ -103,6 +103,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 incomeButton.setVisibility(View.VISIBLE);
             }
             epoch = args.getLong(KEY_MOVEMENT_EPOCH);
+            ((EditText) view.findViewById(R.id.movement_detail_title_view)).setText(args.getString(KEY_MOVEMENT_TITLE));
+            ((EditText) view.findViewById(R.id.movement_detail_amount_view)).setText(String.valueOf(Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
         }
 
         ((EditText) view.findViewById(R.id.movement_detail_date_view)).setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));

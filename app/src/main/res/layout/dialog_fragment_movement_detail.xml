@@ -40,7 +40,7 @@
         tools:ignore="Deprecated,TextFields" />
 
     <EditText
-        android:id="@+id/movement_detail_name_view"
+        android:id="@+id/movement_detail_title_view"
         android:hint="@string/movement_detail_name_view_hint"
         style="@style/MovementDetailText"
         android:focusable="true"
@@ -67,8 +67,8 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:nextFocusLeft="@+id/movement_detail_title_view"
-            android:nextFocusUp="@+id/movement_detail_title_view"
+            android:nextFocusLeft="@id/movement_detail_title_view"
+            android:nextFocusUp="@id/movement_detail_title_view"
             android:nextFocusDown="@null"
             android:nextFocusForward="@null"
             android:nextFocusRight="@null"
@@ -80,7 +80,7 @@
             android:focusableInTouchMode="false"
             android:gravity="center_horizontal|bottom"
             android:layout_width="wrap_content"
-            android:layout_toEndOf="@+id/movement_detail_amount_view"
+            android:layout_toEndOf="@id/movement_detail_amount_view"
             android:layout_alignBottom="@+id/movement_detail_types_view"
             android:layout_height="wrap_content" />
 
