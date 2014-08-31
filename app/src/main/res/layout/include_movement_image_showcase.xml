@@ -18,7 +18,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/movement_image_dialog_view"
+        android:id="@+id/movement_image_showcase_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
@@ -26,8 +26,8 @@
         android:contentDescription="@string/movement_image_content_description" />
 
     <ImageButton
-        android:id="@+id/button_movement_picture_snap"
-        android:layout_alignBottom="@id/movement_image_dialog_view"
+        android:id="@+id/button_movement_image_snap"
+        android:layout_alignBottom="@id/movement_image_showcase_view"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
