@@ -50,6 +50,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
     private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
     private Context mContext;
     private static final int REQUEST_TAKE_PHOTO = 1;
+    private PhotoViewAttacher mPhotoViewAttacher;
+    private ImageView mPhotoView;
 
     /**
      * To be used when editing a movement.
@@ -118,13 +120,20 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 expenseButton.setVisibility(View.GONE);
                 incomeButton.setVisibility(View.VISIBLE);
             }
-            ImageView photo = (ImageView) view.findViewById(R.id.movement_image_showcase_view);
-            photo.setImageDrawable(Drawable.createFromPath(args.getString(KEY_MOVEMENT_IMAGE_PATH)));
-            new PhotoViewAttacher(photo);
+            mPhotoView = (ImageView) view.findViewById(R.id.movement_image_showcase_view);
+            mPhotoView.setImageDrawable(Drawable.createFromPath(args.getString(KEY_MOVEMENT_IMAGE_PATH)));
+            mPhotoViewAttacher = new PhotoViewAttacher(mPhotoView);
             epoch = args.getLong(KEY_MOVEMENT_EPOCH);
             titleView.setText(args.getString(KEY_MOVEMENT_TITLE));
             amountView.setText(String.valueOf(Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
         }
+
+        view.findViewById(R.id.button_movement_image_snap).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                takeNewMovementPicture();
+            }
+        });
 
         dateView.setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));
 
@@ -194,7 +203,6 @@ public class MovementDetailDialogFragment extends DialogFragment {
             final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
             File pathAsFile = new File(path), oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
             if (pathAsFile.exists() && !pathAsFile.renameTo(oldPathAsFile)) {
-                dismiss();
                 return;
             }
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
@@ -209,7 +217,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
         final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             FileManager.recursiveDelete(oldPathAsFile);
-            dismiss();
+            mPhotoView.setImageDrawable(Drawable.createFromPath(getArguments().getString(KEY_MOVEMENT_IMAGE_PATH)));
+            mPhotoViewAttacher.update();
         } else {
             if (oldPathAsFile.exists() && !oldPathAsFile.renameTo(new File(path)))
                 throw new IllegalStateException("Couldn't rename the original image back to the original name");
