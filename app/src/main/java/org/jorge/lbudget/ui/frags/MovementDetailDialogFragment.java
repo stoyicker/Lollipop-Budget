@@ -19,19 +19,29 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.utils.LBudgetTimeUtils;
 import org.jorge.lbudget.utils.LBudgetUtils;
+
+import java.io.File;
+
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.getMovementColorFromPreferences;
 
@@ -39,6 +49,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
     private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
     private Context mContext;
+    private static final int REQUEST_TAKE_PHOTO = 1;
 
     /**
      * To be used when editing a movement.
@@ -107,6 +118,9 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 expenseButton.setVisibility(View.GONE);
                 incomeButton.setVisibility(View.VISIBLE);
             }
+            ImageView photo = (ImageView) view.findViewById(R.id.movement_image_showcase_view);
+            photo.setImageDrawable(Drawable.createFromPath(args.getString(KEY_MOVEMENT_IMAGE_PATH)));
+            new PhotoViewAttacher(photo);
             epoch = args.getLong(KEY_MOVEMENT_EPOCH);
             titleView.setText(args.getString(KEY_MOVEMENT_TITLE));
             amountView.setText(String.valueOf(Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
@@ -172,5 +186,33 @@ public class MovementDetailDialogFragment extends DialogFragment {
             throw new IllegalStateException("Unrecognized movement color found when rendering the movement type button.");
 
         button.setBackgroundResource(background);
+    }
+
+    private void takeNewMovementPicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
+            final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
+            File pathAsFile = new File(path), oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
+            if (pathAsFile.exists() && !pathAsFile.renameTo(oldPathAsFile)) {
+                dismiss();
+                return;
+            }
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                    Uri.fromFile(pathAsFile));
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
+        final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
+            FileManager.recursiveDelete(oldPathAsFile);
+            dismiss();
+        } else {
+            if (oldPathAsFile.exists() && !oldPathAsFile.renameTo(new File(path)))
+                throw new IllegalStateException("Couldn't rename the original image back to the original name");
+        }
     }
 }

@@ -113,7 +113,7 @@ public class MovementImageDialogFragment extends DialogFragment {
         if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
             final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
             File pathAsFile = new File(path), oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
-            if (!pathAsFile.renameTo(oldPathAsFile)) {
+            if (pathAsFile.exists() && !pathAsFile.renameTo(oldPathAsFile)) {
                 dismiss();
                 return;
             }
@@ -131,7 +131,7 @@ public class MovementImageDialogFragment extends DialogFragment {
             FileManager.recursiveDelete(oldPathAsFile);
             dismiss();
         } else {
-            if (!oldPathAsFile.renameTo(new File(path)))
+            if (oldPathAsFile.exists() && !oldPathAsFile.renameTo(new File(path)))
                 throw new IllegalStateException("Couldn't rename the original image back to the original name");
         }
     }
