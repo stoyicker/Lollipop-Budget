@@ -21,6 +21,7 @@
         android:id="@+id/movement_image_showcase_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:src="@drawable/ic_picture"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
         android:contentDescription="@string/movement_image_content_description" />
