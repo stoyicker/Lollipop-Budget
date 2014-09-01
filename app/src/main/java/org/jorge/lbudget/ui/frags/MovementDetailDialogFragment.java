@@ -37,7 +37,7 @@ import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.getMo
 
 public class MovementDetailDialogFragment extends DialogFragment {
 
-    private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH";
+    private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
     private Context mContext;
 
     /**
@@ -46,7 +46,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
      * @param movement {@link org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel} The movement to edit.
      * @return {@link org.jorge.lbudget.ui.frags.MovementDetailDialogFragment} The ready-to-use fragment
      */
-    public static MovementDetailDialogFragment newInstance(@NonNull MovementListRecyclerAdapter.MovementDataModel movement) {
+    public static MovementDetailDialogFragment newInstance(Context context, @NonNull MovementListRecyclerAdapter.MovementDataModel movement) {
         MovementDetailDialogFragment ret = new MovementDetailDialogFragment();
 
         Bundle args = new Bundle();
@@ -54,6 +54,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
         args.putString(KEY_MOVEMENT_TITLE, movement.getMovementTitle());
         args.putLong(KEY_MOVEMENT_AMOUNT, movement.getMovementAmount());
         args.putLong(KEY_MOVEMENT_EPOCH, movement.getMovementEpoch());
+        args.putString(KEY_MOVEMENT_IMAGE_PATH, movement.getImagePath(context));
 
         ret.setArguments(args);
 

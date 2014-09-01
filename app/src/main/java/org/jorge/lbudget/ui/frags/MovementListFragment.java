@@ -102,7 +102,7 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
     }
 
     private void showEditMovementDialog(MovementListRecyclerAdapter.MovementDataModel movement) {
-        DialogFragment dialogFragment = MovementDetailDialogFragment.newInstance(movement);
+        DialogFragment dialogFragment = MovementDetailDialogFragment.newInstance(mContext, movement);
         dialogFragment.show(getFragmentManager(), LBudgetUtils.getString(mContext, "edit_movement_dialog_name"));
     }
 
