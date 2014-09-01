@@ -50,7 +50,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final RecyclerView mRecyclerView;
     private List<MovementDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
-    private final int itemLayout = R.layout.list_item_movement_list;
+    private final int itemLayout = R.layout.list_item_movement;
     private static int incomeColor, expenseColor;
     private final Context mContext;
     private static float x = Float.MAX_VALUE;

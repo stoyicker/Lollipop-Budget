@@ -45,7 +45,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private final RecyclerView mRecyclerView;
     private final List<AccountDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
-    private final int itemLayout = R.layout.list_item_account_list;
+    private final int itemLayout = R.layout.list_item_account;
     private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
 
