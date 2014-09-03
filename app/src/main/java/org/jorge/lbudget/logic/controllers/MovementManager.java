@@ -57,4 +57,21 @@ public class MovementManager {
     public Boolean removeMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
         return SQLiteDAO.getInstance().removeMovement(movement) && mMovementList.remove(movement);
     }
+
+    public Boolean updateMovement(Integer movementId, String newMovementTitle, Long newAmount, Long newEpoch) {
+        MovementListRecyclerAdapter.MovementDataModel thisMovement = null;
+        for (MovementListRecyclerAdapter.MovementDataModel x : mMovementList)
+            if (x.getMovementId() == movementId) {
+                thisMovement = x;
+                break;
+            }
+
+        if (thisMovement == null)
+            return Boolean.FALSE;
+
+        thisMovement.setTitle(newMovementTitle);
+        thisMovement.setAmount(newAmount);
+        thisMovement.setEpoch(newEpoch);
+        return SQLiteDAO.getInstance().updateMovement(thisMovement);
+    }
 }

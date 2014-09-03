@@ -145,7 +145,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                 synchronized (DB_LOCK) {
                     db.beginTransaction();
                     db.insert(ACCOUNTS_TABLE_NAME, null, mapAccountToStorable(accounts[0]));
-                    createAccountTable(getWritableDatabase(), accounts[0].getAccountId());
+                    createAccountTable(db, accounts[0].getAccountId());
                     db.setTransactionSuccessful();
                     db.endTransaction();
                     LBackupAgent.requestBackup(mContext);
@@ -337,5 +337,15 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.endTransaction();
             LBackupAgent.requestBackup(mContext);
         }
+    }
+
+    public Boolean updateMovement(MovementListRecyclerAdapter.MovementDataModel newMovementInfo) {
+        final SQLiteDatabase db = getWritableDatabase();
+        final String selectedAccTableName = generateSelectedAccountTableName();
+        Integer ret;
+        synchronized (DB_LOCK) {
+            ret = db.update(selectedAccTableName, mapMovementToStorable(newMovementInfo), MOVEMENT_KEY_ID + " = " + newMovementInfo.getMovementId(), null);
+        }
+        return ret > 0;
     }
 }

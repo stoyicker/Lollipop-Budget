@@ -37,8 +37,8 @@ import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.ui.utils.undobar.UndoBar;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
-import org.jorge.lbudget.utils.LBudgetUtils;
 import org.jorge.lbudget.utils.LBudgetTimeUtils;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
 import java.util.List;
@@ -283,7 +283,20 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         public long getMovementEpoch() {
             return epoch;
         }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setAmount(Long amount) {
+            this.amount = amount;
+        }
+
+        public void setEpoch(Long epoch) {
+            this.epoch = epoch;
+        }
     }
+
 
     public interface MovementImageClickListener {
         public void onMovementImageClick(MovementDataModel movement);

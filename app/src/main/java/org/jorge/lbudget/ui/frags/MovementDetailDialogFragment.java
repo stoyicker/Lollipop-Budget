@@ -36,6 +36,7 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
+import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.utils.LBudgetTimeUtils;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
@@ -113,7 +114,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
                     Long amount = (Long.valueOf(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
                     String epochAs8601, title = titleView.getText().toString();
                     if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.getEpochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
-                        MovementDetailDialogFragment.this.updateMovement(args.getInt(KEY_MOVEMENT_ID), LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601), title, amount);
+                        MovementDetailDialogFragment.this.updateMovement(args.getInt(KEY_MOVEMENT_ID), title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                     }
                 }
             };
@@ -176,9 +177,9 @@ public class MovementDetailDialogFragment extends DialogFragment {
         return ret;
     }
 
-    private void updateMovement(int id, Long newEpoch, String title, Long amount) {
-        //TODO Update movement
-        throw new UnsupportedOperationException("Not yet implemented.");
+    private void updateMovement(int id, String newTitle, Long newAmount, Long newEpoch) {
+        //TODO Refresh view
+        MovementManager.getInstance().updateMovement(id, newTitle, newAmount, newEpoch);
     }
 
     private void setMovementTypeButtonBackground(Button button, int movementColorFromPreferences) {
