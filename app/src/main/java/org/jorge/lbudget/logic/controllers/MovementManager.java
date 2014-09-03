@@ -17,6 +17,8 @@ import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MovementManager {
@@ -51,7 +53,17 @@ public class MovementManager {
         if (!mMovementList.contains(movement)) {
             mMovementList.add(movement);
         }
+        sortMovementList();
         return ret;
+    }
+
+    private void sortMovementList() {
+        Collections.sort(mMovementList, new Comparator<MovementListRecyclerAdapter.MovementDataModel>() {
+            @Override
+            public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1, MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
+                return -((int) (movementDataModel1.getMovementEpoch() - movementDataModel2.getMovementEpoch()));
+            }
+        });
     }
 
     public Boolean removeMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
@@ -68,6 +80,8 @@ public class MovementManager {
 
         if (thisMovement == null)
             return Boolean.FALSE;
+
+        sortMovementList();
 
         thisMovement.setTitle(newMovementTitle);
         thisMovement.setAmount(newAmount);

@@ -131,9 +131,10 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         List<MovementListRecyclerAdapter.MovementDataModel> ret;
         SQLiteDatabase db = getReadableDatabase();
         final String selectedAccMovTableName = generateAccountTableName(account);
+        final Long now = System.currentTimeMillis();
         synchronized (DB_LOCK) {
             db.beginTransaction();
-            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " <= " + System.currentTimeMillis(), null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
+            Cursor allMovements = db.query(selectedAccMovTableName, null, MOVEMENT_KEY_EPOCH + " <= " + now, null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
             ret = new ArrayList<>();
             if (allMovements != null && allMovements.moveToFirst()) {
                 do {
