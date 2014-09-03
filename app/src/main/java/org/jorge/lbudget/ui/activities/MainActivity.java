@@ -28,6 +28,7 @@ import android.view.View;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.ui.frags.AccountListFragment;
+import org.jorge.lbudget.ui.frags.ExpenseGraphFragment;
 import org.jorge.lbudget.ui.frags.MovementListFragment;
 import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
@@ -119,7 +120,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
                 target = findMovementListFragment();
                 break;
             case 1:
-                target = findBalanceGraphFragment();
+                target = findExpenseGraphFragment();
                 break;
             case 2:
                 target = findAccountListFragment();
@@ -136,8 +137,10 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         return mContentFragments[0];
     }
 
-    private Fragment findBalanceGraphFragment() {
-        throw new UnsupportedOperationException("Not yet implemented.");
+    private Fragment findExpenseGraphFragment() {
+        if (mContentFragments[1] == null)
+            mContentFragments[1] = Fragment.instantiate(mContext, ExpenseGraphFragment.class.getName());
+        return mContentFragments[1];
     }
 
     private Fragment findAccountListFragment() {
