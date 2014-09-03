@@ -47,7 +47,7 @@ import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.getMo
 
 public class MovementDetailDialogFragment extends DialogFragment {
 
-    private static final String KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
+    private static final String KEY_MOVEMENT_ID = "MOVEMENT_ID", KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
     private Context mContext;
     private static final int REQUEST_TAKE_PHOTO = 1;
     private PhotoViewAttacher mPhotoViewAttacher;
@@ -64,6 +64,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
         Bundle args = new Bundle();
 
+        args.putInt(KEY_MOVEMENT_ID, movement.getMovementId());
         args.putString(KEY_MOVEMENT_TITLE, movement.getMovementTitle());
         args.putLong(KEY_MOVEMENT_AMOUNT, movement.getMovementAmount());
         args.putLong(KEY_MOVEMENT_EPOCH, movement.getMovementEpoch());
@@ -112,7 +113,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
                     Long amount = (Long.valueOf(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
                     String epochAs8601, title = titleView.getText().toString();
                     if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.getEpochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
-                        MovementDetailDialogFragment.this.updateMovement(LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601), title, amount);
+                        MovementDetailDialogFragment.this.updateMovement(args.getInt(KEY_MOVEMENT_ID), LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601), title, amount);
                     }
                 }
             };
@@ -175,7 +176,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
         return ret;
     }
 
-    private void updateMovement(Long newEpoch, String title, Long amount) {
+    private void updateMovement(int id, Long newEpoch, String title, Long amount) {
         //TODO Update movement
         throw new UnsupportedOperationException("Not yet implemented.");
     }
