@@ -39,9 +39,11 @@ public abstract class LBudgetTimeUtils {
         }
 
         long now = System.currentTimeMillis();
-        if (time > now || time <= 0) {
-            throw new IllegalArgumentException("The time provided is either negative or situated in the future.");
+        if (time > now) {
+            throw new IllegalArgumentException("The time provided is situated in the future.");
         }
+        if (time <= 0)
+            throw new IllegalArgumentException("The time provided is negative.");
 
         final long diff = now - time;
         String identifier, amount = "";
