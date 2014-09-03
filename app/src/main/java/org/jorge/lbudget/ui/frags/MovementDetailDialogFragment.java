@@ -15,6 +15,7 @@ package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
@@ -28,6 +29,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,6 +43,7 @@ import org.jorge.lbudget.utils.LBudgetTimeUtils;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
+import java.util.StringTokenizer;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -137,7 +140,20 @@ public class MovementDetailDialogFragment extends DialogFragment {
             }
         });
 
-        dateView.setText(LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch));
+        final String epochAsIso8601 = LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch);
+        dateView.setText(epochAsIso8601);
+        final StringTokenizer epochAsISO8601Tokenizer = new StringTokenizer(epochAsIso8601, "-");
+        dateView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        dateView.setText(year + "-" + (month < 9 ? "0" : "") + (month + 1) + "-" + (day < 10 ? "0" : "") + day);
+                    }
+                }, Integer.parseInt(epochAsISO8601Tokenizer.nextToken()), Integer.parseInt(epochAsISO8601Tokenizer.nextToken()) - 1, Integer.parseInt(epochAsISO8601Tokenizer.nextToken())).show();
+            }
+        });
 
         setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext, "pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier")));
         setMovementTypeButtonBackground(expenseButton, getMovementColorFromPreferences(mContext, "pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier")));
