@@ -38,11 +38,7 @@
     <string name="no_movements">No movements found to date.</string>
     <string name="new_account_default_name">New account\u0020</string>
     <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
-    <string name="time_ago_just_now">just now</string>
-    <string name="time_ago_a_minute">a minute ago</string>
-    <string name="time_ago_minutes">{TIMEPLACEHOLDER} minutes ago</string>
-    <string name="time_ago_an_hour">an hour ago</string>
-    <string name="time_ago_hours">{TIMEPLACEHOLDER} hours ago</string>
+    <string name="time_ago_today">today</string>
     <string name="time_ago_a_day">yesterday</string>
     <string name="time_ago_days">{TIMEPLACEHOLDER} days ago</string>
     <string name="time_ago_a_month">a month ago</string>

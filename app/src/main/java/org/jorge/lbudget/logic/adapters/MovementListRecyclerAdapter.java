@@ -58,6 +58,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final MovementImageClickListener movementImageClickListener;
     private View mEmptyView;
     private final MovementEditRequestListener mMovementEditRequestListener;
+    private static MovementListRecyclerAdapter publicAccessInstance;
 
     public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items, MovementImageClickListener movementImageClickListener, MovementEditRequestListener movementEditRequestListener) {
         this.items = items;
@@ -69,6 +70,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         undoBarShowStateListener = _undoBarShowStateListener;
         mEmptyView = emptyView;
         mMovementEditRequestListener = movementEditRequestListener;
+        publicAccessInstance = this;
     }
 
     public static void updateMovementColors(Context context) {
@@ -97,6 +99,10 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             retId = R.color.movement_color_blue;
         }
         return context.getResources().getColor(retId);
+    }
+
+    public static MovementListRecyclerAdapter getPublicAccessInstance() {
+        return publicAccessInstance;
     }
 
     public void add(MovementDataModel item, int position) {
@@ -173,6 +179,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public int getItemCount() {
         mEmptyView.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
         return items.size();
+    }
+
+    public void refreshItemSet() {
+        items = MovementManager.getInstance().getSelectedAccountMovementsToDate();
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

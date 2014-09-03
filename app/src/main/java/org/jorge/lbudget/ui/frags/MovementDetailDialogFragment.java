@@ -105,8 +105,9 @@ public class MovementDetailDialogFragment extends DialogFragment {
             onPositiveButtonClickListener =
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            //TODO Save the movement
-                            throw new UnsupportedOperationException("Not yet implemented.");
+                            Long amount = (Long.valueOf(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                            String epochAs8601 = dateView.getText().toString(), title = titleView.getText().toString();
+                            MovementDetailDialogFragment.this.addMovement(title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                         }
                     };
         } else {
@@ -193,9 +194,18 @@ public class MovementDetailDialogFragment extends DialogFragment {
         return ret;
     }
 
+    //FIXME Properly match the id of the stored element and of the object
+    //FIXME Why do the new elements appear below?
+    //FIXME Why can't I add decimal amounts?
+
+    private void addMovement(String title, Long amount, long epoch) {
+        if (MovementManager.getInstance().addMovement(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch)))
+            MovementListRecyclerAdapter.getPublicAccessInstance().refreshItemSet();
+    }
+
     private void updateMovement(int id, String newTitle, Long newAmount, Long newEpoch) {
-        //TODO Refresh view
-        MovementManager.getInstance().updateMovement(id, newTitle, newAmount, newEpoch);
+        if (MovementManager.getInstance().updateMovement(id, newTitle, newAmount, newEpoch))
+            MovementListRecyclerAdapter.getPublicAccessInstance().refreshItemSet();
     }
 
     private void setMovementTypeButtonBackground(Button button, int movementColorFromPreferences) {

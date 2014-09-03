@@ -99,6 +99,29 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         return getAccountMovementsToDate(AccountManager.getInstance().getSelectedAccount());
     }
 
+    public List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountMovements() {
+        List<MovementListRecyclerAdapter.MovementDataModel> ret;
+        SQLiteDatabase db = getReadableDatabase();
+        final String selectedAccMovTableName = generateSelectedAccountTableName();
+        synchronized (DB_LOCK) {
+            db.beginTransaction();
+            Cursor allMovements = db.query(selectedAccMovTableName, null, null, null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
+            ret = new ArrayList<>();
+            if (allMovements != null && allMovements.moveToFirst()) {
+                do {
+                    ret.add(mapStorableToMovement(allMovements));
+                } while (allMovements.moveToNext());
+
+            }
+            if (allMovements != null)
+                allMovements.close();
+            db.setTransactionSuccessful();
+            db.endTransaction();
+        }
+
+        return ret;
+    }
+
     /**
      * Retrieves the movements of the selected account only before the instant the query to the database is performed.
      *
@@ -175,6 +198,17 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             }
         }.executeOnExecutor(BACKGROUND_OPS_EXECUTOR, movement);
         return Boolean.TRUE;
+    }
+
+    public Boolean updateMovement(MovementListRecyclerAdapter.MovementDataModel newMovementInfo) {
+        final SQLiteDatabase db = getWritableDatabase();
+        final String selectedAccTableName = generateSelectedAccountTableName();
+        Integer ret;
+        synchronized (DB_LOCK) {
+            ret = db.update(selectedAccTableName, mapMovementToStorable(newMovementInfo), MOVEMENT_KEY_ID + " = " + newMovementInfo.getMovementId(), null);
+            LBackupAgent.requestBackup(mContext);
+        }
+        return ret > 0;
     }
 
     public Boolean removeAccount(AccountListRecyclerAdapter.AccountDataModel account) {
@@ -337,15 +371,5 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             db.endTransaction();
             LBackupAgent.requestBackup(mContext);
         }
-    }
-
-    public Boolean updateMovement(MovementListRecyclerAdapter.MovementDataModel newMovementInfo) {
-        final SQLiteDatabase db = getWritableDatabase();
-        final String selectedAccTableName = generateSelectedAccountTableName();
-        Integer ret;
-        synchronized (DB_LOCK) {
-            ret = db.update(selectedAccTableName, mapMovementToStorable(newMovementInfo), MOVEMENT_KEY_ID + " = " + newMovementInfo.getMovementId(), null);
-        }
-        return ret > 0;
     }
 }

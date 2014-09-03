@@ -29,10 +29,15 @@ import android.view.ViewAnimationUtils;
 import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.ui.activities.InitialActivity;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public abstract class LBudgetUtils {
 
@@ -160,5 +165,21 @@ public abstract class LBudgetUtils {
 
     public static ValueAnimator createStandardCircularHide(View v) {
         return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, v.getWidth(), 0);
+    }
+
+    public static int calculateAvailableMovementId() {
+        List<MovementListRecyclerAdapter.MovementDataModel> allMovementsOnSelectedAcc = SQLiteDAO.getInstance().getSelectedAccountMovements();
+        Collections.sort(allMovementsOnSelectedAcc, new Comparator<MovementListRecyclerAdapter.MovementDataModel>() {
+            @Override
+            public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1, MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
+                return movementDataModel1.getMovementId() - movementDataModel2.getMovementId();
+            }
+        });
+        for (int i = 0; i < allMovementsOnSelectedAcc.size() - 1; i++) {
+            int candidate;
+            if (allMovementsOnSelectedAcc.get(i).getMovementId() + 1 != (candidate = allMovementsOnSelectedAcc.get(i + 1).getMovementId()))
+                return candidate;
+        }
+        return allMovementsOnSelectedAcc.size();
     }
 }

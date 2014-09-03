@@ -45,18 +45,8 @@ public abstract class LBudgetTimeUtils {
 
         final long diff = now - time;
         String identifier, amount = "";
-        if (diff < MINUTE_MILLIS) {
-            identifier = "time_ago_just_now";
-        } else if (diff < 2 * MINUTE_MILLIS) {
-            identifier = "time_ago_a_minute";
-        } else if (diff < 50 * MINUTE_MILLIS) {
-            identifier = "time_ago_minutes";
-            amount = ((int) diff / MINUTE_MILLIS) + "";
-        } else if (diff < 90 * MINUTE_MILLIS) {
-            identifier = "time_ago_an_hour";
-        } else if (diff < DAY_MILLIS) {
-            identifier = "time_ago_hours";
-            amount = ((int) diff / HOUR_MILLIS) + "";
+        if (diff < DAY_MILLIS) {
+            identifier = "time_ago_today";
         } else if (diff < 2 * DAY_MILLIS) {
             identifier = "time_ago_a_day";
         } else if (diff < MONTH_MILLIS) {
