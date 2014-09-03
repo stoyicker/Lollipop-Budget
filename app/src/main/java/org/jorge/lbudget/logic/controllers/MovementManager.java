@@ -21,6 +21,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.jorge.lbudget.devutils.DevUtils.logString;
+
 public class MovementManager {
 
     private List<MovementListRecyclerAdapter.MovementDataModel> mMovementList;
@@ -61,7 +63,7 @@ public class MovementManager {
         Collections.sort(mMovementList, new Comparator<MovementListRecyclerAdapter.MovementDataModel>() {
             @Override
             public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1, MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
-                return -((int) (movementDataModel1.getMovementEpoch() - movementDataModel2.getMovementEpoch()));
+                return movementDataModel1.getMovementEpoch() < movementDataModel2.getMovementEpoch() ? 1 : -1;
             }
         });
     }

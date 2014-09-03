@@ -105,7 +105,13 @@ public class MovementDetailDialogFragment extends DialogFragment {
             onPositiveButtonClickListener =
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Long amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                            Long amount;
+                            try {
+                                amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                            } catch (NumberFormatException ex) {
+                                dismiss();
+                                return;
+                            }
                             String epochAs8601 = dateView.getText().toString(), title = titleView.getText().toString();
                             MovementDetailDialogFragment.this.addMovement(title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                         }
@@ -193,8 +199,6 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
         return ret;
     }
-
-    //FIXME Why do the new elements appear below?
 
     private void addMovement(String title, Long amount, long epoch) {
         if (MovementManager.getInstance().addMovement(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch))) //Since the id is auto-generated upon insertion on DB and after that items are reloaded, a stub id can be used

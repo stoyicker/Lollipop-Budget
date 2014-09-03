@@ -58,12 +58,12 @@ public abstract class LBudgetTimeUtils {
             identifier = "time_ago_a_month";
         } else if (diff < YEAR_MILLIS) {
             identifier = "time_ago_months";
-            amount = ((int) diff / MONTH_MILLIS) + "";
+            amount = (int) (diff / MONTH_MILLIS) + "";
         } else if (diff < 2 * YEAR_MILLIS) {
             identifier = "time_ago_a_year";
         } else {
             identifier = "time_ago_years";
-            amount = ((int) diff / YEAR_MILLIS) + "";
+            amount = (int) (diff / YEAR_MILLIS) + "";
         }
         return LBudgetUtils.getString(context, identifier).replace(LBudgetUtils.getString(context, "time_ago_placeholder"), amount);
     }
