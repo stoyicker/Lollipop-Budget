@@ -30,6 +30,7 @@ import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.ui.activities.InitialActivity;
 
@@ -156,6 +157,23 @@ public abstract class LBudgetUtils {
 
     public static ValueAnimator createStandardCircularHide(View v) {
         return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, v.getWidth(), 0);
+    }
+
+    public static int calculateAvailableAccountId() {
+        List<AccountListRecyclerAdapter.AccountDataModel> allAcc = SQLiteDAO.getInstance().getAccounts();
+        Collections.sort(allAcc, new Comparator<AccountListRecyclerAdapter.AccountDataModel>() {
+            @Override
+            public int compare(AccountListRecyclerAdapter.AccountDataModel acc1, AccountListRecyclerAdapter.AccountDataModel acc2) {
+                return acc1.getAccountId() - acc2.getAccountId();
+            }
+        });
+        for (int i = 0; i < allAcc.size() - 1; i++) {
+            int candidate;
+            if ((candidate = allAcc.get(i).getAccountId() + 1) != allAcc.get(i + 1).getAccountId()) {
+                return candidate;
+            }
+        }
+        return allAcc.size();
     }
 
     public static int calculateAvailableMovementId() {

@@ -121,7 +121,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public void createNewAccount() {
-        int lengthPriorToInsert = getItemCount(), newId = items.get(lengthPriorToInsert - 1).getAccountId() + 1;
+        int lengthPriorToInsert = getItemCount(), newId = LBudgetUtils.calculateAvailableAccountId();
         add(new AccountDataModel(newId, LBudgetUtils.getString(mContext, "new_account_default_name") + newId, Boolean.FALSE), lengthPriorToInsert);
         mRecyclerView.smoothScrollToPosition(lengthPriorToInsert);
     }
