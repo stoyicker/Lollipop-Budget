@@ -105,7 +105,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
             onPositiveButtonClickListener =
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            Long amount = (Long.valueOf(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                            Long amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
                             String epochAs8601 = dateView.getText().toString(), title = titleView.getText().toString();
                             MovementDetailDialogFragment.this.addMovement(title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                         }
@@ -115,7 +115,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
             onPositiveButtonClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Long amount = (Long.valueOf(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                    Long amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
                     String epochAs8601, title = titleView.getText().toString();
                     if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.getEpochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
                         MovementDetailDialogFragment.this.updateMovement(args.getInt(KEY_MOVEMENT_ID), title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
@@ -196,7 +196,6 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
     //FIXME Properly match the id of the stored element and of the object
     //FIXME Why do the new elements appear below?
-    //FIXME Why can't I add decimal amounts?
 
     private void addMovement(String title, Long amount, long epoch) {
         if (MovementManager.getInstance().addMovement(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch)))

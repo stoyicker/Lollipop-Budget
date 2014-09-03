@@ -37,6 +37,8 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
 
+import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
+
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter.ViewHolder> {
 
     private final float MIN_SWIPE_WIDTH_PIXELS;
@@ -106,7 +108,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             viewHolder.accountNameView.setFocusableInTouchMode(Boolean.TRUE);
             viewHolder.balanceView.setTextAppearance(mContext, R.style.AccountTextSelected);
         }
-        viewHolder.balanceView.setText(LBudgetUtils.printifyAmount(mContext, item.calculateBalance()) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        viewHolder.balanceView.setText(printifyAmount(mContext, item.calculateBalance()) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
     }
 
     private void removeAccountFromPersistence(AccountDataModel account) {

@@ -41,14 +41,6 @@ import java.util.List;
 
 public abstract class LBudgetUtils {
 
-    public static String printifyAmount(Context context, long amount) {
-        final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
-        double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
-        BigDecimal bigDecimal = new BigDecimal(val);
-        bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
-        return bigDecimal.toPlainString();
-    }
-
     public static int dpToPx(Resources res, int dp) {
         return (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());

@@ -41,7 +41,10 @@ import org.jorge.lbudget.utils.LBudgetTimeUtils;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.List;
+
+import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
 
@@ -125,7 +128,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         final boolean hasPicture, isIncome = item.getMovementAmount() >= 0;
         intent.setType((hasPicture = new File(item.getImagePath(mContext)).exists()) ? fullMimes : textMime);
         intent.putExtra(Intent.EXTRA_TITLE, item.getMovementTitle());
-        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace(LBudgetUtils.getString(mContext, "amount_placeholder"), LBudgetUtils.printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace(LBudgetUtils.getString(mContext, "amount_placeholder"), printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
         if (hasPicture) {
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath(mContext))));
         }
@@ -157,7 +160,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getMovementTitle());
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
-        viewHolder.movementAmountView.setText(LBudgetUtils.printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        viewHolder.movementAmountView.setText(printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
         viewHolder.movementEpochView.setText(LBudgetTimeUtils.getTimeAgo(item.getMovementEpoch(), mContext));
         final String imagePath = item.getImagePath(mContext);
         if (new File(imagePath).exists()) {
@@ -305,6 +308,25 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public void setEpoch(Long epoch) {
             this.epoch = epoch;
+        }
+
+        public static String printifyAmount(Context context, long amount) {
+            final int decimalPlaces = LBudgetUtils.getInt(context, "amount_of_decimals_allowed");
+            double val = Math.abs(amount) / (Math.pow(10, decimalPlaces));
+            BigDecimal bigDecimal = new BigDecimal(val);
+            bigDecimal = bigDecimal.setScale(decimalPlaces, BigDecimal.ROUND_HALF_DOWN);
+            return bigDecimal.toPlainString();
+        }
+
+        public static Long processStringAmount(String s) {
+            final String DECIMAL_DOT = ".";
+            int decimals;
+            Long ret = new BigDecimal(s.substring(0, decimals = s.indexOf(DECIMAL_DOT))).longValue();
+            if (s.contains(DECIMAL_DOT)) {
+                ret *= 100;
+                ret += s.substring(decimals + 1).length() > 2 ? new BigDecimal(s.substring(decimals + 1, decimals + 3)).longValue() : new BigDecimal(s.substring(decimals + 1)).longValue();
+            }
+            return ret;
         }
     }
 

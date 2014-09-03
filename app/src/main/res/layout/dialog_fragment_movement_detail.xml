@@ -72,7 +72,7 @@
             android:nextFocusDown="@null"
             android:nextFocusForward="@null"
             android:nextFocusRight="@null"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
 
         <TextView
             android:id="@+id/movement_detail_currency_view"
