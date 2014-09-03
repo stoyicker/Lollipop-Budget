@@ -200,6 +200,7 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         return Boolean.TRUE;
     }
 
+
     public Boolean updateMovement(MovementListRecyclerAdapter.MovementDataModel newMovementInfo) {
         final SQLiteDatabase db = getWritableDatabase();
         final String selectedAccTableName = generateSelectedAccountTableName();
@@ -243,7 +244,6 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
                 synchronized (DB_LOCK) {
                     db.beginTransaction();
                     db.delete(selectedAccMovTableName, MOVEMENT_KEY_ID + " = " + movements[0].getMovementId(), null);
-                    deleteAccountTable(db, movements[0].getMovementId());
                     db.setTransactionSuccessful();
                     db.endTransaction();
                     LBackupAgent.requestBackup(mContext);

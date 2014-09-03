@@ -194,11 +194,10 @@ public class MovementDetailDialogFragment extends DialogFragment {
         return ret;
     }
 
-    //FIXME Properly match the id of the stored element and of the object
     //FIXME Why do the new elements appear below?
 
     private void addMovement(String title, Long amount, long epoch) {
-        if (MovementManager.getInstance().addMovement(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch)))
+        if (MovementManager.getInstance().addMovement(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch))) //Since the id is auto-generated upon insertion on DB and after that items are reloaded, a stub id can be used
             MovementListRecyclerAdapter.getPublicAccessInstance().refreshItemSet();
     }
 
