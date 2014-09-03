@@ -34,7 +34,6 @@ import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.ui.activities.InitialActivity;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -169,8 +168,9 @@ public abstract class LBudgetUtils {
         });
         for (int i = 0; i < allMovementsOnSelectedAcc.size() - 1; i++) {
             int candidate;
-            if (allMovementsOnSelectedAcc.get(i).getMovementId() + 1 != (candidate = allMovementsOnSelectedAcc.get(i + 1).getMovementId()))
+            if ((candidate = allMovementsOnSelectedAcc.get(i).getMovementId() + 1) != allMovementsOnSelectedAcc.get(i + 1).getMovementId()) {
                 return candidate;
+            }
         }
         return allMovementsOnSelectedAcc.size();
     }

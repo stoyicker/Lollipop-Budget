@@ -112,6 +112,10 @@ public class MovementDetailDialogFragment extends DialogFragment {
                                 dismiss();
                                 return;
                             }
+                            if (amount == 0L) {
+                                dismiss();
+                                return;
+                            }
                             String epochAs8601 = dateView.getText().toString(), title = titleView.getText().toString();
                             MovementDetailDialogFragment.this.addMovement(title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                         }
