@@ -12,17 +12,12 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.eazegraph.lib.charts.PieChart xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/expense_chart"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/expense_chart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/expense_graph_padding"
-        app:egLegendTextSize="@dimen/expense_graph_legend_size"
-        app:egUsePieRotation="true"
-        app:egValueTextSize="@dimen/expense_graph_text_size" />
-</FrameLayout>
+    android:layout_height="wrap_content"
+    android:padding="@dimen/expense_graph_padding"
+    app:egLegendTextSize="@dimen/expense_graph_legend_size"
+    app:egUsePieRotation="true"
+    app:egValueTextSize="@dimen/expense_graph_text_size" />
