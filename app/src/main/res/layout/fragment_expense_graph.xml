@@ -20,9 +20,9 @@
     <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/expense_chart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:padding="8dp"
-        app:egLegendTextSize="18sp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/expense_graph_padding"
+        app:egLegendTextSize="@dimen/expense_graph_legend_size"
         app:egUsePieRotation="true"
-        app:egValueTextSize="36sp" />
+        app:egValueTextSize="@dimen/expense_graph_text_size" />
 </FrameLayout>

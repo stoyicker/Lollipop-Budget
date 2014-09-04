@@ -32,4 +32,7 @@
     <dimen name="dialog_fragment_padding">4dp</dimen>
     <dimen name="edit_text_compensation_margin">10dp</dimen>
     <dimen name="movement_detail_dialog_top_padding">12dp</dimen>
+    <dimen name="expense_graph_padding">8dp</dimen>
+    <dimen name="expense_graph_text_size">36sp</dimen>
+    <dimen name="expense_graph_legend_size">20sp</dimen>
 </resources>
