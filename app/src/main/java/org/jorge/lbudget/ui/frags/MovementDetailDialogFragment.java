@@ -141,7 +141,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
             mPhotoViewAttacher = new PhotoViewAttacher(mPhotoView);
             epoch = args.getLong(KEY_MOVEMENT_EPOCH);
             titleView.setText(args.getString(KEY_MOVEMENT_TITLE));
-            amountView.setText(String.valueOf(Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
+            amountView.setText(MovementListRecyclerAdapter.MovementDataModel.printifyAmount(mContext, Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
         }
 
         view.findViewById(R.id.button_movement_image_snap).setOnClickListener(new View.OnClickListener() {
