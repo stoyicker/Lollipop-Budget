@@ -330,8 +330,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             } else ret = new BigDecimal(s).longValue() * 100;
             return ret;
         }
-    }
 
+        @Override
+        public String toString() {
+            return getMovementTitle();
+        }
+    }
 
     public interface MovementImageClickListener {
         public void onMovementImageClick(MovementDataModel movement);
