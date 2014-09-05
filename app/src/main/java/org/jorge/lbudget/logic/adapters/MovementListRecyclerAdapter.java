@@ -22,6 +22,7 @@ import android.net.Uri;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -274,7 +275,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
 
         public String getMovementTitle() {
-            return title;
+            return TextUtils.isEmpty(title) ? "" : title;
         }
 
         public int getMovementId() {
