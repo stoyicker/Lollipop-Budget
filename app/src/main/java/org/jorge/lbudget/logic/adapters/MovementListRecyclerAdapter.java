@@ -268,9 +268,9 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     public static class MovementDataModel {
         private final int id; //The id will be used to find the image
         private String title;
-        private long amount, epoch;
+        private Long amount, epoch;
 
-        public long getMovementAmount() {
+        public Long getMovementAmount() {
             return amount;
         }
 

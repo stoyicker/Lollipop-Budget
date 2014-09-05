@@ -28,6 +28,7 @@ import org.eazegraph.lib.models.PieModel;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.utils.LBudgetTimeUtils;
+import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
 
@@ -58,7 +59,13 @@ public class ExpenseGraphFragment extends Fragment {
 
         PieChart mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
 
-        List<PieModel> pies = MovementManager.getInstance().createPieModels(mContext, monthsAgo, 5);
+        int maxUniquePies = 1;
+        while (LBudgetUtils.getColor(mContext, "expense_type_" + maxUniquePies + "_color") != -1) {
+            maxUniquePies++;
+        }
+        maxUniquePies -= 2; //One for the initial index, another one because the last color belongs to 'Other'
+
+        List<PieModel> pies = MovementManager.getInstance().createPieModels(mContext, monthsAgo, maxUniquePies);
 
         for (PieModel pie : pies) {
             mPieChart.addPieSlice(pie);

@@ -27,6 +27,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static org.jorge.lbudget.devutils.DevUtils.logString;
+
 public class MovementManager {
 
     private List<MovementListRecyclerAdapter.MovementDataModel> mMovementList;
@@ -105,7 +107,7 @@ public class MovementManager {
         Collections.sort(expensesInMonth, new Comparator<MovementListRecyclerAdapter.MovementDataModel>() {
             @Override
             public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1, MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
-                return movementDataModel1.getMovementTitle().compareTo(movementDataModel2.getMovementTitle());
+                return movementDataModel1.getMovementAmount().compareTo(movementDataModel2.getMovementAmount());
             }
         });
 
@@ -125,8 +127,10 @@ public class MovementManager {
                     cumulativeMovement = newMovement;
                     colorCounter++;
                 }
-                if (expensesInMonth.isEmpty())
+                if (expensesInMonth.isEmpty()) {
                     ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
+                    colorCounter++;
+                }
             }
             if (colorCounter > maxUniquePies)
                 break;
@@ -134,13 +138,14 @@ public class MovementManager {
         if (colorCounter > maxUniquePies && !expensesInMonth.isEmpty()) {
             cumulativeMovement = null;
             while (!expensesInMonth.isEmpty()) {
+                logString("debug", "Adding to Others " + expensesInMonth.get(0).getMovementTitle());
                 if (cumulativeMovement == null) {
                     cumulativeMovement = expensesInMonth.remove(0);
-                }
-                cumulativeMovement.setAmount(cumulativeMovement.getMovementAmount() + expensesInMonth.remove(0).getMovementAmount());
+                } else
+                    cumulativeMovement.setAmount(cumulativeMovement.getMovementAmount() + expensesInMonth.remove(0).getMovementAmount());
             }
             assert cumulativeMovement != null;
-            ret.add(new PieModel(LBudgetUtils.getString(context, "other_movements_pie_title"), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
+            ret.add(new PieModel(LBudgetUtils.getString(context, "other_movements_pie_title"), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", maxUniquePies + 1 + ""))));
         }
         return ret;
     }

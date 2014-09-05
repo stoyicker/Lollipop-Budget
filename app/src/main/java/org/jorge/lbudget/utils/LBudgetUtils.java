@@ -140,7 +140,7 @@ public abstract class LBudgetUtils {
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getColor(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {
-            Crashlytics.logException(e);
+            //Used for field discovery, so no crash to report
         }
 
         return ret;
