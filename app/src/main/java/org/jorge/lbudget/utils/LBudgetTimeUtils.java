@@ -68,7 +68,7 @@ public abstract class LBudgetTimeUtils {
         return LBudgetUtils.getString(context, identifier).replace(LBudgetUtils.getString(context, "time_ago_placeholder"), amount);
     }
 
-    public static String getEpochAsISO8601(Context context, Long epoch) {
+    public static String epochAsISO8601(Context context, Long epoch) {
         return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format")).format(new Date(epoch));
     }
 
@@ -81,11 +81,50 @@ public abstract class LBudgetTimeUtils {
         }
     }
 
-    public static String getMonthStringInMonthsAgo(Context context, int monthsAgo) {
+    public static String getMonthStringTroughMonthsAgo(Context context, int monthsAgo) {
         if (monthsAgo < 0)
             throw new IllegalArgumentException("Can't calculate movements in the future (monthsAgo is negative)");
         final Long epoch = System.currentTimeMillis() - MONTH_MILLIS * monthsAgo;
-        final String epochAsString = LBudgetTimeUtils.getEpochAsISO8601(context, epoch);
+        final String epochAsString = LBudgetTimeUtils.epochAsISO8601(context, epoch);
         return LBudgetUtils.getString(context, "month_" + epochAsString.substring(5, 7)) + " " + epochAsString.substring(0, 4);
+    }
+
+    public static Long calculateFirstDayOfTheMonthThroughMonthsAgo(Context context, int monthsAgo) {
+        if (monthsAgo < 0)
+            throw new IllegalArgumentException("Can't calculate movements in the future (monthsAgo is negative)");
+        return ISO8601AsEpoch(context, epochAsISO8601(context, System.currentTimeMillis() - MONTH_MILLIS * monthsAgo).substring(0, 8) + "01");
+    }
+
+    public static Long calculateFirstDayOfMonthNextTo(Context context, Long initialDayAsEpoch) {
+        if (initialDayAsEpoch < 0)
+            throw new IllegalArgumentException("Can't calculate last day of a month with a negative epoch");
+        Long sum = DAY_MILLIS;
+        final String epochAsString = epochAsISO8601(context, initialDayAsEpoch);
+        switch (Integer.parseInt(epochAsString.substring(5, 7))) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                sum *= 31;
+                break;
+            case 2:
+                if (Integer.parseInt(epochAsString.substring(0, 4)) % 4 == 0) {
+                    sum *= 29;
+                } else
+                    sum *= 28;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                sum *= 30;
+                break;
+            default:
+                throw new IllegalArgumentException("Month not recognized");
+        }
+        return initialDayAsEpoch + sum;
     }
 }

@@ -127,7 +127,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     Long amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
                     String epochAs8601, title = titleView.getText().toString();
-                    if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.getEpochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
+                    if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.epochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
                         MovementDetailDialogFragment.this.updateMovement(args.getInt(KEY_MOVEMENT_ID), title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                     }
                 }
@@ -151,7 +151,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
             }
         });
 
-        final String epochAsIso8601 = LBudgetTimeUtils.getEpochAsISO8601(mContext, epoch);
+        final String epochAsIso8601 = LBudgetTimeUtils.epochAsISO8601(mContext, epoch);
         dateView.setText(epochAsIso8601);
         final StringTokenizer epochAsISO8601Tokenizer = new StringTokenizer(epochAsIso8601, "-");
         dateView.setOnClickListener(new View.OnClickListener() {

@@ -51,16 +51,15 @@ public class ExpenseGraphFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //TODO Put here some values
         //TODO Try to use the viewpager to see previous months
 
         int monthsAgo = 0;
 
-        ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringInMonthsAgo(mContext, monthsAgo));
+        ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, monthsAgo));
 
         PieChart mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
 
-        List<PieModel> pies = MovementManager.getInstance().createPies(monthsAgo, 5);
+        List<PieModel> pies = MovementManager.getInstance().createPieModels(mContext, monthsAgo, 5);
 
         for (PieModel pie : pies) {
             mPieChart.addPieSlice(pie);

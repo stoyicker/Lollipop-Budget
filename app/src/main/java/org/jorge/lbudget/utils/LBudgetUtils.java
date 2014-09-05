@@ -192,4 +192,8 @@ public abstract class LBudgetUtils {
         }
         return allMovementsOnSelectedAcc.size();
     }
+
+    public static String capitalizeFirst(String movementTitle) {
+        return String.valueOf(movementTitle.charAt(0)).toUpperCase() + movementTitle.substring(1).toLowerCase();
+    }
 }
