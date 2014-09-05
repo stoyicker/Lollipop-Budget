@@ -27,8 +27,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static org.jorge.lbudget.devutils.DevUtils.logString;
-
 public class MovementManager {
 
     private List<MovementListRecyclerAdapter.MovementDataModel> mMovementList;
@@ -138,7 +136,6 @@ public class MovementManager {
         if (colorCounter > maxUniquePies && !expensesInMonth.isEmpty()) {
             cumulativeMovement = null;
             while (!expensesInMonth.isEmpty()) {
-                logString("debug", "Adding to Others " + expensesInMonth.get(0).getMovementTitle());
                 if (cumulativeMovement == null) {
                     cumulativeMovement = expensesInMonth.remove(0);
                 } else
