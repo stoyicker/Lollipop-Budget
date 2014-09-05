@@ -82,6 +82,8 @@ public abstract class LBudgetTimeUtils {
     }
 
     public static String getMonthStringInMonthsAgo(Context context, int monthsAgo) {
+        if (monthsAgo < 0)
+            throw new IllegalArgumentException("Can't calculate movements in the future (monthsAgo is negative)");
         final Long epoch = System.currentTimeMillis() - MONTH_MILLIS * monthsAgo;
         final String epochAsString = LBudgetTimeUtils.getEpochAsISO8601(context, epoch);
         return LBudgetUtils.getString(context, "month_" + epochAsString.substring(5, 7)) + " " + epochAsString.substring(0, 4);

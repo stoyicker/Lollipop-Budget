@@ -40,4 +40,10 @@
     <color name="transparent_black">#40000000</color>
     <color name="movement_image_dialog_background">@android:color/white</color>
     <color name="editable_field_text_color">#492121</color>
+    <color name="expense_type_1_color">#56B7F1</color>
+    <color name="expense_type_2_color">#FED70E</color>
+    <color name="expense_type_3_color">#00C441</color>
+    <color name="expense_type_4_color">#CDA67F</color>
+    <color name="expense_type_5_color">#0026FF</color>
+    <color name="expense_type_6_color">#FE6DA8</color>
 </resources>

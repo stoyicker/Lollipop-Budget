@@ -27,7 +27,10 @@ import android.widget.TextView;
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.logic.controllers.MovementManager;
 import org.jorge.lbudget.utils.LBudgetTimeUtils;
+
+import java.util.List;
 
 public class ExpenseGraphFragment extends Fragment {
 
@@ -51,11 +54,18 @@ public class ExpenseGraphFragment extends Fragment {
         //TODO Put here some values
         //TODO Try to use the viewpager to see previous months
 
-        ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringInMonthsAgo(mContext, 0));
+        int monthsAgo = 0;
+
+        ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringInMonthsAgo(mContext, monthsAgo));
 
         PieChart mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
 
-        mPieChart.addPieSlice(new PieModel("Freetime", 15, Color.parseColor("#FE6DA8")));
+        List<PieModel> pies = MovementManager.getInstance().createPies(monthsAgo, 5);
+
+        for (PieModel pie : pies) {
+            mPieChart.addPieSlice(pie);
+        }
+
         mPieChart.addPieSlice(new PieModel("Sleep", 25, Color.parseColor("#56B7F1")));
         mPieChart.addPieSlice(new PieModel("Work", 35, Color.parseColor("#CDA67F")));
         mPieChart.addPieSlice(new PieModel("Eating", 9, Color.parseColor("#FED70E")));

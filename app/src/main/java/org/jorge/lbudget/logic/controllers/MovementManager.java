@@ -13,6 +13,7 @@
 
 package org.jorge.lbudget.logic.controllers;
 
+import org.eazegraph.lib.models.PieModel;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
@@ -20,8 +21,6 @@ import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import static org.jorge.lbudget.devutils.DevUtils.logString;
 
 public class MovementManager {
 
@@ -89,5 +88,11 @@ public class MovementManager {
         thisMovement.setAmount(newAmount);
         thisMovement.setEpoch(newEpoch);
         return SQLiteDAO.getInstance().updateMovement(thisMovement);
+    }
+
+    public List<PieModel> createPies(int monthsAgo, int maxPies) {
+        if (monthsAgo < 0)
+            throw new IllegalArgumentException("Can't calculate movements in the future (monthsAgo is negative)");
+        return null;
     }
 }
