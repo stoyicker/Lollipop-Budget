@@ -16,7 +16,6 @@ package org.jorge.lbudget.ui.frags;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -64,10 +63,6 @@ public class ExpenseGraphFragment extends Fragment {
         for (PieModel pie : pies) {
             mPieChart.addPieSlice(pie);
         }
-
-        mPieChart.addPieSlice(new PieModel("Sleep", 25, Color.parseColor("#56B7F1")));
-        mPieChart.addPieSlice(new PieModel("Work", 35, Color.parseColor("#CDA67F")));
-        mPieChart.addPieSlice(new PieModel("Eating", 9, Color.parseColor("#FED70E")));
 
         mPieChart.startAnimation();
     }
