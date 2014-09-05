@@ -137,9 +137,10 @@ public class MovementManager {
                 if (cumulativeMovement == null) {
                     cumulativeMovement = expensesInMonth.remove(0);
                 }
+                cumulativeMovement.setAmount(cumulativeMovement.getMovementAmount() + expensesInMonth.remove(0).getMovementAmount());
             }
             assert cumulativeMovement != null;
-            ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
+            ret.add(new PieModel(LBudgetUtils.getString(context, "other_movements_pie_title"), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
         }
         return ret;
     }

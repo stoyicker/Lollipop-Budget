@@ -65,4 +65,5 @@
     <string name="month_10">October</string>
     <string name="month_11">November</string>
     <string name="month_12">December</string>
+    <string name="other_movements_pie_title">Other</string>
 </resources>
