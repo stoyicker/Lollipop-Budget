@@ -13,19 +13,31 @@
 
 package org.jorge.lbudget.ui.frags;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.eazegraph.lib.charts.PieChart;
 import org.eazegraph.lib.models.PieModel;
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.utils.LBudgetTimeUtils;
 
 public class ExpenseGraphFragment extends Fragment {
+
+    private Context mContext;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mContext = activity.getApplicationContext();
+    }
 
     @Nullable
     @Override
@@ -36,8 +48,11 @@ public class ExpenseGraphFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //TODO Polish the XML layout and put here some values and maybe some footer
+        //TODO Put here some values
         //TODO Try to use the viewpager to see previous months
+
+        ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringInMonthsAgo(mContext, 0));
+
         PieChart mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
 
         mPieChart.addPieSlice(new PieModel("Freetime", 15, Color.parseColor("#FE6DA8")));

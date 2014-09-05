@@ -53,4 +53,16 @@
     <string name="income_name">Income</string>
     <string name="movement_detail_name_view_hint">Description</string>
     <string name="new_item_content_description">New item</string>
+    <string name="month_01">January</string>
+    <string name="month_02">February</string>
+    <string name="month_03">March</string>
+    <string name="month_04">April</string>
+    <string name="month_05">May</string>
+    <string name="month_06">June</string>
+    <string name="month_07">July</string>
+    <string name="month_08">August</string>
+    <string name="month_09">September</string>
+    <string name="month_10">October</string>
+    <string name="month_11">November</string>
+    <string name="month_12">December</string>
 </resources>

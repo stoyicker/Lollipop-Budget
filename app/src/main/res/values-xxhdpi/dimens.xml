@@ -35,4 +35,5 @@
     <dimen name="expense_graph_padding">8dp</dimen>
     <dimen name="expense_graph_text_size">36sp</dimen>
     <dimen name="expense_graph_legend_size">20sp</dimen>
+    <dimen name="expense_graph_top_margin">4dp</dimen>
 </resources>

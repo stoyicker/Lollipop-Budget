@@ -132,4 +132,14 @@
     <style name="MovementDetailText">
         <item name="android:textColor">@color/editable_field_text_color</item>
     </style>
+
+    <style name="ExpenseGraphMonthTextStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/theme_text_color_secondary</item>
+        <item name="android:shadowColor">@android:color/white</item>
+        <item name="android:shadowDx">8</item>
+        <item name="android:shadowDy">8</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:textSize">@dimen/expense_graph_title_text_size</item>
+    </style>
 </resources>

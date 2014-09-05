@@ -12,12 +12,25 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
   -->
-<org.eazegraph.lib.charts.PieChart xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/expense_chart"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="@dimen/expense_graph_padding"
-    app:egLegendTextSize="@dimen/expense_graph_legend_size"
-    app:egUsePieRotation="true"
-    app:egValueTextSize="@dimen/expense_graph_text_size" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/expense_graph_month_view"
+        android:layout_marginTop="@dimen/expense_graph_top_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ExpenseGraphMonthTextStyle"
+        android:gravity="center" />
+
+    <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/expense_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/expense_graph_padding"
+        app:egLegendTextSize="@dimen/expense_graph_legend_size"
+        app:egUsePieRotation="true"
+        app:egValueTextSize="@dimen/expense_graph_text_size" />
+</LinearLayout>

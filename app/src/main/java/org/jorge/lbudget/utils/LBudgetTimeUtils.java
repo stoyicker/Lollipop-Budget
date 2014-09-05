@@ -80,4 +80,10 @@ public abstract class LBudgetTimeUtils {
             return null;
         }
     }
+
+    public static String getMonthStringInMonthsAgo(Context context, int monthsAgo) {
+        final Long epoch = System.currentTimeMillis() - MONTH_MILLIS * monthsAgo;
+        final String epochAsString = LBudgetTimeUtils.getEpochAsISO8601(context, epoch);
+        return LBudgetUtils.getString(context, "month_" + epochAsString.substring(5, 7)) + " " + epochAsString.substring(0, 4);
+    }
 }
