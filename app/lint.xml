@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~ This file is part of LBudget.
   ~ LBudget is free software: you can redistribute it and/or modify
   ~ it under the terms of version 3 of the GNU General Public License as published by
@@ -20,4 +19,10 @@
     <!-- Lint doesn't recognize Gradle min API declaration -->
     <issue id="InlinedApi" severity="ignore" />
     <issue id="NewApi" severity="ignore" />
+
+    <!-- Text that does not have to be translated -->
+    <issue id="MissingTranslation">
+        <ignore path="src/main/res/values/strings.xml" />
+    </issue>
+    <issue id="ExtraTranslation" severity="ignore" />
 </lint>
