@@ -1,7 +1,6 @@
 .gradle
 /local.properties
 crashlytics.properties
-crashlytics-build.properties
 .DS_Store
 build
 .idea
@@ -12,3 +11,4 @@ gradlew
 Deployment
 signing
 com_crashlytics_export_strings.xml
+assets
