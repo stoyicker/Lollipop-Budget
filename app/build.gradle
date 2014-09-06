@@ -73,6 +73,12 @@ android {
                 runProguard false
                 zipAlign false
             }
+
+            unsignedRelease {
+                runProguard true
+                zipAlign true
+                proguardFiles new File('proguard-app.pro')
+            }
         }
     }
 }
