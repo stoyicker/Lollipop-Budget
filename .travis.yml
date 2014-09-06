@@ -5,3 +5,4 @@ android:
     - tools
     - build-tools-20.0.0
     - android-L
+script: gradle assembleStandardDebug
