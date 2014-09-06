@@ -47,7 +47,7 @@ android {
 
         signingConfigs {
             release {
-                storeFile new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetgplaykey.keystore")
+                storeFile new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudget.keystore")
                 storePassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetstorage.pwd").text)
                 keyAlias(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudget.alias").text)
                 keyPassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetkey.pwd").text)
