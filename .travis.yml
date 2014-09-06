@@ -15,5 +15,10 @@ before_install:
     - export GRADLE_HOME=$PWD/gradle-1.10
     - export PATH=$GRADLE_HOME/bin:$PATH
 # Gradle setup end
+# Signature stub start
+    - cat "stub keystore" > lbudget.keystore
+    - cat "stub storage pwd" > lbudgetstorage.pwd
+    - cat "stub key pwd" > lbudgetkey.pwd
+# Signature stub end
 script:
-    - gradle assembleStandardDebug
+    - gradle assembleStandardUnsignedRelease
