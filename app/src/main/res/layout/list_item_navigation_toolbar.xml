@@ -16,7 +16,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/navigation_toolbar_item_height"
     android:elevation="@dimen/elevation_navigation_toolbar">
 
     <LinearLayout
@@ -30,8 +30,8 @@
             android:id="@+id/navigation_toolbar_entry_icon_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/navigation_toolbar_element_horizontal_margin"
-            android:paddingRight="@dimen/navigation_toolbar_element_horizontal_margin"
+            android:paddingStart="@dimen/navigation_toolbar_element_horizontal_margin"
+            android:paddingEnd="@dimen/navigation_toolbar_element_horizontal_margin"
             android:scaleX="@dimen/navigation_toolbar_icon_scale_ratio"
             android:scaleY="@dimen/navigation_toolbar_icon_scale_ratio"
             tools:ignore="ContentDescription" />
@@ -41,8 +41,9 @@
             android:id="@+id/navigation_toolbar_entry_text_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingRight="@dimen/navigation_toolbar_element_horizontal_margin"
-            style="@style/NavigationToolbarMenuItemStyle" />
+            android:paddingEnd="@dimen/navigation_toolbar_element_horizontal_margin"
+            style="@style/NavigationToolbarMenuItemStyle"
+            tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
     <ImageView
