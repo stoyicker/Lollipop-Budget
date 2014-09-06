@@ -10,5 +10,7 @@ gradle
 gradlew.bat
 gradlew
 Deployment
-signing
+*.keystore
+*.pwd
+*.alias
 com_crashlytics_export_strings.xml

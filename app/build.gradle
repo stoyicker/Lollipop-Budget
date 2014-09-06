@@ -33,6 +33,8 @@ repositories {
     }
 }
 
+logger.error(new File(".").absolutePath)
+
 android {
     compileSdkVersion 'android-L'
     buildToolsVersion "20.0.0"
@@ -47,10 +49,10 @@ android {
 
         signingConfigs {
             release {
-                storeFile new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudget.keystore")
-                storePassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetstorage.pwd").text)
-                keyAlias(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudget.alias").text)
-                keyPassword(new File("/home/stoyicker/Desktop/LBudget/app/signing/lbudgetkey.pwd").text)
+                storeFile new File("lbudget.keystore")
+                storePassword(new File("lbudgetstorage.pwd").text)
+                keyAlias("lbudget")
+                keyPassword(new File("lbudgetkey.pwd").text)
             }
         }
 
