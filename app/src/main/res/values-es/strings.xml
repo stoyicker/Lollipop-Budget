@@ -1,0 +1,69 @@
+<!--
+  ~ This file is part of LBudget.
+  ~ LBudget is free software: you can redistribute it and/or modify
+  ~ it under the terms of version 3 of the GNU General Public License as published by
+  ~ the Free Software Foundation
+  ~ LBudget is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  ~ GNU General Public License for more details.
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with LBudget. If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <string name="navigation_menu_item0">Movimientos</string>
+    <string name="navigation_menu_item1">Gráfico de gastos</string>
+    <string name="navigation_menu_item2">Cuentas</string>
+    <string name="content_description_menu">Menú</string>
+    <string name="action_settings">Configuración</string>
+    <string name="selected_menu_content_description">Seleccionado</string>
+    <string name="movement_image_content_description">Imagen de movimiento</string>
+    <string name="movement_color_name_red">Rojo</string>
+    <string name="movement_color_name_green">Verde</string>
+    <string name="movement_color_name_blue">Azul</string>
+    <string name="pref_title_movement_income_color">Color de ganancia</string>
+    <string name="pref_title_movement_expense_color">Color de gasto</string>
+    <string name="action_share">Compartir</string>
+    <string name="share_dialog_title">Compartir con</string>
+    <string name="share_text_income">He ingresado {MONEYPLACEHOLDER}\u0020</string>
+    <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
+    <string name="undo_bar_undo_uppercase">DESHACER</string>
+    <string name="movement_list_item_removal">Elemento eliminado</string>
+    <string name="item_edit">Editar</string>
+    <string name="pref_title_currency_code">Moneda</string>
+    <string name="preferences_title_general">GENERAL</string>
+    <string name="account_name_edit_text_hint">Nombre de cuenta</string>
+    <string name="default_account_name">Cuenta por defecto</string>
+    <string name="no_movements">No movimientos encontrados hasta hoy.</string>
+    <string name="new_account_default_name">Nueva cuenta\u0020</string>
+    <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
+    <string name="time_ago_today">hoy</string>
+    <string name="time_ago_a_day">ayer</string>
+    <string name="time_ago_days">hace {TIMEPLACEHOLDER} días</string>
+    <string name="time_ago_a_month">hace un mes</string>
+    <string name="time_ago_months">hace {TIMEPLACEHOLDER} meses</string>
+    <string name="time_ago_a_year">hace un año</string>
+    <string name="time_ago_years">hace {TIMEPLACEHOLDER} años</string>
+    <string name="picture_snap_content_description">Hacer una foto</string>
+    <string name="image_too_large_alt_message">Ésta imagen es demasiado grande. Perdona!</string>
+    <string name="register_movement_dialog_title">Registrar</string>
+    <string name="edit_movement_dialog_title">Editar</string>
+    <string name="expense_name">Gasto</string>
+    <string name="income_name">Ganancia</string>
+    <string name="movement_detail_name_view_hint">Descripción</string>
+    <string name="new_item_content_description">Nuevo objeto</string>
+    <string name="month_01">Enero</string>
+    <string name="month_02">Febrero</string>
+    <string name="month_03">Marzo</string>
+    <string name="month_04">Abril</string>
+    <string name="month_05">Mayo</string>
+    <string name="month_06">Junio</string>
+    <string name="month_07">Julio</string>
+    <string name="month_08">Agosto</string>
+    <string name="month_09">Septiembre</string>
+    <string name="month_10">Octubre</string>
+    <string name="month_11">Noviembre</string>
+    <string name="month_12">Dicembre</string>
+    <string name="other_movements_pie_title">Otros</string>
+</resources>
