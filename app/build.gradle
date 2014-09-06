@@ -63,7 +63,7 @@ android {
             release {
                 runProguard true
                 zipAlign true
-                proguardFiles getDefaultProguardFile('proguard-app.pro')
+                proguardFiles new File('proguard-app.pro')
                 signingConfig signingConfigs.release
             }
 
