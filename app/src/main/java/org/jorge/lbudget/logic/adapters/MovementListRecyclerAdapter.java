@@ -44,6 +44,7 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Locale;
 
 import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
 
@@ -94,7 +95,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         int retId = -1;
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final String prefKey = LBudgetUtils.getString(context, prefName);
-        final String identifier = sharedPreferences.getString(prefKey, LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase() + "_identifier"));
+        final String identifier = sharedPreferences.getString(prefKey, LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase(Locale.getDefault()) + "_identifier"));
         if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_red_identifier"))) {
             retId = R.color.movement_color_red;
         } else if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_green_identifier"))) {
@@ -109,18 +110,18 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         return publicAccessInstance;
     }
 
-    public void add(MovementDataModel item, int position) {
-        items.add(position, item);
-        notifyItemInserted(position);
-        MovementManager.getInstance().addMovement(item);
-    }
-
-    public MovementDataModel remove(int position) {
-        MovementDataModel ret = items.remove(position);
-        notifyItemRemoved(position);
-        removeMovementFromPersistence(ret);
-        return ret;
-    }
+//    public void add(MovementDataModel item, int position) {
+//        items.add(position, item);
+//        notifyItemInserted(position);
+//        MovementManager.getInstance().addMovement(item);
+//    }
+//
+//    public MovementDataModel remove(int position) {
+//        MovementDataModel ret = items.remove(position);
+//        notifyItemRemoved(position);
+//        removeMovementFromPersistence(ret);
+//        return ret;
+//    }
 
     private void sendShareIntent(MovementDataModel item) {
         Intent intent = new Intent(Intent.ACTION_SEND);

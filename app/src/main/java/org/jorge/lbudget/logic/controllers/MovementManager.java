@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class MovementManager {
 
@@ -118,7 +119,7 @@ public class MovementManager {
                 cumulativeMovement = expensesInMonth.remove(0);
             } else {
                 MovementListRecyclerAdapter.MovementDataModel newMovement = expensesInMonth.remove(0);
-                if (cumulativeMovement.getMovementTitle().toLowerCase().contentEquals(newMovement.getMovementTitle().toLowerCase())) {
+                if (cumulativeMovement.getMovementTitle().toLowerCase(Locale.getDefault()).contentEquals(newMovement.getMovementTitle().toLowerCase(Locale.getDefault()))) {
                     cumulativeMovement = new MovementListRecyclerAdapter.MovementDataModel(-1, LBudgetUtils.capitalizeFirst(cumulativeMovement.getMovementTitle()), cumulativeMovement.getMovementAmount() + newMovement.getMovementAmount(), cumulativeMovement.getMovementEpoch());//The id and the epoch are useless but we need the wrapper
                 } else {
                     ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));

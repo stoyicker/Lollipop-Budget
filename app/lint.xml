@@ -25,4 +25,10 @@
         <ignore path="src/main/res/values/strings.xml" />
     </issue>
     <issue id="ExtraTranslation" severity="ignore" />
+    <!-- Misleading accessibility warning -->
+    <issue id="ClickableViewAccessibility" severity="ignore" />
+    <!-- Obvious -->
+    <issue id="Override" severity="ignore" />
+    <!-- Things loaded through reflection -->
+    <issue id="UnusedResources" severity="ignore" />
 </lint>

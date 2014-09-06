@@ -13,18 +13,7 @@
 
 package org.jorge.lbudget.utils;
 
-import android.animation.ValueAnimator;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
-import android.util.TypedValue;
-import android.view.View;
-import android.view.ViewAnimationUtils;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -32,27 +21,27 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
-import org.jorge.lbudget.ui.activities.InitialActivity;
 
 import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public abstract class LBudgetUtils {
-
-    public static int dpToPx(Resources res, int dp) {
-        return (int) TypedValue
-                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
-    }
-
-    public static void restartApp(Activity activity) {
-        activity.startActivity(new Intent(activity, InitialActivity.class));
-        Intent i = activity.getBaseContext().getPackageManager()
-                .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(i);
-    }
+//
+//    public static int dpAsPixels(Resources res, int dp) {
+//        return (int) TypedValue
+//                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
+//    }
+//
+//    public static void restartApp(Activity activity) {
+//        activity.startActivity(new Intent(activity, InitialActivity.class));
+//        Intent i = activity.getBaseContext().getPackageManager()
+//                .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
+//        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        activity.startActivity(i);
+//    }
 
     public static String[] getStringArray(Context context, String variableName) {
         String[] ret = null;
@@ -96,27 +85,27 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-    public static Boolean isInternetReachable(Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        Boolean ret;
-
-        ConnectivityManager connectivityManager =
-                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetworkInfo =
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI),
-                dataNetworkInfo =
-                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        Boolean isWifiConnected =
-                (wifiNetworkInfo == null) ? Boolean.FALSE : wifiNetworkInfo.isConnected(),
-                isDataConnected =
-                        (dataNetworkInfo == null) ? Boolean.FALSE :
-                                dataNetworkInfo.isConnected();
-        ret = isWifiConnected || (preferences
-                .getBoolean("pref_title_data",
-                        Boolean.FALSE) && isDataConnected);
-
-        return ret;
-    }
+//    public static Boolean isInternetReachable(Context context) {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        Boolean ret;
+//
+//        ConnectivityManager connectivityManager =
+//                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo wifiNetworkInfo =
+//                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI),
+//                dataNetworkInfo =
+//                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+//        Boolean isWifiConnected =
+//                (wifiNetworkInfo == null) ? Boolean.FALSE : wifiNetworkInfo.isConnected(),
+//                isDataConnected =
+//                        (dataNetworkInfo == null) ? Boolean.FALSE :
+//                                dataNetworkInfo.isConnected();
+//        ret = isWifiConnected || (preferences
+//                .getBoolean("pref_title_data",
+//                        Boolean.FALSE) && isDataConnected);
+//
+//        return ret;
+//    }
 
     public static int getInt(Context context, String variableName) {
         int ret = -1;
@@ -146,18 +135,18 @@ public abstract class LBudgetUtils {
         return ret;
     }
 
-    public static int pixelsAsDp(Context context, int sizeInPx) {
-        float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (sizeInPx * scale + 0.5f);
-    }
-
-    public static ValueAnimator createStandardCircularReveal(View v) {
-        return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, 0, v.getWidth());
-    }
-
-    public static ValueAnimator createStandardCircularHide(View v) {
-        return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, v.getWidth(), 0);
-    }
+//    public static int pixelsAsDp(Context context, int sizeInPx) {
+//        float scale = context.getResources().getDisplayMetrics().density;
+//        return (int) (sizeInPx * scale + 0.5f);
+//    }
+//
+//    public static ValueAnimator createStandardCircularReveal(View v) {
+//        return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, 0, v.getWidth());
+//    }
+//
+//    public static ValueAnimator createStandardCircularHide(View v) {
+//        return ViewAnimationUtils.createCircularReveal(v, (v.getLeft() + v.getRight()) / 2, (v.getTop() + v.getBottom()) / 2, v.getWidth(), 0);
+//    }
 
     public static int calculateAvailableAccountId() {
         List<AccountListRecyclerAdapter.AccountDataModel> allAcc = SQLiteDAO.getInstance().getAccounts();
@@ -194,6 +183,6 @@ public abstract class LBudgetUtils {
     }
 
     public static String capitalizeFirst(String movementTitle) {
-        return String.valueOf(movementTitle.charAt(0)).toUpperCase() + movementTitle.substring(1).toLowerCase();
+        return String.valueOf(movementTitle.charAt(0)).toUpperCase(Locale.getDefault()) + movementTitle.substring(1).toLowerCase(Locale.getDefault());
     }
 }
