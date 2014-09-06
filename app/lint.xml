@@ -31,4 +31,17 @@
     <issue id="Override" severity="ignore" />
     <!-- Things loaded through reflection -->
     <issue id="UnusedResources" severity="ignore" />
+    <!-- It's fine for the dialogs -->
+    <issue id="InflateParams">
+        <ignore path="src/main/java/org/jorge/lbudget/ui/frags/MovementDetailDialogFragment.java" />
+        <ignore path="src/main/java/org/jorge/lbudget/ui/frags/MovementImageDialogFragment.java" />
+    </issue>
+    <!-- Needs to be non-static -->
+    <issue id="HandlerLeak">
+        <ignore path="src/main/java/org/jorge/lbudget/ui/utils/FloatingActionButton.java" />
+    </issue>
+    <!-- It's fine, the navigation toolbar does require its own color -->
+    <issue id="Overdraw">
+        <ignore path="src/main/res/layout/fragment_navigation_toolbar.xml" />
+    </issue>
 </lint>
