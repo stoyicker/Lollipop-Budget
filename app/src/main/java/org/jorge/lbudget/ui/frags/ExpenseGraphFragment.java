@@ -54,6 +54,7 @@ public class ExpenseGraphFragment extends Fragment {
 
         int monthsAgo = 0;
 
+        View noMovementsView = view.findViewById(android.R.id.empty);
         ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, monthsAgo));
 
         PieChart mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
@@ -66,10 +67,16 @@ public class ExpenseGraphFragment extends Fragment {
 
         List<PieModel> pies = MovementManager.getInstance().createPieModels(mContext, monthsAgo, maxUniquePies);
 
-        for (PieModel pie : pies) {
-            mPieChart.addPieSlice(pie);
+        if (pies.isEmpty()) {
+            mPieChart.setVisibility(View.GONE);
+            noMovementsView.setVisibility(View.VISIBLE);
+        } else {
+            for (PieModel pie : pies) {
+                mPieChart.addPieSlice(pie);
+            }
+            mPieChart.startAnimation();
+            mPieChart.setVisibility(View.VISIBLE);
+            noMovementsView.setVisibility(View.GONE);
         }
-
-        mPieChart.startAnimation();
     }
 }

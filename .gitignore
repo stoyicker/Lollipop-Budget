@@ -1,6 +1,7 @@
 .gradle
 /local.properties
 crashlytics.properties
+crashlytics-build.properties
 .DS_Store
 build
 .idea

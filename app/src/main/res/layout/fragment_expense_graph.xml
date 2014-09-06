@@ -33,4 +33,12 @@
         app:egLegendTextSize="@dimen/expense_graph_legend_size"
         app:egUsePieRotation="true"
         app:egValueTextSize="@dimen/expense_graph_text_size" />
+
+    <TextView
+        android:id="@android:id/empty"
+        android:text="@string/no_movements"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 </LinearLayout>

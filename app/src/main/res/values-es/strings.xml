@@ -35,7 +35,7 @@
     <string name="preferences_title_general">GENERAL</string>
     <string name="account_name_edit_text_hint">Nombre de cuenta</string>
     <string name="default_account_name">Cuenta por defecto</string>
-    <string name="no_movements">No movimientos encontrados hasta hoy.</string>
+    <string name="no_movements">¡No hay movimientos!</string>
     <string name="new_account_default_name">Nueva cuenta\u0020</string>
     <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
     <string name="time_ago_today">hoy</string>

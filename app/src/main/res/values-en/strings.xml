@@ -35,7 +35,7 @@
     <string name="preferences_title_general">GENERAL</string>
     <string name="account_name_edit_text_hint">Account name</string>
     <string name="default_account_name">Default account</string>
-    <string name="no_movements">No movements found to date.</string>
+    <string name="no_movements">No movements found!</string>
     <string name="new_account_default_name">New account\u0020</string>
     <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
     <string name="time_ago_today">today</string>
