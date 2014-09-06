@@ -64,7 +64,7 @@
             android:focusable="true"
             style="@style/MovementDetailText"
             android:focusableInTouchMode="true"
-            android:layout_width="150dp"
+            android:layout_width="@dimen/movement_detail_amount_edittext_width"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:nextFocusLeft="@id/movement_detail_title_view"
