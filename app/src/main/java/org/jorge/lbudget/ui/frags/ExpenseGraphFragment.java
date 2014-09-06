@@ -51,7 +51,6 @@ public class ExpenseGraphFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //TODO Try to use the viewpager to see previous months
 
         int monthsAgo = 0;
 
