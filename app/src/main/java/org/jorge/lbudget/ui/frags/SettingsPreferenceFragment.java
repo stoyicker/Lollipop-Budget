@@ -15,9 +15,11 @@ package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.net.LBackupAgent;
@@ -38,9 +40,11 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.preferences);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
 
         final Preference currencyPreference = findPreference(LBudgetUtils.getString(mContext, "pref_key_currency_code")), incomeColorPreference = findPreference(LBudgetUtils.getString(mContext, "pref_key_movement_income_color")), expenseColorPreference = findPreference(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"));
 
+        currencyPreference.setSummary(preferences.getString(LBudgetUtils.getString(mContext, "pref_key_currency_code"), LBudgetUtils.getString(mContext, "currency_172")));
         currencyPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
@@ -50,19 +54,21 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
             }
         });
 
+        incomeColorPreference.setSummary(LBudgetUtils.capitalizeFirst(preferences.getString(LBudgetUtils.getString(mContext, "pref_key_movement_income_color"), LBudgetUtils.getString(mContext, "movement_color_green_identifier"))));
         incomeColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                incomeColorPreference.setSummary((CharSequence) o);
+                incomeColorPreference.setSummary(LBudgetUtils.capitalizeFirst((CharSequence) o));
                 LBackupAgent.requestBackup(mContext);
                 return Boolean.TRUE;
             }
         });
 
+        expenseColorPreference.setSummary(LBudgetUtils.capitalizeFirst(preferences.getString(LBudgetUtils.getString(mContext, "pref_key_movement_expense_color"), LBudgetUtils.getString(mContext, "movement_color_red_identifier"))));
         expenseColorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                expenseColorPreference.setSummary((CharSequence) o);
+                expenseColorPreference.setSummary(LBudgetUtils.capitalizeFirst((CharSequence) o));
                 LBackupAgent.requestBackup(mContext);
                 return Boolean.TRUE;
             }
