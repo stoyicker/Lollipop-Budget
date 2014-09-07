@@ -117,6 +117,8 @@ public class MovementManager {
         while (!expensesInMonth.isEmpty()) {
             if (cumulativeMovement == null) {
                 cumulativeMovement = expensesInMonth.remove(0);
+                if (expensesInMonth.isEmpty())
+                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
             } else {
                 MovementListRecyclerAdapter.MovementDataModel newMovement = expensesInMonth.remove(0);
                 if (cumulativeMovement.getMovementTitle().toLowerCase(Locale.getDefault()).contentEquals(newMovement.getMovementTitle().toLowerCase(Locale.getDefault()))) {
