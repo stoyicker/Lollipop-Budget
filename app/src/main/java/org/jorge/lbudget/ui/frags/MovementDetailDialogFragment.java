@@ -97,10 +97,12 @@ public class MovementDetailDialogFragment extends DialogFragment {
         final Button expenseButton = (Button) view.findViewById(R.id.movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R.id.movement_detail_type_income_view);
         final EditText dateView = (EditText) view.findViewById(R.id.movement_detail_date_view), titleView = (EditText) view.findViewById(R.id.movement_detail_title_view), amountView = (EditText) view.findViewById(R.id.movement_detail_amount_view);
         Long epoch = System.currentTimeMillis();
+        String imagePath;
 
         ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
 
         if (args == null) {
+            imagePath = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext); //The data around the object is just random stub to be able to get the image path
             dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
             onPositiveButtonClickListener =
                     new DialogInterface.OnClickListener() {
@@ -121,6 +123,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
                         }
                     };
         } else {
+            imagePath = args.getString(KEY_MOVEMENT_IMAGE_PATH);
             dialogTitle = LBudgetUtils.getString(mContext, "edit_movement_dialog_title");
             onPositiveButtonClickListener = new DialogInterface.OnClickListener() {
                 @Override
@@ -144,10 +147,12 @@ public class MovementDetailDialogFragment extends DialogFragment {
             amountView.setText(MovementListRecyclerAdapter.MovementDataModel.printifyAmount(mContext, Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
         }
 
+        final String imagePathAsFinal = imagePath;
+
         view.findViewById(R.id.button_movement_image_snap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                takeNewMovementPicture();
+                takeNewMovementPicture(imagePathAsFinal);
             }
         });
 
@@ -192,6 +197,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
         ).setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        FileManager.recursiveDelete(new File(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext))); //The data around the object is just random stub to be able to get the image path
                         MovementDetailDialogFragment.this.dismiss();
                     }
                 }
@@ -231,11 +237,10 @@ public class MovementDetailDialogFragment extends DialogFragment {
         button.setBackgroundResource(background);
     }
 
-    private void takeNewMovementPicture() {
+    private void takeNewMovementPicture(final String imagePath) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
-            final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
-            File pathAsFile = new File(path), oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
+            File pathAsFile = new File(imagePath), oldPathAsFile = new File(imagePath + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
             if (pathAsFile.exists() && !pathAsFile.renameTo(oldPathAsFile)) {
                 return;
             }
@@ -247,7 +252,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final String path = getArguments().getString(KEY_MOVEMENT_IMAGE_PATH);
+        final String path = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext); //The data around the object is just random stub to be able to get the image path
         final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             FileManager.recursiveDelete(oldPathAsFile);
