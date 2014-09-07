@@ -63,8 +63,6 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
             singleton = new SQLiteDAO(_context);
             mContext = _context;
             singleton.getReadableDatabase(); //Force the database creation
-        } else {
-            throw new IllegalStateException("SQLiteDAO.setup(Context) should only be called once.");
         }
     }
 
