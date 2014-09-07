@@ -14,6 +14,7 @@
 package org.jorge.lbudget.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -182,7 +183,8 @@ public abstract class LBudgetUtils {
         return allMovementsOnSelectedAcc.size();
     }
 
-    public static String capitalizeFirst(String movementTitle) {
-        return String.valueOf(movementTitle.charAt(0)).toUpperCase(Locale.getDefault()) + movementTitle.substring(1).toLowerCase(Locale.getDefault());
+    public static CharSequence capitalizeFirst(CharSequence movementTitle) {
+        if (TextUtils.isEmpty(movementTitle)) return movementTitle;
+        return String.valueOf(movementTitle.charAt(0)).toUpperCase(Locale.getDefault()) + movementTitle.toString().substring(1).toLowerCase(Locale.getDefault());
     }
 }
