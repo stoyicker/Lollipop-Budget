@@ -100,7 +100,7 @@ public class MovementManager {
         return SQLiteDAO.getInstance().updateMovement(thisMovement);
     }
 
-    public List<PieModel> createPieModels(Context context, int monthsAgo, int maxUniquePies) {
+    public List<PieModel> createMonthlyPieModels(Context context, int monthsAgo, int maxUniquePies) {
         if (monthsAgo < 0)
             throw new IllegalArgumentException("Can't calculate movements in the future (monthsAgo is negative)");
 

@@ -14,13 +14,16 @@
 package org.jorge.lbudget.ui.frags;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import org.eazegraph.lib.charts.PieChart;
@@ -35,6 +38,10 @@ import java.util.List;
 public class ExpenseGraphFragment extends Fragment {
 
     private Context mContext;
+    private int MONTHS_AGO = 0;
+    private View mNoMovementsView;
+    private TextView mTitleView;
+    private PieChart mPieChart;
 
     @Override
     public void onAttach(Activity activity) {
@@ -52,12 +59,26 @@ public class ExpenseGraphFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        int monthsAgo = 0;
+        mNoMovementsView = view.findViewById(android.R.id.empty);
 
-        View noMovementsView = view.findViewById(android.R.id.empty);
-        ((TextView) view.findViewById(R.id.expense_graph_month_view)).setText(LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, monthsAgo));
+        mTitleView = (TextView) view.findViewById(R.id.expense_graph_month_title_view);
+        mTitleView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMonthChooserDialog();
+            }
+        });
 
-        PieChart mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
+        mPieChart = (PieChart) view.findViewById(R.id.expense_chart);
+
+        redrawExpenseGraph();
+    }
+
+    private synchronized void redrawExpenseGraph() {
+
+        final int monthsAgo = MONTHS_AGO;
+
+        mTitleView.setText(LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, monthsAgo));
 
         int maxUniquePies = 1;
         while (LBudgetUtils.getColor(mContext, "expense_type_" + maxUniquePies + "_color") != -1) {
@@ -65,18 +86,46 @@ public class ExpenseGraphFragment extends Fragment {
         }
         maxUniquePies -= 2; //One for the initial index, another one because the last color belongs to 'Other'
 
-        List<PieModel> pies = MovementManager.getInstance().createPieModels(mContext, monthsAgo, maxUniquePies);
+        List<PieModel> pies = MovementManager.getInstance().createMonthlyPieModels(mContext, monthsAgo, maxUniquePies);
 
         if (pies.isEmpty()) {
             mPieChart.setVisibility(View.GONE);
-            noMovementsView.setVisibility(View.VISIBLE);
+            mNoMovementsView.setVisibility(View.VISIBLE);
         } else {
             for (PieModel pie : pies) {
                 mPieChart.addPieSlice(pie);
             }
             mPieChart.startAnimation();
             mPieChart.setVisibility(View.VISIBLE);
-            noMovementsView.setVisibility(View.GONE);
+            mNoMovementsView.setVisibility(View.GONE);
         }
+    }
+
+    private void showMonthChooserDialog() {
+        AlertDialog.Builder monthChooserBuilder = new AlertDialog.Builder(getActivity());
+
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
+                android.R.layout.select_dialog_singlechoice);
+        for (int i = 0; i < 12; i++) {
+            adapter.add(LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, i));
+        }
+
+        monthChooserBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        monthChooserBuilder.setSingleChoiceItems(adapter, MONTHS_AGO, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ExpenseGraphFragment.this.MONTHS_AGO = i;
+                ExpenseGraphFragment.this.redrawExpenseGraph();
+                dialogInterface.dismiss();
+            }
+        });
+
+        monthChooserBuilder.show();
     }
 }

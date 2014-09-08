@@ -18,7 +18,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/expense_graph_month_view"
+        android:id="@+id/expense_graph_month_title_view"
         android:layout_marginTop="@dimen/expense_graph_top_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

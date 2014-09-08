@@ -41,8 +41,8 @@ android {
         standard {
             minSdkVersion 'L'
             targetSdkVersion 'L'
-            versionCode 4
-            versionName "0.3.0"
+            versionCode 5
+            versionName "0.4.0"
         }
 
         signingConfigs {
