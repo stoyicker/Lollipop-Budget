@@ -257,6 +257,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             FileManager.recursiveDelete(oldPathAsFile);
             mPhotoView.setImageDrawable(Drawable.createFromPath(path));
+            if (mPhotoViewAttacher == null)
+                mPhotoViewAttacher = new PhotoViewAttacher(mPhotoView);
             mPhotoViewAttacher.update();
         } else {
             if (oldPathAsFile.exists() && !oldPathAsFile.renameTo(new File(path)))
