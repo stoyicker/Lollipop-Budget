@@ -16,6 +16,7 @@
     <string name="pref_key_movement_income_color">preference_movement_income_color</string>
     <string name="pref_key_movement_expense_color">preference_movement_expense_color</string>
     <string name="pref_key_currency_code">preference_currency_code</string>
+    <string name="pref_key_export_csv">preference_export_csv</string>
     <string name="symbol_file_separator">/</string>
     <string name="symbol_parent_directory">..</string>
     <string name="database_directory_name">databases</string>
@@ -255,4 +256,5 @@
     <string name="movement_image_dialog_name">MOVEMENT_IMAGE_DIALOG</string>
     <string name="amount_numeric_none">0,00</string>
     <string name="iso_8601_date_format">yyyy-MM-dd</string>
+    <string name="exported_file_name">lbudget.csv</string>
 </resources>

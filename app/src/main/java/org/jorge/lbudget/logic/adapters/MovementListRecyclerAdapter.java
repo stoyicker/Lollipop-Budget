@@ -336,6 +336,10 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         public String toString() {
             return getMovementTitle();
         }
+
+        public String toCsvString() {
+            return getMovementId() + "," + getMovementTitle() + "," + getMovementAmount() + "," + getMovementEpoch();
+        }
     }
 
     public interface MovementImageClickListener {

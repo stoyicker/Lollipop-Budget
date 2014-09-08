@@ -52,7 +52,7 @@ public abstract class FileManager {
         return builder.toString();
     }
 
-    public static Boolean writeStringToFile(String string, File file)
+    public static Boolean writeStringToFile(String string, File file, Boolean append)
             throws IOException {
 
         if (!file.exists()) {
@@ -60,7 +60,7 @@ public abstract class FileManager {
                 return Boolean.FALSE;
         }
 
-        FileOutputStream outputStream = new FileOutputStream(file);
+        FileOutputStream outputStream = new FileOutputStream(file, append);
         outputStream.write(string.getBytes(Charset.defaultCharset()));
         outputStream.close();
 

@@ -14,14 +14,18 @@
 package org.jorge.lbudget.logic.controllers;
 
 import android.content.Context;
+import android.os.Environment;
 
 import org.eazegraph.lib.models.PieModel;
 import org.jorge.lbudget.io.db.SQLiteDAO;
+import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
 import org.jorge.lbudget.utils.LBudgetTimeUtils;
 import org.jorge.lbudget.utils.LBudgetUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -159,5 +163,32 @@ public class MovementManager {
             }
         }
         return ret;
+    }
+
+    public synchronized Boolean exportMovementsAsCSV(Context context) {
+        final List<AccountListRecyclerAdapter.AccountDataModel> allAccs = SQLiteDAO.getInstance().getAccounts();
+
+        final File target = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath(), LBudgetUtils.getString(context, "exported_file_name"));
+
+        FileManager.recursiveDelete(target);
+
+        for (AccountListRecyclerAdapter.AccountDataModel acc : allAccs) {
+            List<MovementListRecyclerAdapter.MovementDataModel> allMovs = SQLiteDAO.getInstance().getAllMovementsInAccount(acc);
+
+            final StringBuilder thisAccount = new StringBuilder(acc.toCsvString() + "\n");
+            for (MovementListRecyclerAdapter.MovementDataModel mov : allMovs) {
+                thisAccount.append(mov.toCsvString()).append("\n");
+            }
+
+            thisAccount.append("\n");
+
+            try {
+                FileManager.writeStringToFile(thisAccount.toString(), target, Boolean.TRUE);
+            } catch (IOException e) {
+                return Boolean.FALSE;
+            }
+        }
+
+        return Boolean.TRUE;
     }
 }

@@ -66,4 +66,7 @@
     <string name="month_11">Noviembre</string>
     <string name="month_12">Dicembre</string>
     <string name="other_movements_pie_title">Otros</string>
+    <string name="pref_title_export_csv">Exportar datos como CSV</string>
+    <string name="csv_export_successful">Datos exportados correctamente a tu carpeta de descargas.</string>
+    <string name="csv_export_unsuccessful">Ha habido un error que ha impedido que los datos sean exportados.</string>
 </resources>

@@ -32,6 +32,8 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import static org.jorge.lbudget.devutils.DevUtils.logString;
+
 public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     public static final Object[] DB_LOCK = new Object[0];
@@ -101,6 +103,29 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
         List<MovementListRecyclerAdapter.MovementDataModel> ret;
         SQLiteDatabase db = getReadableDatabase();
         final String selectedAccMovTableName = generateSelectedAccountTableName();
+        synchronized (DB_LOCK) {
+            db.beginTransaction();
+            Cursor allMovements = db.query(selectedAccMovTableName, null, null, null, null, null, MOVEMENT_KEY_EPOCH + " DESC");
+            ret = new ArrayList<>();
+            if (allMovements != null && allMovements.moveToFirst()) {
+                do {
+                    ret.add(mapStorableToMovement(allMovements));
+                } while (allMovements.moveToNext());
+
+            }
+            if (allMovements != null)
+                allMovements.close();
+            db.setTransactionSuccessful();
+            db.endTransaction();
+        }
+
+        return ret;
+    }
+
+    public List<MovementListRecyclerAdapter.MovementDataModel> getAllMovementsInAccount(AccountListRecyclerAdapter.AccountDataModel account) {
+        List<MovementListRecyclerAdapter.MovementDataModel> ret;
+        SQLiteDatabase db = getReadableDatabase();
+        final String selectedAccMovTableName = generateAccountTableName(account);
         synchronized (DB_LOCK) {
             db.beginTransaction();
             Cursor allMovements = db.query(selectedAccMovTableName, null, null, null, null, null, MOVEMENT_KEY_EPOCH + " DESC");

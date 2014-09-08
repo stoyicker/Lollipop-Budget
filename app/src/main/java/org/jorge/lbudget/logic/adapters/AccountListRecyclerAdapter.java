@@ -268,5 +268,9 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 ret += movementDataModel.getMovementAmount();
             return ret;
         }
+
+        public String toCsvString() {
+            return getAccountId() + "," + getAccountName() + "," + isSelected();
+        }
     }
 }
