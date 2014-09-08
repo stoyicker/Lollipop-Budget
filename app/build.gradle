@@ -33,8 +33,6 @@ repositories {
     }
 }
 
-logger.error(new File(".").absolutePath)
-
 android {
     compileSdkVersion 'android-L'
     buildToolsVersion "20.0.0"
