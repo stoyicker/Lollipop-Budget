@@ -257,4 +257,5 @@
     <string name="amount_numeric_none">0,00</string>
     <string name="iso_8601_date_format">yyyy-MM-dd</string>
     <string name="exported_file_name">lbudget.csv</string>
+    <string name="default_account_name">Default account</string>
 </resources>
