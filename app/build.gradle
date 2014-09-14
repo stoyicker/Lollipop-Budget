@@ -41,7 +41,7 @@ android {
         standard {
             minSdkVersion 'L'
             targetSdkVersion 'L'
-            versionCode 6
+            versionCode 7
             versionName "0.4.1"
         }
 
