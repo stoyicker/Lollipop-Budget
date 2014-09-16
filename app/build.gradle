@@ -39,10 +39,11 @@ android {
 
     productFlavors {
         standard {
+            applicationId "org.jorge.lbudget"
             minSdkVersion 'L'
             targetSdkVersion 'L'
-            versionCode 8
-            versionName "0.4.11"
+            versionCode 9
+            versionName "0.4.20"
         }
 
         signingConfigs {
