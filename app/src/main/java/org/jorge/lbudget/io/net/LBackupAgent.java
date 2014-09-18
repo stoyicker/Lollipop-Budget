@@ -36,7 +36,7 @@ public class LBackupAgent extends BackupAgentHelper {
     public void onCreate() {
         Context appContext = getApplicationContext();
 
-        String[] allPreferences = LBudgetUtils.getStringArray(appContext, "all_preference_keys");
+        String[] allPreferences = LBudgetUtils.getStringArray(appContext, "backupable_preference_keys");
         SharedPreferencesBackupHelper sharedPreferencesBackupHelper = new SharedPreferencesBackupHelper(appContext, allPreferences);
         addHelper(PREFERENCES_BACKUP_KEY, sharedPreferencesBackupHelper);
 
