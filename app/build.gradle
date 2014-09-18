@@ -42,8 +42,8 @@ android {
             applicationId "org.jorge.lbudget"
             minSdkVersion 'L'
             targetSdkVersion 'L'
-            versionCode 10
-            versionName "0.4.21"
+            versionCode 11
+            versionName "0.4.22"
         }
 
         signingConfigs {

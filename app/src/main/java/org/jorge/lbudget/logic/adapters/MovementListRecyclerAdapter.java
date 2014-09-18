@@ -325,7 +325,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             int decimals;
             Long ret;
             if (s.contains(DECIMAL_DOT)) {
-                ret = new BigDecimal(s.substring(0, decimals = s.indexOf(DECIMAL_DOT))).longValue();
+                decimals = 0;
+                ret = new BigDecimal(TextUtils.isEmpty(s) ? "" : s.substring(0, decimals = s.indexOf(DECIMAL_DOT))).longValue();
                 ret *= 100;
                 ret += s.substring(decimals + 1).length() > 2 ? new BigDecimal(s.substring(decimals + 1, decimals + 3)).longValue() : new BigDecimal(s.substring(decimals + 1)).longValue();
             } else ret = new BigDecimal(s).longValue() * 100;
