@@ -5,6 +5,7 @@ android:
     - tools
     - build-tools-21.0.1
     - android-21
+    - support-v7
 branches:
   only:
     - master
