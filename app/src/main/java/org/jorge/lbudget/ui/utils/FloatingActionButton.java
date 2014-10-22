@@ -55,12 +55,13 @@ public class FloatingActionButton extends ImageButton {
     private final ScrollSettleHandler mScrollSettleHandler = new ScrollSettleHandler();
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
     private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+
         @Override
-        public void onScrollStateChanged(int scrollState) {
+        public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
         }
 
         @Override
-        public void onScrolled(int dx, int dy) {
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             int newScrollY = getListViewScrollY();
             if (newScrollY == mScrollY) {
                 return;

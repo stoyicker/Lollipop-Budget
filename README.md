@@ -1,4 +1,4 @@
-LBudget - master [![!](https://travis-ci.org/Stoyicker/LBudget.svg?branch=master)](https://travis-ci.org/Stoyicker/LBudget)
+Lollipop Budget - master [![!](https://travis-ci.org/Stoyicker/LBudget.svg?branch=master)](https://travis-ci.org/Stoyicker/LBudget)
 =======
 
 **Legal notice: See [LICENSE](https://raw.githubusercontent.com/Stoyicker/LBudget/master/LICENSE "LICENSE")**
