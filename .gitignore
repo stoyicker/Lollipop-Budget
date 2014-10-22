@@ -5,10 +5,7 @@ crashlytics.properties
 .DS_Store
 build
 .idea
-gradle
 *.iml
-gradlew.bat
-gradlew
 Deployment
 *.keystore
 *.pwd

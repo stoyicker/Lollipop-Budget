@@ -16,3 +16,5 @@ before_install:
 # Signature stub end
     - pwd
     - chmod +x ../gradlew
+script:
+    - ./gradlew clean build
