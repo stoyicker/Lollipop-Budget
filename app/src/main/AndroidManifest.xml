@@ -12,11 +12,14 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="org.jorge.lbudget">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-sdk tools:node="replace" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -45,7 +48,10 @@
             android:logo="@drawable/ic_action_settings"
             android:theme="@style/SettingsTheme"
             android:label="@string/action_settings" />
-        <meta-data android:name="com.crashlytics.ApiKey" android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c"/>
+
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c" />
     </application>
 
 </manifest>
