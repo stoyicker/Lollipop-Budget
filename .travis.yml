@@ -15,4 +15,4 @@ before_install:
     - echo "stub key pwd" > lbudgetkey.pwd
 # Signature stub end
 script:
-    - ./gradlew clean build
+    - ../gradlew clean build
