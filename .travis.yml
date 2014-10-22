@@ -3,22 +3,16 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-20.0.0
-    - android-L
+    - build-tools-21.0.1
+    - android-21
 branches:
   only:
     - master
 before_install:
-# Gradle setup start
-    - wget http://services.gradle.org/distributions/gradle-1.10-bin.zip
-    - unzip gradle-1.10-bin.zip
-    - export GRADLE_HOME=$PWD/gradle-1.10
-    - export PATH=$GRADLE_HOME/bin:$PATH
-# Gradle setup end
 # Signature stub start
     - echo "stub keystore" > lbudget.keystore
     - echo "stub storage pwd" > lbudgetstorage.pwd
     - echo "stub key pwd" > lbudgetkey.pwd
 # Signature stub end
 script:
-    - gradle assembleStandardUnsignedRelease
+    - ./gradlew clean build
