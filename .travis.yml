@@ -14,7 +14,6 @@ before_install:
     - echo "stub storage pwd" > lbudgetstorage.pwd
     - echo "stub key pwd" > lbudgetkey.pwd
 # Signature stub end
-    - pwd
     - chmod +x ./gradlew
 script:
     - ./gradlew clean build
