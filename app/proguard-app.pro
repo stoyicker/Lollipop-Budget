@@ -27,6 +27,7 @@
 -keep public class com.google.vending.licensing.ILicensingService
 -keep public class com.android.vending.licensing.ILicensingService
 -keep public class com.github.amlcurran.showcaseview.targets.ActionBarViewWrapper
+-keep public class org.jorge.lbudget.utils.LBudgetTimeUtils
 
 -keepclasseswithmembernames class * {
     native <methods>;
