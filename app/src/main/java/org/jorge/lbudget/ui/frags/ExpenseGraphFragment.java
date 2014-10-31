@@ -106,8 +106,15 @@ public class ExpenseGraphFragment extends Fragment {
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
                 android.R.layout.select_dialog_singlechoice);
+        int j = 0;
         for (int i = 0; i < 12; i++) {
-            adapter.add(LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, i));
+            String month = LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, j);
+            if (LBudgetUtils.adapterContains(adapter, month)) {
+                j++;
+                month = LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, j);
+            }
+            adapter.add(month);
+            j++;
         }
 
         monthChooserBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

@@ -137,6 +137,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             View.OnTouchListener listener = new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
+                    final int pos = getPosition();
                     InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
                             Context.INPUT_METHOD_SERVICE);
                     switch (motionEvent.getAction()) {
@@ -153,8 +154,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                         @Override
                                         public void onAnimationEnd(Animation animation) {
                                             wholeView.setVisibility(View.GONE);
-                                            int pos;
-                                            final AccountDataModel account = items.remove(pos = getPosition());
+                                            final AccountDataModel account = items.remove(pos);
                                             notifyItemRemoved(pos);
                                             undoBarShowStateListener.onShowUndoBar();
                                             new UndoBar.Builder(mActivity)
@@ -168,8 +168,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
                                                         @Override
                                                         public void onUndo(Parcelable token) {
-                                                            int pos;
-                                                            items.add(pos = getPosition() > -1 ? getPosition() : 0, account);
+                                                            items.add(pos, account);
                                                             notifyItemInserted(pos);
                                                             mRecyclerView.smoothScrollToPosition(pos);
                                                             undoBarShowStateListener.onHideUndoBar();

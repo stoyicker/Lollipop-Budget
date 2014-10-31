@@ -33,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
+import org.jorge.lbudget.devutils.DevUtils;
 import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
@@ -203,6 +204,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
                 @Override
                 public boolean onTouch(final View view, MotionEvent motionEvent) {
+                    final int pos = getPosition();
                     switch (motionEvent.getAction()) {
                         case MotionEvent.ACTION_UP:
                             final float diff = motionEvent.getX() - x;
@@ -216,8 +218,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                     @Override
                                     public void onAnimationEnd(Animation animation) {
                                         view.setVisibility(View.GONE);
-                                        int pos;
-                                        final MovementDataModel movement = items.remove(pos = getPosition());
+                                        final MovementDataModel movement = items.remove(pos);
                                         notifyItemRemoved(pos);
                                         undoBarShowStateListener.onShowUndoBar();
                                         new UndoBar.Builder(mActivity)
@@ -231,8 +232,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
                                                     @Override
                                                     public void onUndo(Parcelable token) {
-                                                        int pos;
-                                                        items.add(pos = getPosition() > -1 ? getPosition() : 0, movement);
+                                                        items.add(pos, movement);
                                                         notifyItemInserted(pos);
                                                         mRecyclerView.smoothScrollToPosition(pos);
                                                         undoBarShowStateListener.onHideUndoBar();

@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.controllers.AccountManager;
@@ -31,7 +32,8 @@ public class InitialActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Crashlytics.start(this);
+        Fabric.with(this, new Crashlytics());
+
         Context appContext = getApplicationContext();
         SQLiteDAO.setup(appContext);
         flushCacheIfNecessary(appContext);

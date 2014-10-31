@@ -15,6 +15,7 @@ package org.jorge.lbudget.utils;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -186,5 +187,12 @@ public abstract class LBudgetUtils {
     public static CharSequence capitalizeFirst(CharSequence movementTitle) {
         if (TextUtils.isEmpty(movementTitle)) return movementTitle;
         return String.valueOf(movementTitle.charAt(0)).toUpperCase(Locale.ENGLISH) + movementTitle.toString().substring(1).toLowerCase(Locale.ENGLISH);
+    }
+
+    public static boolean adapterContains(ArrayAdapter<String> adapter, String month) {
+        int count = adapter.getCount();
+        for (int i = 0; i < count; i++)
+            if (month.contentEquals(adapter.getItem(i))) return true;
+        return false;
     }
 }
