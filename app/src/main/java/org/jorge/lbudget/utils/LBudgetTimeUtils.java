@@ -70,12 +70,12 @@ public abstract class LBudgetTimeUtils {
     }
 
     public static String epochAsISO8601(Context context, Long epoch) {
-        return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format"), Locale.getDefault()).format(new Date(epoch));
+        return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format"), Locale.ENGLISH).format(new Date(epoch));
     }
 
     public static Long ISO8601AsEpoch(Context context, String iso8601) {
         try {
-            return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format"), Locale.getDefault()).parse(iso8601).getTime();
+            return new SimpleDateFormat(LBudgetUtils.getString(context, "iso_8601_date_format"), Locale.ENGLISH).parse(iso8601).getTime();
         } catch (ParseException e) {
             Crashlytics.logException(e);
             return null;

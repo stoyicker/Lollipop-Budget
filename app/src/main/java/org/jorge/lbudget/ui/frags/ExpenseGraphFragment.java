@@ -120,6 +120,8 @@ public class ExpenseGraphFragment extends Fragment {
         monthChooserBuilder.setSingleChoiceItems(adapter, MONTHS_AGO, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if (MONTHS_AGO < 0 || MONTHS_AGO > 11)
+                    return;
                 ExpenseGraphFragment.this.MONTHS_AGO = i;
                 ExpenseGraphFragment.this.redrawExpenseGraph();
                 dialogInterface.dismiss();

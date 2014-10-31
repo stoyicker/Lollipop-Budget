@@ -126,7 +126,7 @@ public class MovementManager {
                     ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
             } else {
                 MovementListRecyclerAdapter.MovementDataModel newMovement = expensesInMonth.remove(0);
-                if (cumulativeMovement.getMovementTitle().toLowerCase(Locale.getDefault()).contentEquals(newMovement.getMovementTitle().toLowerCase(Locale.getDefault()))) {
+                if (cumulativeMovement.getMovementTitle().toLowerCase(Locale.ENGLISH).contentEquals(newMovement.getMovementTitle().toLowerCase(Locale.ENGLISH))) {
                     cumulativeMovement = new MovementListRecyclerAdapter.MovementDataModel(-1, LBudgetUtils.capitalizeFirst(cumulativeMovement.getMovementTitle()).toString(), cumulativeMovement.getMovementAmount() + newMovement.getMovementAmount(), cumulativeMovement.getMovementEpoch());//The id and the epoch are useless but we need the wrapper
                 } else {
                     ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));

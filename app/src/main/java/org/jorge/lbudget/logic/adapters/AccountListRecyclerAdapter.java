@@ -169,7 +169,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                                         @Override
                                                         public void onUndo(Parcelable token) {
                                                             int pos;
-                                                            items.add(pos = getPosition(), account);
+                                                            items.add(pos = getPosition() > -1 ? getPosition() : 0, account);
                                                             notifyItemInserted(pos);
                                                             mRecyclerView.smoothScrollToPosition(pos);
                                                             undoBarShowStateListener.onHideUndoBar();

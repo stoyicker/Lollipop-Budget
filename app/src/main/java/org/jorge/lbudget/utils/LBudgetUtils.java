@@ -185,6 +185,6 @@ public abstract class LBudgetUtils {
 
     public static CharSequence capitalizeFirst(CharSequence movementTitle) {
         if (TextUtils.isEmpty(movementTitle)) return movementTitle;
-        return String.valueOf(movementTitle.charAt(0)).toUpperCase(Locale.getDefault()) + movementTitle.toString().substring(1).toLowerCase(Locale.getDefault());
+        return String.valueOf(movementTitle.charAt(0)).toUpperCase(Locale.ENGLISH) + movementTitle.toString().substring(1).toLowerCase(Locale.ENGLISH);
     }
 }

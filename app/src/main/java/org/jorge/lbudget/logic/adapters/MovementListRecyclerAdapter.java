@@ -95,7 +95,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         int retId = -1;
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         final String prefKey = LBudgetUtils.getString(context, prefName);
-        final String identifier = sharedPreferences.getString(prefKey, LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase(Locale.getDefault()) + "_identifier"));
+        final String identifier = sharedPreferences.getString(prefKey, LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase(Locale.ENGLISH) + "_identifier"));
         if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_red_identifier"))) {
             retId = R.color.movement_color_red;
         } else if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_green_identifier"))) {
@@ -232,7 +232,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                     @Override
                                                     public void onUndo(Parcelable token) {
                                                         int pos;
-                                                        items.add(pos = getPosition(), movement);
+                                                        items.add(pos = getPosition() > -1 ? getPosition() : 0, movement);
                                                         notifyItemInserted(pos);
                                                         mRecyclerView.smoothScrollToPosition(pos);
                                                         undoBarShowStateListener.onHideUndoBar();
