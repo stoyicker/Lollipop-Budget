@@ -1,10 +1,10 @@
 buildscript {
     repositories {
-        maven { url 'http://download.crashlytics.com/maven' }
+        maven { url 'https://maven.fabric.io/repo' }
     }
 
     dependencies {
-        classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.14.2'
+        classpath 'io.fabric.tools:gradle:1.14.1'
     }
 }
 /*
@@ -21,21 +21,19 @@ buildscript {
  */
 
 apply plugin: 'com.android.application'
-apply plugin: 'crashlytics'
+apply plugin: 'io.fabric'
 
 repositories {
     jcenter()
     maven {
-        url 'http://download.crashlytics.com/maven'
-    }
-    maven {
         url 'https://oss.sonatype.org/content/groups/public'
     }
+    maven { url 'https://maven.fabric.io/repo' }
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.1"
+    buildToolsVersion "21.0.2"
 
     productFlavors {
         standard {
@@ -74,10 +72,13 @@ android {
             zipAlign false
         }
 
+        unsignedRelease.initWith(buildTypes.debug)
+
         unsignedRelease {
             runProguard true
             zipAlign true
             proguardFiles new File('proguard-app.pro')
+            debuggable true
         }
     }
 }
@@ -86,7 +87,9 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.android.support:cardview-v7:21.0.0'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
-    compile 'com.crashlytics.android:crashlytics:1.1.13'
     compile 'com.github.blackfizz:eazegraph:1.1.14-SNAPSHOT@aar'
     compile 'com.nineoldandroids:library:2.4.0'
+    compile('com.crashlytics.sdk.android:crashlytics:2.0.0@aar') {
+        transitive = true;
+    }
 }
