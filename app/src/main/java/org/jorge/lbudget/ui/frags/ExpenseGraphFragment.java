@@ -105,7 +105,7 @@ public class ExpenseGraphFragment extends Fragment {
         AlertDialog.Builder monthChooserBuilder = new AlertDialog.Builder(getActivity());
 
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(mContext,
-                android.R.layout.select_dialog_singlechoice);
+                R.layout.select_dialog_singlechoice_black);
         int j = 0;
         for (int i = 0; i < 12; i++) {
             String month = LBudgetTimeUtils.getMonthStringTroughMonthsAgo(mContext, j);
