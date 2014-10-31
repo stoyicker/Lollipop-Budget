@@ -3,7 +3,7 @@ android:
   components:
     - platform-tools
     - tools
-    - build-tools-21.0.1
+    - build-tools-21.0.2
     - android-21
     - extra-android-m2repository
 branches:
@@ -17,4 +17,4 @@ before_install:
 # Signature stub end
     - chmod +x ./gradlew
 script:
-    - ./gradlew clean assembleDebug
+    - ./gradlew clean assembleStandardUnsignedRelease
