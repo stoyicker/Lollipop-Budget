@@ -13,4 +13,4 @@ before_install:
 # Signature stub end
     - chmod +x ./gradlew
 script:
-    - ./gradlew clean assembleGooglePlayTravis
+    - ./gradlew clean assembleReleaseTravis
