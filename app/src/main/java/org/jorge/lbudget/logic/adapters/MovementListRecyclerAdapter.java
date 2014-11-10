@@ -225,6 +225,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                 .setListener(new UndoBar.Listener() {
                                                     @Override
                                                     public void onHide() {
+                                                        view.setVisibility(View.VISIBLE);
                                                         removeMovementFromPersistence(movement);
                                                         undoBarShowStateListener.onHideUndoBar();
                                                     }

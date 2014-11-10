@@ -161,6 +161,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                                     .setListener(new UndoBar.Listener() {
                                                         @Override
                                                         public void onHide() {
+                                                            wholeView.setVisibility(View.VISIBLE);
                                                             removeAccountFromPersistence(account);
                                                             undoBarShowStateListener.onHideUndoBar();
                                                         }
