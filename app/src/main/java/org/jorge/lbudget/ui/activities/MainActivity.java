@@ -79,7 +79,8 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
             }
         });
         mContentFragments = new Fragment[LBudgetUtils.getStringArray(mContext, "navigation_items").length];
-        showInitialFragment();
+        if (getFragmentManager().findFragmentById(R.id.content_fragment_container) == null)
+            showInitialFragment();
     }
 
     private void showInitialFragment() {
