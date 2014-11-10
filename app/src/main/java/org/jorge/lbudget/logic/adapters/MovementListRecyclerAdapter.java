@@ -110,11 +110,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         return publicAccessInstance;
     }
 
-//    public void add(MovementDataModel item, int position) {
-//        items.add(position, item);
-//        notifyItemInserted(position);
-//        MovementManager.getInstance().addMovement(item);
-//    }
+    public void add(MovementDataModel item) {
+        items.add(item);
+        notifyDataSetChanged();
+        MovementManager.getInstance().addMovement(item);
+    }
 //
 //    public MovementDataModel remove(int position) {
 //        MovementDataModel ret = items.remove(position);

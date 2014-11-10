@@ -61,7 +61,7 @@ public class MovementManager {
 
     public Boolean addMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
         Boolean ret = SQLiteDAO.getInstance().addMovement(movement) && !mMovementList.contains(movement);
-        if (movement.getMovementEpoch() < System.currentTimeMillis()) {
+        if (ret && movement.getMovementEpoch() < System.currentTimeMillis()) {
             mMovementList.add(movement);
             sortMovementList();
         } else

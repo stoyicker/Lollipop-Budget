@@ -158,6 +158,8 @@ public abstract class LBudgetUtils {
                 return acc1.getAccountId() - acc2.getAccountId();
             }
         });
+        if (allAcc.size() == 1)
+            return allAcc.get(0).getAccountId() == 1 ? 2 : 1;
         for (int i = 0; i < allAcc.size() - 1; i++) {
             int candidate;
             if ((candidate = allAcc.get(i).getAccountId() + 1) != allAcc.get(i + 1).getAccountId()) {
@@ -175,6 +177,8 @@ public abstract class LBudgetUtils {
                 return movementDataModel1.getMovementId() - movementDataModel2.getMovementId();
             }
         });
+        if (allMovementsOnSelectedAcc.size() == 1)
+            return allMovementsOnSelectedAcc.get(0).getMovementId() == 1 ? 2 : 1;
         for (int i = 0; i < allMovementsOnSelectedAcc.size() - 1; i++) {
             int candidate;
             if ((candidate = allMovementsOnSelectedAcc.get(i).getMovementId() + 1) != allMovementsOnSelectedAcc.get(i + 1).getMovementId()) {

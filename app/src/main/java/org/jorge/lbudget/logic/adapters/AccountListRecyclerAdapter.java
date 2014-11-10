@@ -66,13 +66,12 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         AccountManager.getInstance().addAccount(item);
     }
 
-    //If not used, ProGuard will take it out, but they're not disturbing here.
-    public AccountDataModel remove(int position) {
-        AccountDataModel ret = items.remove(position);
-        notifyItemRemoved(position);
-        removeAccountFromPersistence(ret);
-        return ret;
-    }
+//    public AccountDataModel remove(int position) {
+//        AccountDataModel ret = items.remove(position);
+//        notifyItemRemoved(position);
+//        removeAccountFromPersistence(ret);
+//        return ret;
+//    }
 
     private void setSelectedAccount(int position) {
         AccountDataModel oldSelectedAccount = AccountManager.getInstance().getSelectedAccount(), newSelectedAccount = items.get(position);

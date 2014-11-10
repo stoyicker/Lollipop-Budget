@@ -48,7 +48,7 @@ public class AccountManager {
 
     public Boolean addAccount(AccountListRecyclerAdapter.AccountDataModel account) {
         Boolean ret = SQLiteDAO.getInstance().addAccount(account) && !mAccountList.contains(account);
-        if (!mAccountList.contains(account)) {
+        if (ret && !mAccountList.contains(account)) {
             mAccountList.add(account);
         }
         return ret;

@@ -211,8 +211,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
     }
 
     private void addMovement(String title, Long amount, long epoch) {
-        if (MovementManager.getInstance().addMovement(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch))) //Since the id is auto-generated upon insertion on DB and after that items are reloaded, a stub id can be used
-            MovementListRecyclerAdapter.getPublicAccessInstance().refreshItemSet();
+        MovementListRecyclerAdapter.MovementDataModel movement = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch);
+        MovementListRecyclerAdapter.getPublicAccessInstance().add(movement);
     }
 
     private void updateMovement(int id, String newTitle, Long newAmount, Long newEpoch) {
