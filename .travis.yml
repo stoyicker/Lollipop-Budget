@@ -1,11 +1,7 @@
 language: android
 android:
   components:
-    - platform-tools
-    - tools
-    - build-tools-21.0.2
-    - android-21
-    - extra-android-m2repository
+    - build-tools-21.1.1
 branches:
   only:
     - master
@@ -17,4 +13,4 @@ before_install:
 # Signature stub end
     - chmod +x ./gradlew
 script:
-    - ./gradlew clean assembleStandardUnsignedRelease
+    - ./gradlew clean assembleGooglePlayTravis
