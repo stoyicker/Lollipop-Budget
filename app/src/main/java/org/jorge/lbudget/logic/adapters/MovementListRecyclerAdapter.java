@@ -114,6 +114,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         items.add(item);
         notifyDataSetChanged();
         MovementManager.getInstance().addMovement(item);
+        mRecyclerView.smoothScrollToPosition(items.size() - 1);
     }
 //
 //    public MovementDataModel remove(int position) {

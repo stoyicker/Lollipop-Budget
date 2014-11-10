@@ -64,6 +64,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         items.add(position, item);
         notifyItemInserted(position);
         AccountManager.getInstance().addAccount(item);
+        mRecyclerView.smoothScrollToPosition(position);
     }
 
 //    public AccountDataModel remove(int position) {
