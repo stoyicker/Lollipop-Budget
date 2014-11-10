@@ -169,6 +169,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                                         @Override
                                                         public void onUndo(Parcelable token) {
                                                             items.add(pos, account);
+                                                            wholeView.setVisibility(View.VISIBLE);
                                                             notifyItemInserted(pos);
                                                             mRecyclerView.smoothScrollToPosition(pos);
                                                             undoBarShowStateListener.onHideUndoBar();

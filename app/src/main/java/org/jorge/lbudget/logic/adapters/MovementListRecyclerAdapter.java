@@ -33,7 +33,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.devutils.DevUtils;
 import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.logic.controllers.AccountManager;
 import org.jorge.lbudget.logic.controllers.MovementManager;
@@ -233,6 +232,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                                                     @Override
                                                     public void onUndo(Parcelable token) {
                                                         items.add(pos, movement);
+                                                        view.setVisibility(View.VISIBLE);
                                                         notifyItemInserted(pos);
                                                         mRecyclerView.smoothScrollToPosition(pos);
                                                         undoBarShowStateListener.onHideUndoBar();
