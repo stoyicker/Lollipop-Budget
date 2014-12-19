@@ -47,11 +47,14 @@ import java.util.StringTokenizer;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.getMovementColorFromPreferences;
+import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter
+        .getMovementColorFromPreferences;
 
 public class MovementDetailDialogFragment extends DialogFragment {
 
-    private static final String KEY_MOVEMENT_ID = "MOVEMENT_ID", KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT", KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
+    private static final String KEY_MOVEMENT_ID = "MOVEMENT_ID",
+            KEY_MOVEMENT_TITLE = "MOVEMENT_TITLE", KEY_MOVEMENT_AMOUNT = "MOVEMENT_AMOUNT",
+            KEY_MOVEMENT_EPOCH = "MOVEMENT_EPOCH", KEY_MOVEMENT_IMAGE_PATH = "MOVEMENT_IMAGE_PATH";
     private Context mContext;
     private static final int REQUEST_TAKE_PHOTO = 1;
     private PhotoViewAttacher mPhotoViewAttacher;
@@ -60,10 +63,14 @@ public class MovementDetailDialogFragment extends DialogFragment {
     /**
      * To be used when editing a movement.
      *
-     * @param movement {@link org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel} The movement to edit.
-     * @return {@link org.jorge.lbudget.ui.frags.MovementDetailDialogFragment} The ready-to-use fragment
+     * @param movement {@link org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter
+     * .MovementDataModel} The movement to edit.
+     * @return {@link org.jorge.lbudget.ui.frags.MovementDetailDialogFragment} The ready-to-use
+     * fragment
      */
-    public static MovementDetailDialogFragment newInstance(Context context, @NonNull MovementListRecyclerAdapter.MovementDataModel movement) {
+    public static MovementDetailDialogFragment newInstance(Context context,
+                                                           @NonNull MovementListRecyclerAdapter
+                                                                   .MovementDataModel movement) {
         MovementDetailDialogFragment ret = new MovementDetailDialogFragment();
 
         Bundle args = new Bundle();
@@ -88,29 +95,40 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_fragment_movement_detail, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout
+                .dialog_fragment_movement_detail, null);
 
         final Bundle args = getArguments();
 
         final String dialogTitle;
         final DialogInterface.OnClickListener onPositiveButtonClickListener;
-        final Button expenseButton = (Button) view.findViewById(R.id.movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R.id.movement_detail_type_income_view);
-        final EditText dateView = (EditText) view.findViewById(R.id.movement_detail_date_view), titleView = (EditText) view.findViewById(R.id.movement_detail_title_view), amountView = (EditText) view.findViewById(R.id.movement_detail_amount_view);
+        final Button expenseButton = (Button) view.findViewById(R.id
+                .movement_detail_type_expense_view), incomeButton = (Button) view.findViewById(R
+                .id.movement_detail_type_income_view);
+        final EditText dateView = (EditText) view.findViewById(R.id.movement_detail_date_view),
+                titleView = (EditText) view.findViewById(R.id.movement_detail_title_view),
+                amountView = (EditText) view.findViewById(R.id.movement_detail_amount_view);
         Long epoch = System.currentTimeMillis();
         String imagePath;
 
-        ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager.getInstance().getSelectedCurrency(mContext));
+        ((TextView) view.findViewById(R.id.movement_detail_currency_view)).setText(AccountManager
+                .getInstance().getSelectedCurrency(mContext));
         mPhotoView = (ImageView) view.findViewById(R.id.movement_image_showcase_view);
 
         if (args == null) {
-            imagePath = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext); //The data around the object is just random stub to be able to get the image path
+            imagePath = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils
+                    .calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext);
+                    //The data around the object is just random stub to be able to get the image
+                    // path
             dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
             onPositiveButtonClickListener =
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
                             Long amount;
                             try {
-                                amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                                amount = (MovementListRecyclerAdapter.MovementDataModel
+                                        .processStringAmount(amountView.getText().toString()) *
+                                        (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
                             } catch (NumberFormatException ex) {
                                 dismiss();
                                 return;
@@ -119,8 +137,10 @@ public class MovementDetailDialogFragment extends DialogFragment {
                                 dismiss();
                                 return;
                             }
-                            String epochAs8601 = dateView.getText().toString(), title = titleView.getText().toString();
-                            MovementDetailDialogFragment.this.addMovement(title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
+                            String epochAs8601 = dateView.getText().toString(),
+                                    title = titleView.getText().toString();
+                            MovementDetailDialogFragment.this.addMovement(title, amount,
+                                    LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
                         }
                     };
         } else {
@@ -129,10 +149,18 @@ public class MovementDetailDialogFragment extends DialogFragment {
             onPositiveButtonClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    Long amount = (MovementListRecyclerAdapter.MovementDataModel.processStringAmount(amountView.getText().toString()) * (incomeButton.getVisibility() == View.VISIBLE ? 1 : -1));
+                    Long amount = (MovementListRecyclerAdapter.MovementDataModel
+                            .processStringAmount(amountView.getText().toString()) * (incomeButton
+                            .getVisibility() == View.VISIBLE ? 1 : -1));
                     String epochAs8601, title = titleView.getText().toString();
-                    if (!(epochAs8601 = dateView.getText().toString()).contentEquals(LBudgetTimeUtils.epochAsISO8601(mContext, args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals(args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong(KEY_MOVEMENT_AMOUNT)) {
-                        MovementDetailDialogFragment.this.updateMovement(args.getInt(KEY_MOVEMENT_ID), title, amount, LBudgetTimeUtils.ISO8601AsEpoch(mContext, epochAs8601));
+                    if (!(epochAs8601 = dateView.getText().toString()).contentEquals
+                            (LBudgetTimeUtils.epochAsISO8601(mContext,
+                                    args.getLong(KEY_MOVEMENT_EPOCH))) || !title.contentEquals
+                            (args.getString(KEY_MOVEMENT_TITLE)) || amount != args.getLong
+                            (KEY_MOVEMENT_AMOUNT)) {
+                        MovementDetailDialogFragment.this.updateMovement(args.getInt
+                                (KEY_MOVEMENT_ID), title, amount, LBudgetTimeUtils.ISO8601AsEpoch
+                                (mContext, epochAs8601));
                     }
                 }
             };
@@ -140,16 +168,19 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 expenseButton.setVisibility(View.GONE);
                 incomeButton.setVisibility(View.VISIBLE);
             }
-            mPhotoView.setImageDrawable(Drawable.createFromPath(args.getString(KEY_MOVEMENT_IMAGE_PATH)));
+            mPhotoView.setImageDrawable(Drawable.createFromPath(args.getString
+                    (KEY_MOVEMENT_IMAGE_PATH)));
             mPhotoViewAttacher = new PhotoViewAttacher(mPhotoView);
             epoch = args.getLong(KEY_MOVEMENT_EPOCH);
             titleView.setText(args.getString(KEY_MOVEMENT_TITLE));
-            amountView.setText(MovementListRecyclerAdapter.MovementDataModel.printifyAmount(mContext, Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
+            amountView.setText(MovementListRecyclerAdapter.MovementDataModel.printifyAmount
+                    (mContext, Math.abs(args.getLong(KEY_MOVEMENT_AMOUNT))));
         }
 
         final String imagePathAsFinal = imagePath;
 
-        view.findViewById(R.id.button_movement_image_snap).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.button_movement_image_snap).setOnClickListener(new View
+                .OnClickListener() {
             @Override
             public void onClick(View view) {
                 takeNewMovementPicture(imagePathAsFinal);
@@ -165,14 +196,21 @@ public class MovementDetailDialogFragment extends DialogFragment {
                 new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        dateView.setText(year + "-" + (month < 9 ? "0" : "") + (month + 1) + "-" + (day < 10 ? "0" : "") + day);
+                        dateView.setText(year + "-" + (month < 9 ? "0" : "") + (month + 1) + "-"
+                                + (day < 10 ? "0" : "") + day);
                     }
-                }, Integer.parseInt(epochAsISO8601Tokenizer.nextToken()), Integer.parseInt(epochAsISO8601Tokenizer.nextToken()) - 1, Integer.parseInt(epochAsISO8601Tokenizer.nextToken())).show();
+                }, Integer.parseInt(epochAsISO8601Tokenizer.nextToken()),
+                        Integer.parseInt(epochAsISO8601Tokenizer.nextToken()) - 1,
+                        Integer.parseInt(epochAsISO8601Tokenizer.nextToken())).show();
             }
         });
 
-        setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext, "pref_key_movement_income_color", LBudgetUtils.getString(mContext, "movement_color_green_identifier")));
-        setMovementTypeButtonBackground(expenseButton, getMovementColorFromPreferences(mContext, "pref_key_movement_expense_color", LBudgetUtils.getString(mContext, "movement_color_red_identifier")));
+        setMovementTypeButtonBackground(incomeButton, getMovementColorFromPreferences(mContext,
+                "pref_key_movement_income_color", LBudgetUtils.getString(mContext,
+                        "movement_color_green_identifier")));
+        setMovementTypeButtonBackground(expenseButton, getMovementColorFromPreferences(mContext,
+                "pref_key_movement_expense_color", LBudgetUtils.getString(mContext,
+                        "movement_color_red_identifier")));
 
         expenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,11 +231,15 @@ public class MovementDetailDialogFragment extends DialogFragment {
         if (TextUtils.isEmpty(dialogTitle))
             setStyle(STYLE_NO_TITLE, 0);
 
-        Dialog ret = new AlertDialog.Builder(getActivity()).setView(view).setTitle(dialogTitle).setPositiveButton(android.R.string.ok, onPositiveButtonClickListener
-        ).setNegativeButton(android.R.string.cancel,
+        Dialog ret = new AlertDialog.Builder(getActivity()).setView(view).setTitle(dialogTitle)
+                .setPositiveButton(android.R.string.ok, onPositiveButtonClickListener
+                ).setNegativeButton(android.R.string.cancel,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        FileManager.recursiveDelete(new File(new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext))); //The data around the object is just random stub to be able to get the image path
+                        FileManager.recursiveDelete(new File(new MovementListRecyclerAdapter
+                                .MovementDataModel(LBudgetUtils.calculateAvailableMovementId(),
+                                "stub", -23, 5).getImagePath(mContext))); //The data around the
+                                // object is just random stub to be able to get the image path
                         MovementDetailDialogFragment.this.dismiss();
                     }
                 }
@@ -205,13 +247,16 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
         ret.setCanceledOnTouchOutside(args != null);
 
-        ret.getWindow().getAttributes().windowAnimations = R.style.AnimatedMovementPanelAnimationStyle;
+        ret.getWindow().getAttributes().windowAnimations = R.style
+                .AnimatedMovementPanelAnimationStyle;
 
         return ret;
     }
 
     private void addMovement(String title, Long amount, long epoch) {
-        MovementListRecyclerAdapter.MovementDataModel movement = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount, epoch);
+        MovementListRecyclerAdapter.MovementDataModel movement = new MovementListRecyclerAdapter
+                .MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), title, amount,
+                epoch);
         MovementListRecyclerAdapter.getPublicAccessInstance().add(movement);
     }
 
@@ -221,7 +266,10 @@ public class MovementDetailDialogFragment extends DialogFragment {
     }
 
     private void setMovementTypeButtonBackground(Button button, int movementColorFromPreferences) {
-        final int MOVEMENT_COLOR_RED = mContext.getResources().getColor(R.color.movement_color_red), MOVEMENT_COLOR_GREEN = mContext.getResources().getColor(R.color.movement_color_green), MOVEMENT_COLOR_BLUE = mContext.getResources().getColor(R.color.movement_color_blue);
+        final int MOVEMENT_COLOR_RED = mContext.getResources().getColor(R.color
+                .movement_color_red), MOVEMENT_COLOR_GREEN = mContext.getResources().getColor(R
+                .color.movement_color_green), MOVEMENT_COLOR_BLUE = mContext.getResources()
+                .getColor(R.color.movement_color_blue);
 
         int background;
 
@@ -232,7 +280,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
         } else if (movementColorFromPreferences == MOVEMENT_COLOR_BLUE) {
             background = R.drawable.movement_type_background_ripple_blue;
         } else
-            throw new IllegalStateException("Unrecognized movement color found when rendering the movement type button.");
+            throw new IllegalStateException("Unrecognized movement color found when rendering the" +
+                    " movement type button.");
 
         button.setBackgroundResource(background);
     }
@@ -240,7 +289,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
     private void takeNewMovementPicture(final String imagePath) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(mContext.getPackageManager()) != null) {
-            File pathAsFile = new File(imagePath), oldPathAsFile = new File(imagePath + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
+            File pathAsFile = new File(imagePath), oldPathAsFile = new File(imagePath +
+                    LBudgetUtils.getString(mContext, "old_image_name_appendix"));
             if (pathAsFile.exists() && !pathAsFile.renameTo(oldPathAsFile)) {
                 return;
             }
@@ -252,8 +302,11 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        final String path = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils.calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext); //The data around the object is just random stub to be able to get the image path
-        final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext, "old_image_name_appendix"));
+        final String path = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils
+                .calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext); //The
+                // data around the object is just random stub to be able to get the image path
+        final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext,
+                "old_image_name_appendix"));
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
             FileManager.recursiveDelete(oldPathAsFile);
             mPhotoView.setImageDrawable(Drawable.createFromPath(path));
@@ -262,7 +315,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
             mPhotoViewAttacher.update();
         } else {
             if (oldPathAsFile.exists() && !oldPathAsFile.renameTo(new File(path)))
-                throw new IllegalStateException("Couldn't rename the original image back to the original name");
+                throw new IllegalStateException("Couldn't rename the original image back to the " +
+                        "original name");
         }
     }
 }

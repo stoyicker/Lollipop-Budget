@@ -1,6 +1,8 @@
 package org.jorge.lbudget.ui.utils;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
@@ -29,11 +31,17 @@ import android.widget.ImageButton;
 import org.jorge.lbudget.R;
 
 /**
- * This class and all resources it uses have been adapted from makovkastar's Floating Action Button library,
+ * This class and all resources it uses have been adapted from makovkastar's Floating Action
+ * Button library,
  * which can be found at https://github.com/makovkastar/FloatingActionButton
- * The purpose of this adaptation is to allow the button to work with a RecylerView instead of with an AbsListView
+ * The purpose of this adaptation is to allow the button to work with a RecylerView instead of
+ * with an AbsListView
  */
-public class FloatingActionButton extends ImageButton {
+public class FloatingActionHideActionBarButton extends ImageButton {
+
+    public void setTopPadding(int paddingTop) {
+        BASE_TOP_PADDING = paddingTop;
+    }
 
     @IntDef({TYPE_NORMAL, TYPE_MINI})
     public @interface TYPE {
@@ -54,7 +62,17 @@ public class FloatingActionButton extends ImageButton {
 
     private final ScrollSettleHandler mScrollSettleHandler = new ScrollSettleHandler();
     private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
-    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
+    private Activity mActivity;
+    private Boolean mActionBarIsShowingOrShown = Boolean.TRUE;
+    private final Object mActionBarLock = new Object();
+    private Integer BASE_TOP_PADDING;
+
+    public void setActivity(Activity activity) {
+        mActivity = activity;
+    }
+
+    private final RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView
+            .OnScrollListener() {
 
         @Override
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -75,19 +93,46 @@ public class FloatingActionButton extends ImageButton {
                 show();
             }
             mScrollY = newScrollY;
+            onScrolledForActionBar(recyclerView, dx, dy);
+        }
+
+        final Integer MIN_SCROLL_TOGGLE_ACTION_BAR = getContext().getResources().getInteger(R.
+                integer.min_scroll_toggle_action_bar);
+
+        public void onScrolledForActionBar(RecyclerView recyclerView, int dx, int dy) {
+            System.out.println("onScrolled");
+            ActionBar actionBar = mActivity.getActionBar();
+            synchronized (mActionBarLock) {
+                System.out.println("onScrolled synced");
+                if (actionBar != null)
+                    if (dy > MIN_SCROLL_TOGGLE_ACTION_BAR && mActionBarIsShowingOrShown) {
+                        System.out.println("onScrolled non-null if");
+                        recyclerView.setPadding(0, 0, 0, 0);
+                        actionBar.hide();
+                        mActionBarIsShowingOrShown = Boolean.FALSE;
+                    } else if ((dy < -1 * MIN_SCROLL_TOGGLE_ACTION_BAR || !recyclerView
+                            .canScrollVertically(-1)) && !mActionBarIsShowingOrShown) {
+                        System.out.println("onScrolled non-null else");
+                        recyclerView.setPadding(0, BASE_TOP_PADDING, 0, 0);
+                        actionBar.show();
+                        mActionBarIsShowingOrShown = Boolean.TRUE;
+                        if (!recyclerView.canScrollVertically(-1))
+                            recyclerView.smoothScrollToPosition(0);
+                    }
+            }
         }
     };
 
-    public FloatingActionButton(Context context) {
+    public FloatingActionHideActionBarButton(Context context) {
         this(context, null);
     }
 
-    public FloatingActionButton(Context context, AttributeSet attrs) {
+    public FloatingActionHideActionBarButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
     }
 
-    public FloatingActionButton(Context context, AttributeSet attrs, int defStyle) {
+    public FloatingActionHideActionBarButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
     }
@@ -137,15 +182,20 @@ public class FloatingActionButton extends ImageButton {
     }
 
     private void initAttributes(Context context, AttributeSet attributeSet) {
-        TypedArray attr = getTypedArray(context, attributeSet, R.styleable.FloatingActionButton);
+        TypedArray attr = getTypedArray(context, attributeSet,
+                R.styleable.FloatingActionHideActionBarButton);
         if (attr != null) {
             try {
-                mColorNormal = attr.getColor(R.styleable.FloatingActionButton_fab_colorNormal,
+                mColorNormal = attr.getColor(R.styleable
+                                .FloatingActionHideActionBarButton_fab_colorNormal,
                         getColor(android.R.color.holo_blue_dark));
-                mColorPressed = attr.getColor(R.styleable.FloatingActionButton_fab_colorPressed,
+                mColorPressed = attr.getColor(R.styleable
+                                .FloatingActionHideActionBarButton_fab_colorPressed,
                         getColor(android.R.color.holo_blue_light));
-                mShadow = attr.getBoolean(R.styleable.FloatingActionButton_fab_shadow, true);
-                mType = attr.getInt(R.styleable.FloatingActionButton_fab_type, TYPE_NORMAL);
+                mShadow = attr.getBoolean(R.styleable
+                        .FloatingActionHideActionBarButton_fab_shadow, true);
+                mType = attr.getInt(R.styleable.FloatingActionHideActionBarButton_fab_type,
+                        TYPE_NORMAL);
             } finally {
                 attr.recycle();
             }
@@ -201,7 +251,8 @@ public class FloatingActionButton extends ImageButton {
 
     protected int getListViewScrollY() {
         View topChild = mRecyclerView.getChildAt(0);
-        return topChild == null ? 0 : ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition() * topChild.getHeight() -
+        return topChild == null ? 0 : ((LinearLayoutManager) mRecyclerView.getLayoutManager())
+                .findFirstVisibleItemPosition() * topChild.getHeight() -
                 topChild.getTop();
     }
 
@@ -312,7 +363,8 @@ public class FloatingActionButton extends ImageButton {
     }
 
     /**
-     * A {@link android.os.Parcelable} representing the {@link org.jorge.lbudget.ui.utils.FloatingActionButton}'s
+     * A {@link android.os.Parcelable} representing the {@link org.jorge.lbudget.ui.utils
+     * .FloatingActionHideActionBarButton}'s
      * state.
      */
     public static class SavedState extends BaseSavedState {
@@ -334,7 +386,8 @@ public class FloatingActionButton extends ImageButton {
             out.writeInt(mScrollY);
         }
 
-        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable.Creator<SavedState>() {
+        public static final Parcelable.Creator<SavedState> CREATOR = new Parcelable
+                .Creator<SavedState>() {
 
             @Override
             public SavedState createFromParcel(Parcel in) {

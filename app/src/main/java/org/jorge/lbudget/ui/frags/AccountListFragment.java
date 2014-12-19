@@ -28,14 +28,14 @@ import android.view.ViewGroup;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
 import org.jorge.lbudget.logic.controllers.AccountManager;
-import org.jorge.lbudget.ui.utils.FloatingActionButton;
+import org.jorge.lbudget.ui.utils.FloatingActionHideActionBarButton;
 import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
 
 public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
 
     private RecyclerView mAccountsRecyclerView;
     private Context mContext;
-    private FloatingActionButton mNewAccountButton;
+    private FloatingActionHideActionBarButton mNewAccountButton;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -43,8 +43,13 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
         mAccountsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         final AccountListRecyclerAdapter mAdapter;
-        mAccountsRecyclerView.setAdapter(mAdapter = new AccountListRecyclerAdapter(this, getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
-        mNewAccountButton = (FloatingActionButton) view.findViewById(R.id.button_new_item);
+        mAccountsRecyclerView.setAdapter(mAdapter = new AccountListRecyclerAdapter(this,
+                getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
+        mAccountsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+        });
+        mNewAccountButton = (FloatingActionHideActionBarButton) view.findViewById(R.id
+                .button_new_item);
         mNewAccountButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,9 +69,14 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_account_list, container, Boolean.FALSE);
         mAccountsRecyclerView = (RecyclerView) ret.findViewById(R.id.account_list_view);
+        FloatingActionHideActionBarButton newItemButton = (FloatingActionHideActionBarButton) ret
+                .findViewById(R.id.button_new_item);
+        newItemButton.setTopPadding(mAccountsRecyclerView.getPaddingTop());
+        newItemButton.setActivity(getActivity());
         return ret;
     }
 

@@ -18,4 +18,5 @@
     <integer name="cache_size_limit_bytes">1048576</integer>
     <integer name="default_account_id">0</integer>
     <integer name="default_movement_id">0</integer>
+    <integer name="min_scroll_toggle_action_bar">50</integer>
 </resources>

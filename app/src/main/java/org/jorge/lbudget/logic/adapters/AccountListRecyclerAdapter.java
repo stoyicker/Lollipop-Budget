@@ -37,9 +37,11 @@ import org.jorge.lbudget.utils.LBudgetUtils;
 
 import java.util.List;
 
-import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
+import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter.MovementDataModel
+        .printifyAmount;
 
-public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter.ViewHolder> {
+public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter
+        .ViewHolder> {
 
     private final float MIN_SWIPE_WIDTH_PIXELS;
     private final Activity mActivity;
@@ -51,7 +53,9 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
 
-    public AccountListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener, Activity activity, List<AccountDataModel> accounts, RecyclerView _recyclerView) {
+    public AccountListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener,
+                                      Activity activity, List<AccountDataModel> accounts,
+                                      RecyclerView _recyclerView) {
         mActivity = activity;
         mContext = activity.getApplicationContext();
         items = accounts;
@@ -75,7 +79,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 //    }
 
     private void setSelectedAccount(int position) {
-        AccountDataModel oldSelectedAccount = AccountManager.getInstance().getSelectedAccount(), newSelectedAccount = items.get(position);
+        AccountDataModel oldSelectedAccount = AccountManager.getInstance().getSelectedAccount(),
+                newSelectedAccount = items.get(position);
         oldSelectedAccount.setSelected(Boolean.FALSE);
         newSelectedAccount.setSelected(Boolean.TRUE);
         int oldSelected = items.indexOf(oldSelectedAccount);
@@ -86,7 +91,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE));
+        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout,
+                viewGroup, Boolean.FALSE));
     }
 
     @Override
@@ -95,20 +101,23 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         viewHolder.accountNameView.setText(item.getAccountName());
         if (item.isSelected()) {
             viewHolder.wholeView.setBackgroundResource(R.color.selected_card_background);
-            viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_selected, 0, 0, 0);
+            viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable
+                    .ic_edit_selected, 0, 0, 0);
             viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountTextSelected);
             viewHolder.accountNameView.setFocusable(Boolean.FALSE);
             viewHolder.accountNameView.setFocusableInTouchMode(Boolean.FALSE);
             viewHolder.balanceView.setTextAppearance(mContext, R.style.AccountTextSelected);
         } else {
             viewHolder.wholeView.setBackgroundResource(R.color.non_selected_card_background);
-            viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_edit_non_selected, 0, 0, 0);
+            viewHolder.accountNameView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable
+                    .ic_edit_non_selected, 0, 0, 0);
             viewHolder.accountNameView.setTextAppearance(mContext, R.style.AccountTextNonSelected);
             viewHolder.accountNameView.setFocusable(Boolean.TRUE);
             viewHolder.accountNameView.setFocusableInTouchMode(Boolean.TRUE);
             viewHolder.balanceView.setTextAppearance(mContext, R.style.AccountTextSelected);
         }
-        viewHolder.balanceView.setText(printifyAmount(mContext, item.calculateBalance()) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        viewHolder.balanceView.setText(printifyAmount(mContext, item.calculateBalance()) + " " +
+                AccountManager.getInstance().getSelectedCurrency(mContext));
     }
 
     private void removeAccountFromPersistence(AccountDataModel account) {
@@ -121,9 +130,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     }
 
     public void createNewAccount() {
-        int lengthPriorToInsert = getItemCount(), newId = LBudgetUtils.calculateAvailableAccountId();
-        add(new AccountDataModel(newId, LBudgetUtils.getString(mContext, "new_account_default_name") + newId, Boolean.FALSE), lengthPriorToInsert);
-        mRecyclerView.smoothScrollToPosition(lengthPriorToInsert);
+        int newId = LBudgetUtils
+                .calculateAvailableAccountId();
+        final AccountDataModel newAcc = new AccountDataModel(newId,
+                LBudgetUtils.getString(mContext, "new_account_default_name") + newId,
+                Boolean.FALSE);
+        if (AccountManager.getInstance().addAccount(newAcc)) {
+            notifyDataSetChanged();
+            mRecyclerView.smoothScrollToPosition(mRecyclerView.getBottom());
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -145,7 +160,9 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                             final float diff = motionEvent.getX() - x;
                             if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
                                 if (!items.get(getPosition()).isSelected()) {
-                                    final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
+                                    final Animation fadeOut = AnimationUtils.loadAnimation
+                                            (mContext, diff < 0 ? R.anim.fade_out_to_left : R
+                                                    .anim.fade_out_to_right);
                                     fadeOut.setAnimationListener(new Animation.AnimationListener() {
                                         @Override
                                         public void onAnimationStart(Animation animation) {
@@ -158,13 +175,15 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                             notifyItemRemoved(pos);
                                             undoBarShowStateListener.onShowUndoBar();
                                             new UndoBar.Builder(mActivity)
-                                                    .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
+                                                    .setMessage(LBudgetUtils.getString(mContext,
+                                                            "movement_list_item_removal"))
                                                     .setListener(new UndoBar.Listener() {
                                                         @Override
                                                         public void onHide() {
                                                             wholeView.setVisibility(View.VISIBLE);
                                                             removeAccountFromPersistence(account);
-                                                            undoBarShowStateListener.onHideUndoBar();
+                                                            undoBarShowStateListener
+                                                                    .onHideUndoBar();
                                                         }
 
                                                         @Override
@@ -172,8 +191,10 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                                                             items.add(pos, account);
                                                             wholeView.setVisibility(View.VISIBLE);
                                                             notifyItemInserted(pos);
-                                                            mRecyclerView.smoothScrollToPosition(pos);
-                                                            undoBarShowStateListener.onHideUndoBar();
+                                                            mRecyclerView.smoothScrollToPosition
+                                                                    (pos);
+                                                            undoBarShowStateListener
+                                                                    .onHideUndoBar();
                                                         }
                                                     })
                                                     .show();
@@ -202,8 +223,10 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 }
             };
             wholeView.setOnTouchListener(listener);
-            accountNameView = (IMECloseListenableEditText) itemView.findViewById(R.id.account_name_view);
-            accountNameView.setOnEditTextCloseListener(new IMECloseListenableEditText.OnEditTextCloseListener() {
+            accountNameView = (IMECloseListenableEditText) itemView.findViewById(R.id
+                    .account_name_view);
+            accountNameView.setOnEditTextCloseListener(new IMECloseListenableEditText
+                    .OnEditTextCloseListener() {
 
                 @Override
                 public void onEditTextClose(String text) {
@@ -211,7 +234,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                         int position;
                         AccountDataModel accountDataModel = items.get(position = getPosition());
                         accountDataModel.setAccountName(text);
-                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountId(), text);
+                        AccountManager.getInstance().setAccountName(accountDataModel.getAccountId
+                                (), text);
                         notifyItemChanged(position);
                     }
                     mActivity.findViewById(android.R.id.content).requestFocus();
@@ -264,7 +288,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
 
         public long calculateBalance() {
             long ret = 0;
-            List<MovementListRecyclerAdapter.MovementDataModel> movementsToDate = MovementManager.getInstance().getAccountMovementsToDate(this);
+            List<MovementListRecyclerAdapter.MovementDataModel> movementsToDate = MovementManager
+                    .getInstance().getAccountMovementsToDate(this);
             for (MovementListRecyclerAdapter.MovementDataModel movementDataModel : movementsToDate)
                 ret += movementDataModel.getMovementAmount();
             return ret;
