@@ -20,8 +20,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.AsyncTask;
 
-import com.crashlytics.android.Crashlytics;
-
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.net.LBackupAgent;
 import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
@@ -198,11 +196,13 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
     }
 
     public Boolean addAccount(final AccountListRecyclerAdapter.AccountDataModel account) {
+
         new AsyncTask<AccountListRecyclerAdapter.AccountDataModel, Void, Void>() {
             @Override
             protected Void doInBackground(AccountListRecyclerAdapter.AccountDataModel... accounts) {
                 if (accounts[0] == null)
-                    throw new IllegalArgumentException("A null account cannot be added to the " +
+                    throw new IllegalArgumentException("A null account cannot be added to the" +
+                            " " +
                             "database.");
                 SQLiteDatabase db = getWritableDatabase();
                 synchronized (DB_LOCK) {
@@ -221,35 +221,28 @@ public class SQLiteDAO extends RobustSQLiteOpenHelper {
 
     public Boolean addMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
 
-        final Object returnLock = new Object();
-
         new AsyncTask<MovementListRecyclerAdapter.MovementDataModel, Void, Void>() {
             @Override
             protected Void doInBackground(MovementListRecyclerAdapter.MovementDataModel...
                                                   movements) {
                 if (movements[0] == null)
-                    throw new IllegalArgumentException("A null movement cannot be added to the " +
+                    throw new IllegalArgumentException("A null movement cannot be added to " +
+                            "the " +
                             "database.");
                 SQLiteDatabase db = getWritableDatabase();
                 final String selectedAccMovTableName = generateSelectedAccountTableName();
                 synchronized (DB_LOCK) {
                     db.beginTransaction();
-                    db.insert(selectedAccMovTableName, null, mapMovementToStorable(movements[0]));
+                    db.insert(selectedAccMovTableName, null,
+                            mapMovementToStorable(movements[0]));
                     db.setTransactionSuccessful();
                     db.endTransaction();
                     LBackupAgent.requestBackup(mContext);
-                    returnLock.notify();
                 }
+
                 return null;
             }
         }.executeOnExecutor(BACKGROUND_OPS_EXECUTOR, movement);
-
-        try {
-            returnLock.wait();
-        } catch (InterruptedException e) {
-            Crashlytics.logException(e);
-            return Boolean.FALSE;
-        }
 
         return Boolean.TRUE;
     }
