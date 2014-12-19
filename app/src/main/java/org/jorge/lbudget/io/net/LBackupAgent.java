@@ -18,6 +18,7 @@ import android.app.backup.BackupDataInput;
 import android.app.backup.BackupDataOutput;
 import android.app.backup.BackupManager;
 import android.app.backup.FileBackupHelper;
+import android.app.backup.RestoreObserver;
 import android.app.backup.SharedPreferencesBackupHelper;
 import android.content.Context;
 import android.os.ParcelFileDescriptor;
@@ -30,19 +31,26 @@ import java.io.IOException;
 
 public class LBackupAgent extends BackupAgentHelper {
 
-    private static final String PREFERENCES_BACKUP_KEY = "PREFERENCES_BACKUP_KEY", DATABASE_BACKUP_KEY = "DATABASE_BACKUP_KEY";
+    private static final String PREFERENCES_BACKUP_KEY = "PREFERENCES_BACKUP_KEY",
+            DATABASE_BACKUP_KEY = "DATABASE_BACKUP_KEY";
+    private static BackupManager mBackupManager;
 
     @Override
     public void onCreate() {
         Context appContext = getApplicationContext();
+        mBackupManager = new BackupManager(appContext);
 
-        String[] allPreferences = LBudgetUtils.getStringArray(appContext, "backupable_preference_keys");
-        SharedPreferencesBackupHelper sharedPreferencesBackupHelper = new SharedPreferencesBackupHelper(appContext, allPreferences);
+        String[] allPreferences = LBudgetUtils.getStringArray(appContext,
+                "backupable_preference_keys");
+        SharedPreferencesBackupHelper sharedPreferencesBackupHelper = new
+                SharedPreferencesBackupHelper(appContext, allPreferences);
         addHelper(PREFERENCES_BACKUP_KEY, sharedPreferencesBackupHelper);
 
-        File databaseFile = appContext.getDatabasePath(LBudgetUtils.getString(appContext, "db_name"));
+        File databaseFile = appContext.getDatabasePath(LBudgetUtils.getString(appContext,
+                "db_name"));
         if (databaseFile != null && databaseFile.exists()) {
-            FileBackupHelper database = new FileBackupHelper(appContext, databaseFile.getAbsolutePath());
+            FileBackupHelper database = new FileBackupHelper(appContext,
+                    databaseFile.getAbsolutePath());
             addHelper(DATABASE_BACKUP_KEY, database);
         }
         //The pictures are not synchronized because it would go beyond the Backup API 1 MB limit
@@ -67,5 +75,14 @@ public class LBackupAgent extends BackupAgentHelper {
     public static void requestBackup(Context appContext) {
         BackupManager bm = new BackupManager(appContext);
         bm.dataChanged();
+    }
+
+    public static void restoreBackup() {
+        mBackupManager.requestRestore(new RestoreObserver() {
+            @Override
+            public void restoreStarting(int numPackages) {
+                super.restoreStarting(numPackages);
+            }
+        });
     }
 }
