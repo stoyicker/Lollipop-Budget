@@ -16,6 +16,8 @@ package org.jorge.lbudget.logic.controllers;
 import android.content.Context;
 import android.os.Environment;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.eazegraph.lib.models.PieModel;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.io.files.FileManager;
@@ -55,12 +57,14 @@ public class MovementManager {
         return mMovementList;
     }
 
-    public List<MovementListRecyclerAdapter.MovementDataModel> getAccountMovementsToDate(AccountListRecyclerAdapter.AccountDataModel account) {
+    public List<MovementListRecyclerAdapter.MovementDataModel> getAccountMovementsToDate
+            (AccountListRecyclerAdapter.AccountDataModel account) {
         return SQLiteDAO.getInstance().getAccountMovementsToDate(account);
     }
 
     public Boolean addMovement(MovementListRecyclerAdapter.MovementDataModel movement) {
-        Boolean ret = SQLiteDAO.getInstance().addMovement(movement) && !mMovementList.contains(movement);
+        Boolean ret = SQLiteDAO.getInstance().addMovement(movement) && !mMovementList.contains
+                (movement);
         if (ret && movement.getMovementEpoch() < System.currentTimeMillis()) {
             mMovementList.add(movement);
             sortMovementList();
@@ -70,10 +74,13 @@ public class MovementManager {
     }
 
     private void sortMovementList() {
-        Collections.sort(mMovementList, new Comparator<MovementListRecyclerAdapter.MovementDataModel>() {
+        Collections.sort(mMovementList, new Comparator<MovementListRecyclerAdapter
+                .MovementDataModel>() {
             @Override
-            public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1, MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
-                return movementDataModel1.getMovementEpoch() < movementDataModel2.getMovementEpoch() ? 1 : -1;
+            public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1,
+                               MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
+                return movementDataModel1.getMovementEpoch() < movementDataModel2
+                        .getMovementEpoch() ? 1 : -1;
             }
         });
     }
@@ -82,7 +89,8 @@ public class MovementManager {
         return SQLiteDAO.getInstance().removeMovement(movement) && mMovementList.remove(movement);
     }
 
-    public Boolean updateMovement(Integer movementId, String newMovementTitle, Long newAmount, Long newEpoch) {
+    public Boolean updateMovement(Integer movementId, String newMovementTitle, Long newAmount,
+                                  Long newEpoch) {
         MovementListRecyclerAdapter.MovementDataModel thisMovement = null;
         for (MovementListRecyclerAdapter.MovementDataModel x : mMovementList)
             if (x.getMovementId() == movementId) {
@@ -101,17 +109,25 @@ public class MovementManager {
         return SQLiteDAO.getInstance().updateMovement(thisMovement);
     }
 
-    public List<PieModel> createMonthlyPieModels(Context context, int monthsAgo, int maxUniquePies) {
+    public List<PieModel> createMonthlyPieModels(Context context, int monthsAgo,
+                                                 int maxUniquePies) {
         if (monthsAgo < 0)
-            throw new IllegalArgumentException("Can't calculate movements in the future (monthsAgo is negative)");
+            throw new IllegalArgumentException("Can't calculate movements in the future " +
+                    "(monthsAgo is negative)");
 
-        final Long firstDay = LBudgetTimeUtils.calculateFirstDayOfTheMonthThroughMonthsAgo(context, monthsAgo), lastDay = LBudgetTimeUtils.calculateFirstDayOfMonthNextTo(context, firstDay);
+        final Long firstDay = LBudgetTimeUtils.calculateFirstDayOfTheMonthThroughMonthsAgo
+                (context, monthsAgo), lastDay = LBudgetTimeUtils.calculateFirstDayOfMonthNextTo
+                (context, firstDay);
 
-        List<MovementListRecyclerAdapter.MovementDataModel> expensesInMonth = MovementManager.getInstance().getSelectedAccountExpensesBetween(firstDay, lastDay);
-        Collections.sort(expensesInMonth, new Comparator<MovementListRecyclerAdapter.MovementDataModel>() {
+        List<MovementListRecyclerAdapter.MovementDataModel> expensesInMonth = MovementManager
+                .getInstance().getSelectedAccountExpensesBetween(firstDay, lastDay);
+        Collections.sort(expensesInMonth, new Comparator<MovementListRecyclerAdapter
+                .MovementDataModel>() {
             @Override
-            public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1, MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
-                return movementDataModel1.getMovementAmount().compareTo(movementDataModel2.getMovementAmount());
+            public int compare(MovementListRecyclerAdapter.MovementDataModel movementDataModel1,
+                               MovementListRecyclerAdapter.MovementDataModel movementDataModel2) {
+                return movementDataModel1.getMovementAmount().compareTo(movementDataModel2
+                        .getMovementAmount());
             }
         });
 
@@ -123,18 +139,34 @@ public class MovementManager {
             if (cumulativeMovement == null) {
                 cumulativeMovement = expensesInMonth.remove(0);
                 if (expensesInMonth.isEmpty())
-                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
+                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(),
+                            Math.abs(cumulativeMovement.getMovementAmount()) / 100,
+                            LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}",
+                                    Math.min(colorCounter, maxUniquePies) + ""))));
             } else {
-                MovementListRecyclerAdapter.MovementDataModel newMovement = expensesInMonth.remove(0);
-                if (cumulativeMovement.getMovementTitle().toLowerCase(Locale.ENGLISH).contentEquals(newMovement.getMovementTitle().toLowerCase(Locale.ENGLISH))) {
-                    cumulativeMovement = new MovementListRecyclerAdapter.MovementDataModel(-1, LBudgetUtils.capitalizeFirst(cumulativeMovement.getMovementTitle()).toString(), cumulativeMovement.getMovementAmount() + newMovement.getMovementAmount(), cumulativeMovement.getMovementEpoch());//The id and the epoch are useless but we need the wrapper
+                MovementListRecyclerAdapter.MovementDataModel newMovement = expensesInMonth
+                        .remove(0);
+                if (cumulativeMovement.getMovementTitle().toLowerCase(Locale.ENGLISH)
+                        .contentEquals(newMovement.getMovementTitle().toLowerCase(Locale.ENGLISH)
+                        )) {
+                    cumulativeMovement = new MovementListRecyclerAdapter.MovementDataModel(-1,
+                            LBudgetUtils.capitalizeFirst(cumulativeMovement.getMovementTitle())
+                                    .toString(), cumulativeMovement.getMovementAmount() +
+                            newMovement.getMovementAmount(), cumulativeMovement.getMovementEpoch
+                            ());//The id and the epoch are useless but we need the wrapper
                 } else {
-                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
+                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(),
+                            Math.abs(cumulativeMovement.getMovementAmount()) / 100,
+                            LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}",
+                                    Math.min(colorCounter, maxUniquePies) + ""))));
                     cumulativeMovement = newMovement;
                     colorCounter++;
                 }
                 if (expensesInMonth.isEmpty()) {
-                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", Math.min(colorCounter, maxUniquePies) + ""))));
+                    ret.add(new PieModel(cumulativeMovement.getMovementTitle(),
+                            Math.abs(cumulativeMovement.getMovementAmount()) / 100,
+                            LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}",
+                                    Math.min(colorCounter, maxUniquePies) + ""))));
                     colorCounter++;
                 }
             }
@@ -147,15 +179,20 @@ public class MovementManager {
                 if (cumulativeMovement == null) {
                     cumulativeMovement = expensesInMonth.remove(0);
                 } else
-                    cumulativeMovement.setAmount(cumulativeMovement.getMovementAmount() + expensesInMonth.remove(0).getMovementAmount());
+                    cumulativeMovement.setAmount(cumulativeMovement.getMovementAmount() +
+                            expensesInMonth.remove(0).getMovementAmount());
             }
             assert cumulativeMovement != null;
-            ret.add(new PieModel(LBudgetUtils.getString(context, "other_movements_pie_title"), Math.abs(cumulativeMovement.getMovementAmount()) / 100, LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}", maxUniquePies + 1 + ""))));
+            ret.add(new PieModel(LBudgetUtils.getString(context, "other_movements_pie_title"),
+                    Math.abs(cumulativeMovement.getMovementAmount()) / 100,
+                    LBudgetUtils.getColor(context, colorString.replace("{PLACEHOLDER}",
+                            maxUniquePies + 1 + ""))));
         }
         return ret;
     }
 
-    private List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountExpensesBetween(Long lowestExtreme, Long highestExtreme) {
+    private List<MovementListRecyclerAdapter.MovementDataModel> getSelectedAccountExpensesBetween
+            (Long lowestExtreme, Long highestExtreme) {
         List<MovementListRecyclerAdapter.MovementDataModel> ret = new ArrayList<>();
         for (MovementListRecyclerAdapter.MovementDataModel x : mMovementList) {
             Long epoch = x.getMovementEpoch();
@@ -167,14 +204,18 @@ public class MovementManager {
     }
 
     public synchronized Boolean exportMovementsAsCSV(Context context) {
-        final List<AccountListRecyclerAdapter.AccountDataModel> allAccs = SQLiteDAO.getInstance().getAccounts();
+        final List<AccountListRecyclerAdapter.AccountDataModel> allAccs = SQLiteDAO.getInstance()
+                .getAccounts();
 
-        final File target = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath(), LBudgetUtils.getString(context, "exported_file_name"));
+        final File target = new File(Environment.getExternalStoragePublicDirectory(Environment
+                .DIRECTORY_DOWNLOADS).getPath(), LBudgetUtils.getString(context,
+                "exported_file_name"));
 
         FileManager.recursiveDelete(target);
 
         for (AccountListRecyclerAdapter.AccountDataModel acc : allAccs) {
-            List<MovementListRecyclerAdapter.MovementDataModel> allMovs = SQLiteDAO.getInstance().getAllMovementsInAccount(acc);
+            List<MovementListRecyclerAdapter.MovementDataModel> allMovs = SQLiteDAO.getInstance()
+                    .getAllMovementsInAccount(acc);
 
             final StringBuilder thisAccount = new StringBuilder(acc.toCsvString() + "\n");
             for (MovementListRecyclerAdapter.MovementDataModel mov : allMovs) {
@@ -186,6 +227,7 @@ public class MovementManager {
             try {
                 FileManager.writeStringToFile(thisAccount.toString(), target, Boolean.TRUE);
             } catch (IOException e) {
+                Crashlytics.logException(e);
                 return Boolean.FALSE;
             }
         }
