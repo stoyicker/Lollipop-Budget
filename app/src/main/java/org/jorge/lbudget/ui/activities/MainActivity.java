@@ -13,6 +13,7 @@
 
 package org.jorge.lbudget.ui.activities;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -39,7 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class MainActivity extends Activity implements NavigationToolbarFragment.NavigationToolbarListener {
+public class MainActivity extends Activity implements NavigationToolbarFragment
+        .NavigationToolbarListener {
 
     private NavigationToolbarButton mNavigationToolbarButton;
     private RecyclerView mNavigationMenuView;
@@ -47,6 +49,7 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
     private Fragment[] mContentFragments;
     private NavigationToolbarFragment mNavigationToolbarFragment;
     private Stack<Integer> mNavigatedIndexesStack;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,21 +57,28 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
         mNavigatedIndexesStack = new Stack<>();
         mNavigatedIndexesStack.push(0);
         setContentView(R.layout.activity_main);
+        mActionBar = getActionBar();
         mContext = getApplicationContext();
-        mNavigationToolbarFragment = (NavigationToolbarFragment) getFragmentManager().findFragmentById(R.id.fragment_navigation_toolbar);
+        mNavigationToolbarFragment = (NavigationToolbarFragment) getFragmentManager()
+                .findFragmentById(R.id.fragment_navigation_toolbar);
         mNavigationToolbarButton = mNavigationToolbarFragment.getNavigationToolbarButton();
         mNavigationMenuView = (RecyclerView) findViewById(R.id.navigation_toolbar_selector);
         mNavigationMenuView.setHasFixedSize(Boolean.TRUE);
         mNavigationMenuView.setLayoutManager(new LinearLayoutManager(mContext));
         mNavigationMenuView.setItemAnimator(new DefaultItemAnimator());
-        mNavigationMenuView.setAdapter(new NavigationToolbarRecyclerAdapter(loadMenuItems(), mNavigationToolbarFragment, mNavigationToolbarButton));
-        mNavigationToolbarButton.setOnOpenStateChangeLister(new NavigationToolbarButton.OpenStateChangeListener() {
+        mNavigationMenuView.setAdapter(new NavigationToolbarRecyclerAdapter(loadMenuItems(),
+                mNavigationToolbarFragment, mNavigationToolbarButton));
+        mNavigationToolbarButton.setOnOpenStateChangeLister(new NavigationToolbarButton
+                .OpenStateChangeListener() {
             @Override
             public void onOpenRequest() {
                 if (mNavigationMenuView.getVisibility() == View.VISIBLE) {
                     //If the menu is already open, close it instead
                     mNavigationToolbarButton.initCloseProtocol();
                     return;
+                }
+                if (mActionBar != null && !mActionBar.isShowing()) {
+                    mActionBar.show();
                 }
                 openNavigationMenu();
             }
@@ -78,13 +88,15 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
                 closeNavigationMenu();
             }
         });
-        mContentFragments = new Fragment[LBudgetUtils.getStringArray(mContext, "navigation_items").length];
+        mContentFragments = new Fragment[LBudgetUtils.getStringArray(mContext,
+                "navigation_items").length];
         if (getFragmentManager().findFragmentById(R.id.content_fragment_container) == null)
             showInitialFragment();
     }
 
     private void showInitialFragment() {
-        getFragmentManager().beginTransaction().add(R.id.content_fragment_container, findMovementListFragment()).commit();
+        getFragmentManager().beginTransaction().add(R.id.content_fragment_container,
+                findMovementListFragment()).commit();
     }
 
     private List<NavigationToolbarRecyclerAdapter.NavigationToolbarDataModel> loadMenuItems() {
@@ -129,24 +141,30 @@ public class MainActivity extends Activity implements NavigationToolbarFragment.
             default:
                 throw new IllegalArgumentException("Menu with id " + selectedIndex + " not found.");
         }
-        getFragmentManager().beginTransaction().setCustomAnimations(R.animator.fade_in_from_bottom, R.animator.fade_out_to_bottom, R.animator.fade_in_from_bottom, R.animator.fade_out_to_bottom).replace(R.id.content_fragment_container, target).addToBackStack(null).commit();
+        getFragmentManager().beginTransaction().setCustomAnimations(R.animator
+                .fade_in_from_bottom, R.animator.fade_out_to_bottom,
+                R.animator.fade_in_from_bottom, R.animator.fade_out_to_bottom).replace(R.id
+                .content_fragment_container, target).addToBackStack(null).commit();
     }
 
     private Fragment findMovementListFragment() {
         if (mContentFragments[0] == null)
-            mContentFragments[0] = Fragment.instantiate(mContext, MovementListFragment.class.getName());
+            mContentFragments[0] = Fragment.instantiate(mContext,
+                    MovementListFragment.class.getName());
         return mContentFragments[0];
     }
 
     private Fragment findExpenseGraphFragment() {
         if (mContentFragments[1] == null)
-            mContentFragments[1] = Fragment.instantiate(mContext, ExpenseGraphFragment.class.getName());
+            mContentFragments[1] = Fragment.instantiate(mContext,
+                    ExpenseGraphFragment.class.getName());
         return mContentFragments[1];
     }
 
     private Fragment findAccountListFragment() {
         if (mContentFragments[2] == null)
-            mContentFragments[2] = Fragment.instantiate(mContext, AccountListFragment.class.getName());
+            mContentFragments[2] = Fragment.instantiate(mContext,
+                    AccountListFragment.class.getName());
         return mContentFragments[2];
     }
 

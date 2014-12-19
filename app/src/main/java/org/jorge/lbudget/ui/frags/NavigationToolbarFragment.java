@@ -29,7 +29,8 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarRecyclerAdapter;
 
-public class NavigationToolbarFragment extends Fragment implements NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener {
+public class NavigationToolbarFragment extends Fragment implements
+        NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener {
 
     private NavigationToolbarListener mCallback;
     private ImageView mWedgeView;
@@ -59,13 +60,15 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_navigation_toolbar, container, Boolean.FALSE);
-        mNavigationToolbarButton = (NavigationToolbarButton) ret.findViewById(R.id.navigation_toolbar_selected);
+        mNavigationToolbarButton = (NavigationToolbarButton) ret.findViewById(R.id
+                .navigation_toolbar_selected);
         mWedgeView = (ImageView) ret.findViewById(R.id.navigation_toolbar_wedge);
         return ret;
     }
 
     public void rotateWedge(Boolean clockwise) {
-        Animation animationRotate = AnimationUtils.loadAnimation(mContext, R.anim.rotate_clockwise_180);
+        Animation animationRotate = AnimationUtils.loadAnimation(mContext,
+                R.anim.rotate_clockwise_180);
         if (!clockwise) animationRotate.setInterpolator(new Interpolator() {
             @Override
             public float getInterpolation(float v) {
@@ -86,7 +89,8 @@ public class NavigationToolbarFragment extends Fragment implements NavigationToo
             mCallback = (NavigationToolbarListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement " + NavigationToolbarRecyclerAdapter.NavigationToolbarRecyclerAdapterOnItemClickListener.class.getName());
+                    + " must implement " + NavigationToolbarRecyclerAdapter
+                    .NavigationToolbarRecyclerAdapterOnItemClickListener.class.getName());
         }
     }
 }
