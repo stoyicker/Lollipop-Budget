@@ -1,7 +1,10 @@
 language: android
+# Enable container-based infrastructure
+sudo: false
 android:
   components:
     - build-tools-21.1.2
+    - extra-android-m2repository
 branches:
   only:
     - master
