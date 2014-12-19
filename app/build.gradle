@@ -44,8 +44,8 @@ android {
             applicationId "org.jorge.lbudget"
             minSdkVersion 21
             targetSdkVersion 21
-            versionCode 17
-            versionName "0.5.3"
+            versionCode 18
+            versionName "0.6"
         }
     }
 
