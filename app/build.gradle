@@ -106,4 +106,5 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.0.1@aar') {
         transitive = true;
     }
+    compile 'com.malinskiy:superrecyclerview:1.0.1'
 }
