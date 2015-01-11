@@ -33,9 +33,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
+import org.jorge.lbudget.io.files.FileManager;
 import org.jorge.lbudget.ui.util.undobar.UndoBar;
 import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.LBudgetTimeUtils;
@@ -46,9 +46,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
-import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
+import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel
+        .printifyAmount;
 
-public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter.ViewHolder> {
+public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter
+        .ViewHolder> {
 
     private final float MIN_SWIPE_WIDTH_PIXELS;
     private final Activity mActivity;
@@ -65,7 +67,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final MovementEditRequestListener mMovementEditRequestListener;
     private static MovementListRecyclerAdapter publicAccessInstance;
 
-    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener _undoBarShowStateListener, RecyclerView recyclerView, Activity activity, List<MovementDataModel> items, MovementImageClickListener movementImageClickListener, MovementEditRequestListener movementEditRequestListener) {
+    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener
+            _undoBarShowStateListener, RecyclerView recyclerView, Activity activity,
+                                       List<MovementDataModel> items,
+                                       MovementImageClickListener movementImageClickListener,
+                                       MovementEditRequestListener movementEditRequestListener) {
         this.items = items;
         this.movementImageClickListener = movementImageClickListener;
         mContext = activity.getApplicationContext();
@@ -84,23 +90,34 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     }
 
     private static void updateIncomeColor(Context context, String... newColor) {
-        incomeColor = getMovementColorFromPreferences(context, "pref_key_movement_income_color", newColor.length <= 0 ? LBudgetUtils.getString(context, "movement_color_green_identifier") : newColor[0]);
+        incomeColor = getMovementColorFromPreferences(context, "pref_key_movement_income_color",
+                newColor.length <= 0 ? LBudgetUtils.getString(context,
+                        "movement_color_green_identifier") : newColor[0]);
     }
 
     private static void updateExpenseColor(Context context, String... newColor) {
-        expenseColor = getMovementColorFromPreferences(context, "pref_key_movement_expense_color", newColor.length <= 0 ? LBudgetUtils.getString(context, "movement_color_red_identifier") : newColor[0]);
+        expenseColor = getMovementColorFromPreferences(context,
+                "pref_key_movement_expense_color", newColor.length <= 0 ? LBudgetUtils.getString
+                        (context, "movement_color_red_identifier") : newColor[0]);
     }
 
-    public static int getMovementColorFromPreferences(Context context, String prefName, String defaultColor) {
+    public static int getMovementColorFromPreferences(Context context, String prefName,
+                                                      String defaultColor) {
         int retId = -1;
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences
+                (context);
         final String prefKey = LBudgetUtils.getString(context, prefName);
-        final String identifier = sharedPreferences.getString(prefKey, LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase(Locale.ENGLISH) + "_identifier"));
-        if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_red_identifier"))) {
+        final String identifier = sharedPreferences.getString(prefKey,
+                LBudgetUtils.getString(context, "movement_color_" + defaultColor.toLowerCase
+                        (Locale.ENGLISH) + "_identifier"));
+        if (identifier.contentEquals(LBudgetUtils.getString(context,
+                "movement_color_red_identifier"))) {
             retId = R.color.movement_color_red;
-        } else if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_green_identifier"))) {
+        } else if (identifier.contentEquals(LBudgetUtils.getString(context,
+                "movement_color_green_identifier"))) {
             retId = R.color.movement_color_green;
-        } else if (identifier.contentEquals(LBudgetUtils.getString(context, "movement_color_blue_identifier"))) {
+        } else if (identifier.contentEquals(LBudgetUtils.getString(context,
+                "movement_color_blue_identifier"))) {
             retId = R.color.movement_color_blue;
         }
         return context.getResources().getColor(retId);
@@ -129,19 +146,27 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         final String textMime = "text/plain", fullMimes = textMime + "image/*";
         final boolean hasPicture, isIncome = item.getMovementAmount() >= 0;
-        intent.setType((hasPicture = new File(item.getImagePath(mContext)).exists()) ? fullMimes : textMime);
+        intent.setType((hasPicture = new File(item.getImagePath(mContext)).exists()) ? fullMimes
+                : textMime);
         intent.putExtra(Intent.EXTRA_TITLE, item.getMovementTitle());
-        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string.share_text_income) : mContext.getString(R.string.share_text_expense)).replace(LBudgetUtils.getString(mContext, "amount_placeholder"), printifyAmount(mContext, item.getMovementAmount())) + AccountManager.getInstance().getSelectedCurrency(mContext));
+        intent.putExtra(Intent.EXTRA_TEXT, (isIncome ? mContext.getString(R.string
+                .share_text_income) : mContext.getString(R.string.share_text_expense)).replace
+                (LBudgetUtils.getString(mContext, "amount_placeholder"), printifyAmount(mContext,
+                        item.getMovementAmount())) + AccountManager.getInstance()
+                .getSelectedCurrency(mContext));
         if (hasPicture) {
-            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath(mContext))));
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(item.getImagePath
+                    (mContext))));
         }
 
-        mActivity.startActivity(Intent.createChooser(intent, LBudgetUtils.getString(mContext, "share_dialog_title")));
+        mActivity.startActivity(Intent.createChooser(intent, LBudgetUtils.getString(mContext,
+                "share_dialog_title")));
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, final int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup,
+                Boolean.FALSE);
         v.findViewById(R.id.button_share_movement).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,8 +188,10 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         viewHolder.movementNameView.setText(item.getMovementTitle());
         long amount = item.getMovementAmount();
         viewHolder.movementTypeView.setBackgroundColor(amount >= 0 ? incomeColor : expenseColor);
-        viewHolder.movementAmountView.setText(printifyAmount(mContext, amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
-        viewHolder.movementEpochView.setText(LBudgetTimeUtils.getTimeAgo(item.getMovementEpoch(), mContext));
+        viewHolder.movementAmountView.setText(printifyAmount(mContext,
+                amount) + " " + AccountManager.getInstance().getSelectedCurrency(mContext));
+        viewHolder.movementEpochView.setText(LBudgetTimeUtils.getTimeAgo(item.getMovementEpoch(),
+                mContext));
         final String imagePath = item.getImagePath(mContext);
         if (new File(imagePath).exists()) {
             try {
@@ -192,79 +219,81 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
         private final TextView movementNameView, movementAmountView, movementEpochView;
         private final ImageView movementImageView;
         private final View movementTypeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(null); //Required for onTouchListener.
-            itemView.setOnTouchListener(new View.OnTouchListener() {
-
-                @Override
-                public boolean onTouch(final View view, MotionEvent motionEvent) {
-                    final int pos = getPosition();
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_UP:
-                            final float diff = motionEvent.getX() - x;
-                            if (x != Float.MAX_VALUE && Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
-                                final Animation fadeOut = AnimationUtils.loadAnimation(mContext, diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
-                                fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                                    @Override
-                                    public void onAnimationStart(Animation animation) {
-                                    }
-
-                                    @Override
-                                    public void onAnimationEnd(Animation animation) {
-                                        view.setVisibility(View.GONE);
-                                        final MovementDataModel movement = items.remove(pos);
-                                        notifyItemRemoved(pos);
-                                        undoBarShowStateListener.onShowUndoBar();
-                                        new UndoBar.Builder(mActivity)
-                                                .setMessage(LBudgetUtils.getString(mContext, "movement_list_item_removal"))
-                                                .setListener(new UndoBar.Listener() {
-                                                    @Override
-                                                    public void onHide() {
-                                                        view.setVisibility(View.VISIBLE);
-                                                        removeMovementFromPersistence(movement);
-                                                        undoBarShowStateListener.onHideUndoBar();
-                                                    }
-
-                                                    @Override
-                                                    public void onUndo(Parcelable token) {
-                                                        items.add(pos, movement);
-                                                        view.setVisibility(View.VISIBLE);
-                                                        notifyItemInserted(pos);
-                                                        mRecyclerView.smoothScrollToPosition(pos);
-                                                        undoBarShowStateListener.onHideUndoBar();
-                                                    }
-                                                })
-                                                .show();
-                                    }
-
-                                    @Override
-                                    public void onAnimationRepeat(Animation animation) {
-                                    }
-                                });
-                                view.startAnimation(fadeOut);
-                            } else {
-                                x = Float.MAX_VALUE; //Reset x
-                                mMovementEditRequestListener.onMovementEditRequested(items.get(getPosition()));
-                            }
-                            break;
-                        case MotionEvent.ACTION_DOWN:
-                            x = motionEvent.getX();
-                            break;
-                    }
-                    return false;
-                }
-            });
+            itemView.setOnClickListener(null);
+            itemView.setOnTouchListener(this);
             movementNameView = (TextView) itemView.findViewById(R.id.movement_name_view);
             movementAmountView = (TextView) itemView.findViewById(R.id.movement_amount_view);
             movementImageView = (ImageView) itemView.findViewById(R.id.movement_image_view);
             movementTypeView = itemView.findViewById(R.id.movement_type_view);
             movementEpochView = (TextView) itemView.findViewById(R.id.movement_epoch_view);
+        }
+
+        @Override
+        public boolean onTouch(final View view, MotionEvent motionEvent) {
+            final int pos = getPosition();
+            switch (motionEvent.getAction()) {
+                case MotionEvent.ACTION_UP:
+                    final float diff = motionEvent.getX() - x;
+                    if (x != Float.MAX_VALUE && Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
+                        final Animation fadeOut = AnimationUtils.loadAnimation(mContext,
+                                diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
+                        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                view.setVisibility(View.GONE);
+                                final MovementDataModel movement = items.remove(pos);
+                                notifyItemRemoved(pos);
+                                undoBarShowStateListener.onShowUndoBar();
+                                new UndoBar.Builder(mActivity)
+                                        .setMessage(LBudgetUtils.getString(mContext,
+                                                "movement_list_item_removal"))
+                                        .setListener(new UndoBar.Listener() {
+                                            @Override
+                                            public void onHide() {
+                                                view.setVisibility(View.VISIBLE);
+                                                removeMovementFromPersistence(movement);
+                                                undoBarShowStateListener.onHideUndoBar();
+                                            }
+
+                                            @Override
+                                            public void onUndo(Parcelable token) {
+                                                items.add(pos, movement);
+                                                view.setVisibility(View.VISIBLE);
+                                                notifyItemInserted(pos);
+                                                mRecyclerView.smoothScrollToPosition(pos);
+                                                undoBarShowStateListener.onHideUndoBar();
+                                            }
+                                        })
+                                        .show();
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
+                        });
+                        view.startAnimation(fadeOut);
+                    } else {
+                        x = Float.MAX_VALUE; //Reset x
+                        mMovementEditRequestListener.onMovementEditRequested(items.get
+                                (getPosition()));
+                    }
+                    break;
+                case MotionEvent.ACTION_DOWN:
+                    x = motionEvent.getX();
+                    break;
+            }
+            return false;
         }
     }
 
@@ -294,7 +323,9 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public String getImagePath(Context _context) {
             final String fileSeparator = LBudgetUtils.getString(_context, "symbol_file_separator");
-            File target = new File(_context.getExternalFilesDir(LBudgetUtils.getString(_context, "picture_folder_name")) + fileSeparator + getMovementId() + LBudgetUtils.getString(_context, "camera_image_extension"));
+            File target = new File(_context.getExternalFilesDir(LBudgetUtils.getString(_context,
+                    "picture_folder_name")) + fileSeparator + getMovementId() + LBudgetUtils
+                    .getString(_context, "camera_image_extension"));
             return target.getAbsolutePath();
         }
 
@@ -328,9 +359,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
             Long ret;
             if (s.contains(DECIMAL_DOT)) {
                 decimals = 0;
-                ret = new BigDecimal(TextUtils.isEmpty(s) ? "" : s.substring(0, decimals = s.indexOf(DECIMAL_DOT))).longValue();
+                ret = new BigDecimal(TextUtils.isEmpty(s) ? "" : s.substring(0,
+                        decimals = s.indexOf(DECIMAL_DOT))).longValue();
                 ret *= 100;
-                ret += s.substring(decimals + 1).length() > 2 ? new BigDecimal(s.substring(decimals + 1, decimals + 3)).longValue() : new BigDecimal(s.substring(decimals + 1)).longValue();
+                ret += s.substring(decimals + 1).length() > 2 ? new BigDecimal(s.substring
+                        (decimals + 1, decimals + 3)).longValue() : new BigDecimal(s.substring
+                        (decimals + 1)).longValue();
             } else ret = new BigDecimal(s).longValue() * 100;
             return ret;
         }
@@ -341,7 +375,8 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
 
         public String toCsvString() {
-            return getMovementId() + "," + getMovementTitle() + "," + getMovementAmount() + "," + getMovementEpoch();
+            return getMovementId() + "," + getMovementTitle() + "," + getMovementAmount() + "," +
+                    "" + getMovementEpoch();
         }
     }
 

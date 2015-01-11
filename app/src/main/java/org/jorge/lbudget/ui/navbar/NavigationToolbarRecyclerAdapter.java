@@ -26,7 +26,8 @@ import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.List;
 
-public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<NavigationToolbarRecyclerAdapter.ViewHolder> {
+public class NavigationToolbarRecyclerAdapter extends RecyclerView
+        .Adapter<NavigationToolbarRecyclerAdapter.ViewHolder> {
 
     private List<NavigationToolbarDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
@@ -38,7 +39,10 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
         public int getSelectedItemPosition();
     }
 
-    public NavigationToolbarRecyclerAdapter(List<NavigationToolbarDataModel> items, NavigationToolbarRecyclerAdapterOnItemClickListener callback, NavigationToolbarSelectionRecorder _selectionRecorder) {
+    public NavigationToolbarRecyclerAdapter(List<NavigationToolbarDataModel> items,
+                                            NavigationToolbarRecyclerAdapterOnItemClickListener
+                                                    callback, NavigationToolbarSelectionRecorder
+            _selectionRecorder) {
         this.items = items;
         mCallback = callback;
         mSelectionRecorder = _selectionRecorder;
@@ -46,7 +50,8 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup, Boolean.FALSE);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(itemLayout, viewGroup,
+                Boolean.FALSE);
         return new ViewHolder(v, mCallback);
     }
 
@@ -57,7 +62,8 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
         viewHolder.textView.setText(text);
         viewHolder.iconView.setContentDescription(text);
         viewHolder.iconView.setImageResource(item.getIconResId());
-        viewHolder.selectedView.setVisibility(i == mSelectionRecorder.getSelectedItemPosition() ? View.VISIBLE : View.GONE);
+        viewHolder.selectedView.setVisibility(i == mSelectionRecorder.getSelectedItemPosition() ?
+                View.VISIBLE : View.GONE);
         viewHolder.itemView.setTag(item);
     }
 
@@ -66,27 +72,26 @@ public class NavigationToolbarRecyclerAdapter extends RecyclerView.Adapter<Navig
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView textView;
         private final ImageView selectedView, iconView;
         private final NavigationToolbarRecyclerAdapterOnItemClickListener mCallback;
 
-        public ViewHolder(View itemView, NavigationToolbarRecyclerAdapterOnItemClickListener callback) {
+        public ViewHolder(View itemView, NavigationToolbarRecyclerAdapterOnItemClickListener
+                callback) {
             super(itemView);
             mCallback = callback;
-            itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    int i = getPosition();
-                    mCallback.onNavigationItemSelected(i);
-                }
-            });
+            itemView.setOnClickListener(this);
             textView = (TextView) itemView.findViewById(R.id.navigation_toolbar_entry_text_view);
             iconView = (ImageView) itemView.findViewById(R.id.navigation_toolbar_entry_icon_view);
             selectedView = (ImageView) itemView.findViewById(R.id.navigation_toolbar_selected_view);
         }
 
+        @Override
+        public void onClick(View view) {
+            int i = getPosition();
+            mCallback.onNavigationItemSelected(i);
+        }
     }
 
     public interface NavigationToolbarRecyclerAdapterOnItemClickListener {
