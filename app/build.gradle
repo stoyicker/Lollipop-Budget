@@ -36,6 +36,10 @@ buildscript {
 }
 
 android {
+    dexOptions {
+        preDexLibraries = Boolean.FALSE
+    }
+
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
 
