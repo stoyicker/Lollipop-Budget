@@ -40,10 +40,6 @@ import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementD
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter
         .ViewHolder> {
 
-    public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
-    }
-
     private final Activity mActivity;
     private final Context mContext;
     private final RecyclerView mRecyclerView;

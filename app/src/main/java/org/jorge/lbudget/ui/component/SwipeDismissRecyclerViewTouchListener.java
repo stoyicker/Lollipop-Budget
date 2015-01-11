@@ -20,6 +20,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListener {
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
+    }
+
     // Cached ViewConfiguration and system-wide constant values
     private int mSlop;
     private int mMinFlingVelocity;

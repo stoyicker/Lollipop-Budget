@@ -71,7 +71,7 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
         mAccountsRecyclerView.setOnTouchListener(touchListener);
         mAccountsRecyclerView.setOnScrollListener(touchListener.makeScrollListener());
         mAccountsRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(mContext,
-                new AccountListRecyclerAdapter.OnItemClickListener() {
+                new SwipeDismissRecyclerViewTouchListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
                         mAdapter.runClick(view, position);
@@ -89,11 +89,11 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
     }
 
     private class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
-        private AccountListRecyclerAdapter.OnItemClickListener mListener;
+        private SwipeDismissRecyclerViewTouchListener.OnItemClickListener mListener;
 
         GestureDetector mGestureDetector;
 
-        public RecyclerItemClickListener(Context context, AccountListRecyclerAdapter
+        public RecyclerItemClickListener(Context context, SwipeDismissRecyclerViewTouchListener
                 .OnItemClickListener listener) {
             mListener = listener;
             mGestureDetector = new GestureDetector(context,
