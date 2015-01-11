@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/repo' }
+        maven { url 'https://maven.fabric.io/public' }
     }
 
     dependencies {
@@ -92,9 +92,7 @@ repositories {
     maven {
         url 'https://oss.sonatype.org/content/groups/public'
     }
-    maven {
-        url 'https://maven.fabric.io/repo'
-    }
+    maven { url 'https://maven.fabric.io/public' }
 }
 
 dependencies {
@@ -103,8 +101,7 @@ dependencies {
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.github.blackfizz:eazegraph:1.1.14-SNAPSHOT'
     compile 'com.nineoldandroids:library:2.4.0'
-    compile('com.crashlytics.sdk.android:crashlytics:2.0.1@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.2.0@aar') {
         transitive = true;
     }
-    compile 'com.malinskiy:superrecyclerview:1.0.1'
 }

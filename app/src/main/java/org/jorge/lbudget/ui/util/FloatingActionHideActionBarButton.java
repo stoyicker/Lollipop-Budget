@@ -95,19 +95,15 @@ public class FloatingActionHideActionBarButton extends ImageButton {
                 integer.min_scroll_toggle_action_bar);
 
         public void onScrolledForActionBar(RecyclerView recyclerView, int dx, int dy) {
-            System.out.println("onScrolled");
             ActionBar actionBar = mActivity.getActionBar();
             synchronized (mActionBarLock) {
-                System.out.println("onScrolled synced");
                 if (actionBar != null)
                     if (dy > MIN_SCROLL_TOGGLE_ACTION_BAR && mActionBarIsShowingOrShown) {
-                        System.out.println("onScrolled non-null if");
                         recyclerView.setPadding(0, 0, 0, 0);
                         actionBar.hide();
                         mActionBarIsShowingOrShown = Boolean.FALSE;
                     } else if ((dy < -1 * MIN_SCROLL_TOGGLE_ACTION_BAR || !recyclerView
                             .canScrollVertically(-1)) && !mActionBarIsShowingOrShown) {
-                        System.out.println("onScrolled non-null else");
                         recyclerView.setPadding(0, BASE_TOP_PADDING, 0, 0);
                         actionBar.show();
                         mActionBarIsShowingOrShown = Boolean.TRUE;

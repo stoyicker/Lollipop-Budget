@@ -14,13 +14,14 @@
   -->
 
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/movement_card_height"
-    android:elevation="@dimen/elevation_fragment_content"
-    android:padding="@dimen/card_padding"
-    android:layout_marginBottom="@dimen/movement_card_view_bottom_margin"
-    card_view:cardBackgroundColor="@color/non_selected_card_background">
+                                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/movement_card_height"
+                                    android:elevation="@dimen/elevation_fragment_content"
+                                    android:layout_marginBottom="@dimen/movement_card_view_bottom_margin"
+                                    card_view:cardBackgroundColor="@color/non_selected_card_background"
+                                    card_view:cardCornerRadius="@dimen/card_corner_radius"
+                                    card_view:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                     android:layout_marginEnd="@dimen/text_view_barrier_margin"
                     android:paddingBottom="@dimen/movement_text_padding"
                     android:maxLines="1"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"/>
 
                 <TextView
                     android:id="@+id/movement_epoch_view"
@@ -65,13 +66,13 @@
                     android:layout_marginStart="@dimen/text_view_barrier_margin"
                     android:paddingBottom="@dimen/movement_text_padding"
                     android:maxLines="1"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"/>
             </LinearLayout>
 
             <View
                 android:id="@+id/movement_type_view"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/movement_card_movement_type_height" />
+                android:layout_height="@dimen/movement_card_movement_type_height"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -84,7 +85,7 @@
                     android:layout_height="match_parent"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_share"
-                    android:contentDescription="@string/action_share" />
+                    android:contentDescription="@string/action_share"/>
 
                 <TextView
                     android:id="@+id/movement_amount_view"
@@ -93,7 +94,7 @@
                     android:gravity="center_vertical|start"
                     android:paddingTop="@dimen/movement_text_padding"
                     android:paddingBottom="@dimen/movement_text_padding"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"/>
             </RelativeLayout>
         </LinearLayout>
 
@@ -106,6 +107,6 @@
             android:paddingStart="@dimen/movement_image_horizontal_padding"
             android:paddingEnd="@dimen/movement_image_horizontal_padding"
             android:visibility="gone"
-            android:contentDescription="@string/movement_image_content_description" />
+            android:contentDescription="@string/movement_image_content_description"/>
     </LinearLayout>
 </android.support.v7.widget.CardView>

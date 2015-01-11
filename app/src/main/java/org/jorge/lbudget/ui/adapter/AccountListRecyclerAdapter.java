@@ -19,11 +19,8 @@ import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
@@ -43,14 +40,16 @@ import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementD
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter
         .ViewHolder> {
 
-    private final float MIN_SWIPE_WIDTH_PIXELS;
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
+    }
+
     private final Activity mActivity;
     private final Context mContext;
     private final RecyclerView mRecyclerView;
     private final List<AccountDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_account;
-    private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
 
     public AccountListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener,
@@ -60,23 +59,8 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         mContext = activity.getApplicationContext();
         items = accounts;
         mRecyclerView = _recyclerView;
-        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
         undoBarShowStateListener = _undoBarShowStateListener;
     }
-
-//    public void add(AccountDataModel item, int position) {
-//        items.add(position, item);
-//        notifyItemInserted(position);
-//        AccountManager.getInstance().addAccount(item);
-//        mRecyclerView.smoothScrollToPosition(position);
-//    }
-
-//    public AccountDataModel remove(int position) {
-//        AccountDataModel ret = items.remove(position);
-//        notifyItemRemoved(position);
-//        removeAccountFromPersistence(ret);
-//        return ret;
-//    }
 
     private void setSelectedAccount(int position) {
         AccountDataModel oldSelectedAccount = AccountManager.getInstance().getSelectedAccount(),
@@ -141,7 +125,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final IMECloseListenableEditText accountNameView;
         private final View wholeView;
         private final TextView balanceView;
@@ -149,7 +133,6 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         public ViewHolder(View itemView) {
             super(itemView);
             wholeView = itemView;
-            wholeView.setOnTouchListener(this);
             accountNameView = (IMECloseListenableEditText) itemView.findViewById(R.id
                     .account_name_view);
             accountNameView.setOnEditTextCloseListener(new IMECloseListenableEditText
@@ -170,80 +153,52 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
             });
             balanceView = (TextView) itemView.findViewById(R.id.balance_view);
         }
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            final int pos = getPosition();
-            InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
-                    Context.INPUT_METHOD_SERVICE);
-            switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_UP:
-                    final float diff = motionEvent.getX() - x;
-                    if (Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
-                        if (!items.get(getPosition()).isSelected()) {
-                            final Animation fadeOut = AnimationUtils.loadAnimation
-                                    (mContext, diff < 0 ? R.anim.fade_out_to_left : R
-                                            .anim.fade_out_to_right);
-                            fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    wholeView.setVisibility(View.GONE);
-                                    final AccountDataModel account = items.remove(pos);
-                                    notifyItemRemoved(pos);
-                                    undoBarShowStateListener.onShowUndoBar();
-                                    new UndoBar.Builder(mActivity)
-                                            .setMessage(LBudgetUtils.getString(mContext,
-                                                    "movement_list_item_removal"))
-                                            .setListener(new UndoBar.Listener() {
-                                                @Override
-                                                public void onHide() {
-                                                    wholeView.setVisibility(View.VISIBLE);
-                                                    removeAccountFromPersistence(account);
-                                                    undoBarShowStateListener
-                                                            .onHideUndoBar();
-                                                }
-
-                                                @Override
-                                                public void onUndo(Parcelable token) {
-                                                    items.add(pos, account);
-                                                    wholeView.setVisibility(View.VISIBLE);
-                                                    notifyItemInserted(pos);
-                                                    mRecyclerView.smoothScrollToPosition
-                                                            (pos);
-                                                    undoBarShowStateListener
-                                                            .onHideUndoBar();
-                                                }
-                                            })
-                                            .show();
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-                                }
-                            });
-                            wholeView.startAnimation(fadeOut);
-                        }
-                        return Boolean.TRUE;
-                    } else {
-                        x = Float.MAX_VALUE; //Reset x
-                        mActivity.findViewById(android.R.id.content).requestFocus();
-                        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        setSelectedAccount(getPosition());
-                        return Boolean.TRUE;
-                    }
-                case MotionEvent.ACTION_DOWN:
-                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                    x = motionEvent.getX();
-                    return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        }
     }
 
+    public void runDestroy(final RecyclerView origin, final Integer pos) {
+        final View thisView = origin.getChildAt(pos);
+        thisView.setVisibility(View.GONE);
+        final AccountDataModel account = items.get(pos);
+        items.remove(account);
+        notifyItemRemoved(pos);
+        undoBarShowStateListener.onShowUndoBar();
+        new UndoBar.Builder(mActivity)
+                .setMessage(LBudgetUtils.getString(mContext,
+                        "movement_list_item_removal"))
+                .setListener(new UndoBar.Listener() {
+                    @Override
+                    public void onHide() {
+                        thisView.setVisibility(View.VISIBLE);
+                        removeAccountFromPersistence(account);
+                        undoBarShowStateListener
+                                .onHideUndoBar();
+                    }
+
+                    @Override
+                    public void onUndo(Parcelable token) {
+                        items.add(pos, account);
+                        thisView.setVisibility(View.VISIBLE);
+                        notifyItemInserted(pos);
+                        mRecyclerView.smoothScrollToPosition
+                                (pos);
+                        undoBarShowStateListener
+                                .onHideUndoBar();
+                    }
+                })
+                .show();
+    }
+
+    public void runClick(View view, Integer position) {
+        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        mActivity.findViewById(android.R.id.content).requestFocus();
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        setSelectedAccount(position);
+    }
+
+    public Boolean isSelected(Integer i) {
+        return items.get(i).isSelected();
+    }
 
     public static class AccountDataModel {
         private final int id;

@@ -21,13 +21,16 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
 import org.jorge.lbudget.controller.AccountManager;
+import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
+import org.jorge.lbudget.ui.component.SwipeDismissRecyclerViewTouchListener;
 import org.jorge.lbudget.ui.util.FloatingActionHideActionBarButton;
 import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
 
@@ -45,9 +48,35 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
         final AccountListRecyclerAdapter mAdapter;
         mAccountsRecyclerView.setAdapter(mAdapter = new AccountListRecyclerAdapter(this,
                 getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
-        mAccountsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
 
-        });
+        SwipeDismissRecyclerViewTouchListener touchListener =
+                new SwipeDismissRecyclerViewTouchListener(
+                        mAccountsRecyclerView,
+                        new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+                            @Override
+                            public boolean canDismiss(int position) {
+                                return !mAdapter.isSelected(position);
+                            }
+
+                            @Override
+                            public void onDismiss(RecyclerView recyclerView,
+                                                  int[] reverseSortedPositions) {
+                                if (reverseSortedPositions != null)
+                                    mAdapter.runDestroy(recyclerView,
+                                            reverseSortedPositions[0]); //Just limit
+                                // to deal with one, in the future we'll see what happens
+                                // with many
+                            }
+                        });
+        mAccountsRecyclerView.setOnTouchListener(touchListener);
+        mAccountsRecyclerView.setOnScrollListener(touchListener.makeScrollListener());
+        mAccountsRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(mContext,
+                new AccountListRecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        mAdapter.runClick(view, position);
+                    }
+                }));
         mNewAccountButton = (FloatingActionHideActionBarButton) view.findViewById(R.id
                 .button_new_item);
         mNewAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -57,6 +86,37 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
             }
         });
         mNewAccountButton.attachToRecyclerView(mAccountsRecyclerView);
+    }
+
+    private class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
+        private AccountListRecyclerAdapter.OnItemClickListener mListener;
+
+        GestureDetector mGestureDetector;
+
+        public RecyclerItemClickListener(Context context, AccountListRecyclerAdapter
+                .OnItemClickListener listener) {
+            mListener = listener;
+            mGestureDetector = new GestureDetector(context,
+                    new GestureDetector.SimpleOnGestureListener() {
+                        @Override
+                        public boolean onSingleTapUp(MotionEvent e) {
+                            return Boolean.TRUE;
+                        }
+                    });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView view, MotionEvent e) {
+            View childView = view.findChildViewUnder(e.getX(), e.getY());
+            if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
+                mListener.onItemClick(childView, view.getChildPosition(childView));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView view, MotionEvent motionEvent) {
+        }
     }
 
     public void onShowUndoBar() {
