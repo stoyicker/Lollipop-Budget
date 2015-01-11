@@ -16,4 +16,4 @@ before_install:
 # Signature stub end
     - chmod +x ./gradlew
 script:
-    - ./gradlew clean assembleStandardTravis
+    - ./gradlew clean build

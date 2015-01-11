@@ -38,4 +38,8 @@
     <issue id="RelativeOverlap">
         <ignore path="src/main/res/layout/dialog_fragment_movement_detail.xml"/>
     </issue>
+    <issue id="IconLocation">
+        <ignore path="src/main/res/drawable/button_focused.9.png"/>
+        <ignore path="src/main/res/drawable/button_pressed.9.png"/>
+    </issue>
 </lint>
