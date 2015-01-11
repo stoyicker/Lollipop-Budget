@@ -13,7 +13,7 @@
   ~ along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<org.jorge.lbudget.ui.utils.undobar.UndoBarView xmlns:android="http://schemas.android.com/apk/res/android"
+<org.jorge.lbudget.ui.util.undobar.UndoBarView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/undoBar"
     style="@style/UndoBarRootStyle">
 
@@ -30,4 +30,4 @@
         <TextView style="@style/UndoBarButtonStyle" />
     </LinearLayout>
 
-</org.jorge.lbudget.ui.utils.undobar.UndoBarView>
+</org.jorge.lbudget.ui.util.undobar.UndoBarView>

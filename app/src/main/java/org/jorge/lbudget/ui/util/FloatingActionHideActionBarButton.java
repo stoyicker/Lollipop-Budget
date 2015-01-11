@@ -1,4 +1,4 @@
-package org.jorge.lbudget.ui.utils;
+package org.jorge.lbudget.ui.util;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -363,7 +363,7 @@ public class FloatingActionHideActionBarButton extends ImageButton {
     }
 
     /**
-     * A {@link android.os.Parcelable} representing the {@link org.jorge.lbudget.ui.utils
+     * A {@link android.os.Parcelable} representing the {@link org.jorge.lbudget.ui.util
      * .FloatingActionHideActionBarButton}'s
      * state.
      */

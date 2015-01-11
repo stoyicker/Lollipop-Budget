@@ -22,10 +22,10 @@ import android.os.AsyncTask;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.net.LBackupAgent;
-import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
-import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
-import org.jorge.lbudget.logic.controllers.AccountManager;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
+import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
+import org.jorge.lbudget.controller.AccountManager;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.ArrayList;
 import java.util.List;

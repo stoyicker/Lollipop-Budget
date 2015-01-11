@@ -11,15 +11,15 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.activities;
+package org.jorge.lbudget.ui.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import org.jorge.lbudget.ui.frags.SettingsPreferenceFragment;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.ui.fragment.SettingsPreferenceFragment;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 public class SettingsPreferenceActivity extends Activity {
     @Override

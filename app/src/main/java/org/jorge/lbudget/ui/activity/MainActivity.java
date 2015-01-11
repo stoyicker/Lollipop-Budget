@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.activities;
+package org.jorge.lbudget.ui.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -28,13 +28,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.ui.frags.AccountListFragment;
-import org.jorge.lbudget.ui.frags.ExpenseGraphFragment;
-import org.jorge.lbudget.ui.frags.MovementListFragment;
-import org.jorge.lbudget.ui.frags.NavigationToolbarFragment;
+import org.jorge.lbudget.ui.fragment.AccountListFragment;
+import org.jorge.lbudget.ui.fragment.ExpenseGraphFragment;
+import org.jorge.lbudget.ui.fragment.MovementListFragment;
+import org.jorge.lbudget.ui.fragment.NavigationToolbarFragment;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarButton;
 import org.jorge.lbudget.ui.navbar.NavigationToolbarRecyclerAdapter;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.ArrayList;
 import java.util.List;

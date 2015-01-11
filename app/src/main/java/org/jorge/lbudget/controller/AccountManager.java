@@ -11,15 +11,15 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.logic.controllers;
+package org.jorge.lbudget.controller;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.jorge.lbudget.io.db.SQLiteDAO;
-import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.List;
 

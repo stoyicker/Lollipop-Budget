@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:name="org.jorge.lbudget.ui.frags.NavigationToolbarFragment"
+        android:name="org.jorge.lbudget.ui.fragment.NavigationToolbarFragment"
         tools:layout="@layout/fragment_navigation_toolbar" />
 
     <android.support.v7.widget.RecyclerView

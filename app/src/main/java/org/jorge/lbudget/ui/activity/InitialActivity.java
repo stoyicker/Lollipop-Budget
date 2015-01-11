@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.activities;
+package org.jorge.lbudget.ui.activity;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,9 +22,9 @@ import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import org.jorge.lbudget.io.db.SQLiteDAO;
 import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.logic.controllers.AccountManager;
-import org.jorge.lbudget.logic.controllers.MovementManager;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.controller.AccountManager;
+import org.jorge.lbudget.controller.MovementManager;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.io.File;
 

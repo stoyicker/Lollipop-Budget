@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.utils;
+package org.jorge.lbudget.util;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -21,8 +21,8 @@ import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.db.SQLiteDAO;
-import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
-import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
+import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
+import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
 
 import java.lang.reflect.Field;
 import java.util.Collections;

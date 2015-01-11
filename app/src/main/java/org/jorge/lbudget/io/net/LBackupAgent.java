@@ -24,7 +24,7 @@ import android.content.Context;
 import android.os.ParcelFileDescriptor;
 
 import org.jorge.lbudget.io.db.SQLiteDAO;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.io.File;
 import java.io.IOException;

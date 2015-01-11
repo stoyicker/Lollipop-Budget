@@ -31,16 +31,16 @@
             android:value="AEdPqrEAAAAIfUZv_HqOv6U1My_aBIVhDMYBSwC8I4vGP8pjWA" />
 
         <activity
-            android:name=".ui.activities.InitialActivity"
+            android:name=".ui.activity.InitialActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.MainActivity" />
+        <activity android:name=".ui.activity.MainActivity" />
         <activity
-            android:name=".ui.activities.SettingsPreferenceActivity"
+            android:name=".ui.activity.SettingsPreferenceActivity"
             android:logo="@drawable/ic_action_settings"
             android:theme="@style/SettingsTheme"
             android:label="@string/action_settings" />

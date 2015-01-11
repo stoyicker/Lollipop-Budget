@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.devutils;
+package org.jorge.lbudget.devutil;
 
 import android.content.Context;
 import android.util.Log;

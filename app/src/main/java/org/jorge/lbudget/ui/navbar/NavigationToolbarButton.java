@@ -17,7 +17,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Button;
 
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 @SuppressWarnings("unused") //Constructors are necessary for instantiation from XML
 public class NavigationToolbarButton extends Button implements NavigationToolbarRecyclerAdapter.NavigationToolbarSelectionRecorder {

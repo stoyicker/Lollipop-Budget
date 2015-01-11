@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.frags;
+package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -26,10 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.logic.adapters.AccountListRecyclerAdapter;
-import org.jorge.lbudget.logic.controllers.AccountManager;
-import org.jorge.lbudget.ui.utils.FloatingActionHideActionBarButton;
-import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
+import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
+import org.jorge.lbudget.controller.AccountManager;
+import org.jorge.lbudget.ui.util.FloatingActionHideActionBarButton;
+import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
 
 public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
 

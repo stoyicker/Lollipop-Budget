@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.frags;
+package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;

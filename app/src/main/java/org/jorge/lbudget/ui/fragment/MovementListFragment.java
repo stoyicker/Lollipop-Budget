@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.frags;
+package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -26,11 +26,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
-import org.jorge.lbudget.logic.controllers.MovementManager;
-import org.jorge.lbudget.ui.utils.FloatingActionHideActionBarButton;
-import org.jorge.lbudget.ui.utils.undobar.UndoBarShowStateListener;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
+import org.jorge.lbudget.controller.MovementManager;
+import org.jorge.lbudget.ui.util.FloatingActionHideActionBarButton;
+import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 public class MovementListFragment extends Fragment implements UndoBarShowStateListener,
         MovementListRecyclerAdapter.MovementImageClickListener, MovementListRecyclerAdapter

@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.frags;
+package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,8 +31,8 @@ import android.widget.ImageView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.io.File;
 

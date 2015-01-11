@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.frags;
+package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -36,18 +36,18 @@ import android.widget.TextView;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter;
-import org.jorge.lbudget.logic.controllers.AccountManager;
-import org.jorge.lbudget.logic.controllers.MovementManager;
-import org.jorge.lbudget.utils.LBudgetTimeUtils;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
+import org.jorge.lbudget.controller.AccountManager;
+import org.jorge.lbudget.controller.MovementManager;
+import org.jorge.lbudget.util.LBudgetTimeUtils;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.io.File;
 import java.util.StringTokenizer;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-import static org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter
+import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter
         .getMovementColorFromPreferences;
 
 public class MovementDetailDialogFragment extends DialogFragment {
@@ -63,9 +63,9 @@ public class MovementDetailDialogFragment extends DialogFragment {
     /**
      * To be used when editing a movement.
      *
-     * @param movement {@link org.jorge.lbudget.logic.adapters.MovementListRecyclerAdapter
+     * @param movement {@link org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter
      * .MovementDataModel} The movement to edit.
-     * @return {@link org.jorge.lbudget.ui.frags.MovementDetailDialogFragment} The ready-to-use
+     * @return {@link org.jorge.lbudget.ui.fragment.MovementDetailDialogFragment} The ready-to-use
      * fragment
      */
     public static MovementDetailDialogFragment newInstance(Context context,

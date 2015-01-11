@@ -22,7 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.utils.LBudgetUtils;
+import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.List;
 
