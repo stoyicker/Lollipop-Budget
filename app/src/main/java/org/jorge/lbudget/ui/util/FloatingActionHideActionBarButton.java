@@ -11,8 +11,6 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.OvalShape;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Message;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorRes;
@@ -24,8 +22,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.Interpolator;
 import android.widget.ImageButton;
 
 import org.jorge.lbudget.R;
@@ -60,8 +56,7 @@ public class FloatingActionHideActionBarButton extends ImageButton {
     private boolean mShadow;
     private int mType;
 
-    private final ScrollSettleHandler mScrollSettleHandler = new ScrollSettleHandler();
-    private final Interpolator mInterpolator = new AccelerateDecelerateInterpolator();
+    private final ScrollSettleHandler mScrollSettleHandler;
     private Activity mActivity;
     private Boolean mActionBarIsShowingOrShown = Boolean.TRUE;
     private final Object mActionBarLock = new Object();
@@ -130,11 +125,13 @@ public class FloatingActionHideActionBarButton extends ImageButton {
     public FloatingActionHideActionBarButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
+        mScrollSettleHandler = new ScrollSettleHandler(this);
     }
 
     public FloatingActionHideActionBarButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
+        mScrollSettleHandler = new ScrollSettleHandler(this);
     }
 
     @Override
@@ -263,27 +260,6 @@ public class FloatingActionHideActionBarButton extends ImageButton {
             marginBottom = ((ViewGroup.MarginLayoutParams) layoutParams).bottomMargin;
         }
         return marginBottom;
-    }
-
-    private class ScrollSettleHandler extends Handler {
-        private static final int TRANSLATE_DURATION_MILLIS = 200;
-
-        private int mSettledScrollY;
-
-        public void onScroll(int scrollY) {
-            if (mSettledScrollY != scrollY) {
-                mSettledScrollY = scrollY;
-                removeMessages(0);
-                sendEmptyMessage(0);
-            }
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            animate().setInterpolator(mInterpolator)
-                    .setDuration(TRANSLATE_DURATION_MILLIS)
-                    .translationY(mSettledScrollY);
-        }
     }
 
     public void setColorNormal(int color) {

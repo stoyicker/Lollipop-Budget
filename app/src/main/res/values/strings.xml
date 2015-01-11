@@ -12,251 +12,251 @@
   -->
 
 <resources>
-    <string name="app_name">Lollipop Budget</string>
-    <string name="pref_key_movement_income_color">preference_movement_income_color</string>
-    <string name="pref_key_movement_expense_color">preference_movement_expense_color</string>
-    <string name="pref_key_currency_code">preference_currency_code</string>
-    <string name="pref_key_export_csv">preference_export_csv</string>
-    <string name="symbol_file_separator">/</string>
-    <string name="symbol_parent_directory">..</string>
-    <string name="database_directory_name">databases</string>
-    <string name="picture_folder_name">pictures</string>
-    <string name="camera_image_extension">.jpeg</string>
-    <string name="db_name">LBudget_DB</string>
-    <string name="movement_color_red_identifier">red</string>
-    <string name="movement_color_green_identifier">green</string>
-    <string name="movement_color_blue_identifier">blue</string>
-    <string name="amount_placeholder">{MONEYPLACEHOLDER}</string>
-    <string name="currency_0">ADP</string>
-    <string name="currency_1">AED</string>
-    <string name="currency_2">AFA</string>
-    <string name="currency_3">AFN</string>
-    <string name="currency_4">ALK</string>
-    <string name="currency_5">ALL</string>
-    <string name="currency_6">ANG</string>
-    <string name="currency_7">AOA</string>
-    <string name="currency_8">AOK</string>
-    <string name="currency_9">AON</string>
-    <string name="currency_10">AOR</string>
-    <string name="currency_11">ARP</string>
-    <string name="currency_12">ARS</string>
-    <string name="currency_13">ARY</string>
-    <string name="currency_14">ATS</string>
-    <string name="currency_15">AUD</string>
-    <string name="currency_16">AWG</string>
-    <string name="currency_17">AYM</string>
-    <string name="currency_18">AZN</string>
-    <string name="currency_19">BAD</string>
-    <string name="currency_20">BAM</string>
-    <string name="currency_21">BBD</string>
-    <string name="currency_22">BEC</string>
-    <string name="currency_23">BEF</string>
-    <string name="currency_24">BGJ</string>
-    <string name="currency_25">BGK</string>
-    <string name="currency_26">BGL</string>
-    <string name="currency_27">BGN</string>
-    <string name="currency_28">BHD</string>
-    <string name="currency_29">BIF</string>
-    <string name="currency_30">BOB</string>
-    <string name="currency_31">BOP</string>
-    <string name="currency_32">BOV</string>
-    <string name="currency_33">BRE</string>
-    <string name="currency_34">BRL</string>
-    <string name="currency_35">BRN</string>
-    <string name="currency_36">BSD</string>
-    <string name="currency_37">BTN</string>
-    <string name="currency_38">BUK</string>
-    <string name="currency_39">BYB</string>
-    <string name="currency_40">BYR</string>
-    <string name="currency_41">BZD</string>
-    <string name="currency_42">CAD</string>
-    <string name="currency_43">CHC</string>
-    <string name="currency_44">CHE</string>
-    <string name="currency_45">CHF</string>
-    <string name="currency_46">CHW</string>
-    <string name="currency_47">CLP</string>
-    <string name="currency_48">CNX</string>
-    <string name="currency_49">COU</string>
-    <string name="currency_50">CSD</string>
-    <string name="currency_51">CSK</string>
-    <string name="currency_52">CUP</string>
-    <string name="currency_53">DDM</string>
-    <string name="currency_54">DKK</string>
-    <string name="currency_55">DOP</string>
-    <string name="currency_56">DZD</string>
-    <string name="currency_57">ERN</string>
-    <string name="currency_58">ESA</string>
-    <string name="currency_59">ESB</string>
-    <string name="currency_60">ESP</string>
-    <string name="currency_61">ETB</string>
-    <string name="currency_62">EUR</string>
-    <string name="currency_63">FIM</string>
-    <string name="currency_64">FJD</string>
-    <string name="currency_65">FKP</string>
-    <string name="currency_66">FRF</string>
-    <string name="currency_67">GBP</string>
-    <string name="currency_68">GEL</string>
-    <string name="currency_69">GHS</string>
-    <string name="currency_70">GIP</string>
-    <string name="currency_71">GMD</string>
-    <string name="currency_72">GNE</string>
-    <string name="currency_73">GQE</string>
-    <string name="currency_74">GWP</string>
-    <string name="currency_75">HKD</string>
-    <string name="currency_76">HUF</string>
-    <string name="currency_77">IDR</string>
-    <string name="currency_78">IEP</string>
-    <string name="currency_79">ILP</string>
-    <string name="currency_80">ILS</string>
-    <string name="currency_81">INR</string>
-    <string name="currency_82">IQD</string>
-    <string name="currency_83">ISJ</string>
-    <string name="currency_84">ITL</string>
-    <string name="currency_85">JMD</string>
-    <string name="currency_86">JOD</string>
-    <string name="currency_87">JPY</string>
-    <string name="currency_88">KGS</string>
-    <string name="currency_89">KYD</string>
-    <string name="currency_90">LAJ</string>
-    <string name="currency_91">LAK</string>
-    <string name="currency_92">LKR</string>
-    <string name="currency_93">LRD</string>
-    <string name="currency_94">LSL</string>
-    <string name="currency_95">LSM</string>
-    <string name="currency_96">LTT</string>
-    <string name="currency_97">LUL</string>
-    <string name="currency_98">LVL</string>
-    <string name="currency_99">MAD</string>
-    <string name="currency_100">MAF</string>
-    <string name="currency_101">MDL</string>
-    <string name="currency_102">MGA</string>
-    <string name="currency_103">MKD</string>
-    <string name="currency_104">MLF</string>
-    <string name="currency_105">MMK</string>
-    <string name="currency_106">MOP</string>
-    <string name="currency_107">MRO</string>
-    <string name="currency_108">MTL</string>
-    <string name="currency_109">MTP</string>
-    <string name="currency_110">MUR</string>
-    <string name="currency_111">MVQ</string>
-    <string name="currency_112">MXP</string>
-    <string name="currency_113">MXV</string>
-    <string name="currency_114">MYR</string>
-    <string name="currency_115">MZE</string>
-    <string name="currency_116">MZM</string>
-    <string name="currency_117">NGN</string>
-    <string name="currency_118">NIC</string>
-    <string name="currency_119">NIO</string>
-    <string name="currency_120">NOK</string>
-    <string name="currency_121">NZD</string>
-    <string name="currency_122">OMR</string>
-    <string name="currency_123">PAB</string>
-    <string name="currency_124">PGK</string>
-    <string name="currency_125">PHP</string>
-    <string name="currency_126">PKR</string>
-    <string name="currency_127">PLN</string>
-    <string name="currency_128">PLZ</string>
-    <string name="currency_129">PTE</string>
-    <string name="currency_130">PYG</string>
-    <string name="currency_131">QAR</string>
-    <string name="currency_132">RHD</string>
-    <string name="currency_133">ROK</string>
-    <string name="currency_134">ROL</string>
-    <string name="currency_135">RON</string>
-    <string name="currency_136">RSD</string>
-    <string name="currency_137">RUB</string>
-    <string name="currency_138">RUR</string>
-    <string name="currency_139">RWF</string>
-    <string name="currency_140">SAR</string>
-    <string name="currency_141">SBD</string>
-    <string name="currency_142">SCR</string>
-    <string name="currency_143">SDD</string>
-    <string name="currency_144">SDP</string>
-    <string name="currency_145">SGD</string>
-    <string name="currency_146">SHP</string>
-    <string name="currency_147">SIT</string>
-    <string name="currency_148">SKK</string>
-    <string name="currency_149">SLL</string>
-    <string name="currency_150">SOS</string>
-    <string name="currency_151">SRD</string>
-    <string name="currency_152">SRG</string>
-    <string name="currency_153">SSP</string>
-    <string name="currency_154">STD</string>
-    <string name="currency_155">SUR</string>
-    <string name="currency_156">SVC</string>
-    <string name="currency_157">SYP</string>
-    <string name="currency_158">SZL</string>
-    <string name="currency_159">THB</string>
-    <string name="currency_160">TJR</string>
-    <string name="currency_161">TJS</string>
-    <string name="currency_162">TMM</string>
-    <string name="currency_163">TMT</string>
-    <string name="currency_164">TND</string>
-    <string name="currency_165">TOP</string>
-    <string name="currency_166">TPE</string>
-    <string name="currency_167">TRL</string>
-    <string name="currency_168">TRY</string>
-    <string name="currency_169">UAK</string>
-    <string name="currency_170">UGW</string>
-    <string name="currency_171">UGX</string>
-    <string name="currency_172">USD</string>
-    <string name="currency_173">USN</string>
-    <string name="currency_174">USS</string>
-    <string name="currency_175">UYI</string>
-    <string name="currency_176">UYN</string>
-    <string name="currency_177">UYP</string>
-    <string name="currency_178">UYU</string>
-    <string name="currency_179">UZS</string>
-    <string name="currency_180">VEB</string>
-    <string name="currency_181">VEF</string>
-    <string name="currency_182">VNC</string>
-    <string name="currency_183">VND</string>
-    <string name="currency_184">XAF</string>
-    <string name="currency_185">XAU</string>
-    <string name="currency_186">XBA</string>
-    <string name="currency_187">XBB</string>
-    <string name="currency_188">XBC</string>
-    <string name="currency_189">XBD</string>
-    <string name="currency_190">XCD</string>
-    <string name="currency_191">XEU</string>
-    <string name="currency_192">XFO</string>
-    <string name="currency_193">XFU</string>
-    <string name="currency_194">XOF</string>
-    <string name="currency_195">XPD</string>
-    <string name="currency_196">XPF</string>
-    <string name="currency_197">XRE</string>
-    <string name="currency_198">XSU</string>
-    <string name="currency_199">XXX</string>
-    <string name="currency_200">YDD</string>
-    <string name="currency_201">YER</string>
-    <string name="currency_202">YUD</string>
-    <string name="currency_203">YUM</string>
-    <string name="currency_204">YUN</string>
-    <string name="currency_205">ZAL</string>
-    <string name="currency_206">ZAR</string>
-    <string name="currency_207">ZMK</string>
-    <string name="currency_208">ZRN</string>
-    <string name="currency_209">ZRZ</string>
-    <string name="currency_210">ZWC</string>
-    <string name="currency_211">ZWD</string>
-    <string name="currency_212">ZWN</string>
-    <string name="currency_213">ZWR</string>
-    <string name="accounts_table_name">ACCOUNTS</string>
-    <string name="account_key_id">ACCOUNT_ID</string>
-    <string name="account_key_name">ACCOUNT_NAME</string>
-    <string name="account_key_selected">ACCOUNT_SELECTED</string>
-    <string name="movement_key_id">MOVEMENT_ID</string>
-    <string name="movement_key_title">MOVEMENT_TITLE</string>
-    <string name="movement_key_amount">MOVEMENT_AMOUNT</string>
-    <string name="movement_key_epoch">MOVEMENT_EPOCH</string>
-    <string name="account_table_name_prefix">ACCOUNT_</string>
-    <string name="old_image_name_appendix">-old</string>
-    <string name="new_movement_dialog_name">NEW_MOVEMENT_DIALOG</string>
-    <string name="edit_movement_dialog_name">EDIT_MOVEMENT_DIALOG</string>
-    <string name="movement_image_dialog_name">MOVEMENT_IMAGE_DIALOG</string>
-    <string name="amount_numeric_none">0,00</string>
-    <string name="iso_8601_date_format">yyyy-MM-dd</string>
-    <string name="exported_file_name">lbudget.csv</string>
+    <string name="app_name" translatable="false">Lollipop Budget</string>
+    <string name="pref_key_movement_income_color" translatable="false">preference_movement_income_color</string>
+    <string name="pref_key_movement_expense_color" translatable="false">preference_movement_expense_color</string>
+    <string name="pref_key_currency_code" translatable="false">preference_currency_code</string>
+    <string name="pref_key_export_csv" translatable="false">preference_export_csv</string>
+    <string name="symbol_file_separator" translatable="false">/</string>
+    <string name="symbol_parent_directory" translatable="false">..</string>
+    <string name="database_directory_name" translatable="false">databases</string>
+    <string name="picture_folder_name" translatable="false">pictures</string>
+    <string name="camera_image_extension" translatable="false">.jpeg</string>
+    <string name="db_name" translatable="false">LBudget_DB</string>
+    <string name="movement_color_red_identifier" translatable="false">red</string>
+    <string name="movement_color_green_identifier" translatable="false">green</string>
+    <string name="movement_color_blue_identifier" translatable="false">blue</string>
+    <string name="amount_placeholder" translatable="false">{MONEYPLACEHOLDER}</string>
+    <string name="currency_0" translatable="false">ADP</string>
+    <string name="currency_1" translatable="false">AED</string>
+    <string name="currency_2" translatable="false">AFA</string>
+    <string name="currency_3" translatable="false">AFN</string>
+    <string name="currency_4" translatable="false">ALK</string>
+    <string name="currency_5" translatable="false">ALL</string>
+    <string name="currency_6" translatable="false">ANG</string>
+    <string name="currency_7" translatable="false">AOA</string>
+    <string name="currency_8" translatable="false">AOK</string>
+    <string name="currency_9" translatable="false">AON</string>
+    <string name="currency_10" translatable="false">AOR</string>
+    <string name="currency_11" translatable="false">ARP</string>
+    <string name="currency_12" translatable="false">ARS</string>
+    <string name="currency_13" translatable="false">ARY</string>
+    <string name="currency_14" translatable="false">ATS</string>
+    <string name="currency_15" translatable="false">AUD</string>
+    <string name="currency_16" translatable="false">AWG</string>
+    <string name="currency_17" translatable="false">AYM</string>
+    <string name="currency_18" translatable="false">AZN</string>
+    <string name="currency_19" translatable="false">BAD</string>
+    <string name="currency_20" translatable="false">BAM</string>
+    <string name="currency_21" translatable="false">BBD</string>
+    <string name="currency_22" translatable="false">BEC</string>
+    <string name="currency_23" translatable="false">BEF</string>
+    <string name="currency_24" translatable="false">BGJ</string>
+    <string name="currency_25" translatable="false">BGK</string>
+    <string name="currency_26" translatable="false">BGL</string>
+    <string name="currency_27" translatable="false">BGN</string>
+    <string name="currency_28" translatable="false">BHD</string>
+    <string name="currency_29" translatable="false">BIF</string>
+    <string name="currency_30" translatable="false">BOB</string>
+    <string name="currency_31" translatable="false">BOP</string>
+    <string name="currency_32" translatable="false">BOV</string>
+    <string name="currency_33" translatable="false">BRE</string>
+    <string name="currency_34" translatable="false">BRL</string>
+    <string name="currency_35" translatable="false">BRN</string>
+    <string name="currency_36" translatable="false">BSD</string>
+    <string name="currency_37" translatable="false">BTN</string>
+    <string name="currency_38" translatable="false">BUK</string>
+    <string name="currency_39" translatable="false">BYB</string>
+    <string name="currency_40" translatable="false">BYR</string>
+    <string name="currency_41" translatable="false">BZD</string>
+    <string name="currency_42" translatable="false">CAD</string>
+    <string name="currency_43" translatable="false">CHC</string>
+    <string name="currency_44" translatable="false">CHE</string>
+    <string name="currency_45" translatable="false">CHF</string>
+    <string name="currency_46" translatable="false">CHW</string>
+    <string name="currency_47" translatable="false">CLP</string>
+    <string name="currency_48" translatable="false">CNX</string>
+    <string name="currency_49" translatable="false">COU</string>
+    <string name="currency_50" translatable="false">CSD</string>
+    <string name="currency_51" translatable="false">CSK</string>
+    <string name="currency_52" translatable="false">CUP</string>
+    <string name="currency_53" translatable="false">DDM</string>
+    <string name="currency_54" translatable="false">DKK</string>
+    <string name="currency_55" translatable="false">DOP</string>
+    <string name="currency_56" translatable="false">DZD</string>
+    <string name="currency_57" translatable="false">ERN</string>
+    <string name="currency_58" translatable="false">ESA</string>
+    <string name="currency_59" translatable="false">ESB</string>
+    <string name="currency_60" translatable="false">ESP</string>
+    <string name="currency_61" translatable="false">ETB</string>
+    <string name="currency_62" translatable="false">EUR</string>
+    <string name="currency_63" translatable="false">FIM</string>
+    <string name="currency_64" translatable="false">FJD</string>
+    <string name="currency_65" translatable="false">FKP</string>
+    <string name="currency_66" translatable="false">FRF</string>
+    <string name="currency_67" translatable="false">GBP</string>
+    <string name="currency_68" translatable="false">GEL</string>
+    <string name="currency_69" translatable="false">GHS</string>
+    <string name="currency_70" translatable="false">GIP</string>
+    <string name="currency_71" translatable="false">GMD</string>
+    <string name="currency_72" translatable="false">GNE</string>
+    <string name="currency_73" translatable="false">GQE</string>
+    <string name="currency_74" translatable="false">GWP</string>
+    <string name="currency_75" translatable="false">HKD</string>
+    <string name="currency_76" translatable="false">HUF</string>
+    <string name="currency_77" translatable="false">IDR</string>
+    <string name="currency_78" translatable="false">IEP</string>
+    <string name="currency_79" translatable="false">ILP</string>
+    <string name="currency_80" translatable="false">ILS</string>
+    <string name="currency_81" translatable="false">INR</string>
+    <string name="currency_82" translatable="false">IQD</string>
+    <string name="currency_83" translatable="false">ISJ</string>
+    <string name="currency_84" translatable="false">ITL</string>
+    <string name="currency_85" translatable="false">JMD</string>
+    <string name="currency_86" translatable="false">JOD</string>
+    <string name="currency_87" translatable="false">JPY</string>
+    <string name="currency_88" translatable="false">KGS</string>
+    <string name="currency_89" translatable="false">KYD</string>
+    <string name="currency_90" translatable="false">LAJ</string>
+    <string name="currency_91" translatable="false">LAK</string>
+    <string name="currency_92" translatable="false">LKR</string>
+    <string name="currency_93" translatable="false">LRD</string>
+    <string name="currency_94" translatable="false">LSL</string>
+    <string name="currency_95" translatable="false">LSM</string>
+    <string name="currency_96" translatable="false">LTT</string>
+    <string name="currency_97" translatable="false">LUL</string>
+    <string name="currency_98" translatable="false">LVL</string>
+    <string name="currency_99" translatable="false">MAD</string>
+    <string name="currency_100" translatable="false">MAF</string>
+    <string name="currency_101" translatable="false">MDL</string>
+    <string name="currency_102" translatable="false">MGA</string>
+    <string name="currency_103" translatable="false">MKD</string>
+    <string name="currency_104" translatable="false">MLF</string>
+    <string name="currency_105" translatable="false">MMK</string>
+    <string name="currency_106" translatable="false">MOP</string>
+    <string name="currency_107" translatable="false">MRO</string>
+    <string name="currency_108" translatable="false">MTL</string>
+    <string name="currency_109" translatable="false">MTP</string>
+    <string name="currency_110" translatable="false">MUR</string>
+    <string name="currency_111" translatable="false">MVQ</string>
+    <string name="currency_112" translatable="false">MXP</string>
+    <string name="currency_113" translatable="false">MXV</string>
+    <string name="currency_114" translatable="false">MYR</string>
+    <string name="currency_115" translatable="false">MZE</string>
+    <string name="currency_116" translatable="false">MZM</string>
+    <string name="currency_117" translatable="false">NGN</string>
+    <string name="currency_118" translatable="false">NIC</string>
+    <string name="currency_119" translatable="false">NIO</string>
+    <string name="currency_120" translatable="false">NOK</string>
+    <string name="currency_121" translatable="false">NZD</string>
+    <string name="currency_122" translatable="false">OMR</string>
+    <string name="currency_123" translatable="false">PAB</string>
+    <string name="currency_124" translatable="false">PGK</string>
+    <string name="currency_125" translatable="false">PHP</string>
+    <string name="currency_126" translatable="false">PKR</string>
+    <string name="currency_127" translatable="false">PLN</string>
+    <string name="currency_128" translatable="false">PLZ</string>
+    <string name="currency_129" translatable="false">PTE</string>
+    <string name="currency_130" translatable="false">PYG</string>
+    <string name="currency_131" translatable="false">QAR</string>
+    <string name="currency_132" translatable="false">RHD</string>
+    <string name="currency_133" translatable="false">ROK</string>
+    <string name="currency_134" translatable="false">ROL</string>
+    <string name="currency_135" translatable="false">RON</string>
+    <string name="currency_136" translatable="false">RSD</string>
+    <string name="currency_137" translatable="false">RUB</string>
+    <string name="currency_138" translatable="false">RUR</string>
+    <string name="currency_139" translatable="false">RWF</string>
+    <string name="currency_140" translatable="false">SAR</string>
+    <string name="currency_141" translatable="false">SBD</string>
+    <string name="currency_142" translatable="false">SCR</string>
+    <string name="currency_143" translatable="false">SDD</string>
+    <string name="currency_144" translatable="false">SDP</string>
+    <string name="currency_145" translatable="false">SGD</string>
+    <string name="currency_146" translatable="false">SHP</string>
+    <string name="currency_147" translatable="false">SIT</string>
+    <string name="currency_148" translatable="false">SKK</string>
+    <string name="currency_149" translatable="false">SLL</string>
+    <string name="currency_150" translatable="false">SOS</string>
+    <string name="currency_151" translatable="false">SRD</string>
+    <string name="currency_152" translatable="false">SRG</string>
+    <string name="currency_153" translatable="false">SSP</string>
+    <string name="currency_154" translatable="false">STD</string>
+    <string name="currency_155" translatable="false">SUR</string>
+    <string name="currency_156" translatable="false">SVC</string>
+    <string name="currency_157" translatable="false">SYP</string>
+    <string name="currency_158" translatable="false">SZL</string>
+    <string name="currency_159" translatable="false">THB</string>
+    <string name="currency_160" translatable="false">TJR</string>
+    <string name="currency_161" translatable="false">TJS</string>
+    <string name="currency_162" translatable="false">TMM</string>
+    <string name="currency_163" translatable="false">TMT</string>
+    <string name="currency_164" translatable="false">TND</string>
+    <string name="currency_165" translatable="false">TOP</string>
+    <string name="currency_166" translatable="false">TPE</string>
+    <string name="currency_167" translatable="false">TRL</string>
+    <string name="currency_168" translatable="false">TRY</string>
+    <string name="currency_169" translatable="false">UAK</string>
+    <string name="currency_170" translatable="false">UGW</string>
+    <string name="currency_171" translatable="false">UGX</string>
+    <string name="currency_172" translatable="false">USD</string>
+    <string name="currency_173" translatable="false">USN</string>
+    <string name="currency_174" translatable="false">USS</string>
+    <string name="currency_175" translatable="false">UYI</string>
+    <string name="currency_176" translatable="false">UYN</string>
+    <string name="currency_177" translatable="false">UYP</string>
+    <string name="currency_178" translatable="false">UYU</string>
+    <string name="currency_179" translatable="false">UZS</string>
+    <string name="currency_180" translatable="false">VEB</string>
+    <string name="currency_181" translatable="false">VEF</string>
+    <string name="currency_182" translatable="false">VNC</string>
+    <string name="currency_183" translatable="false">VND</string>
+    <string name="currency_184" translatable="false">XAF</string>
+    <string name="currency_185" translatable="false">XAU</string>
+    <string name="currency_186" translatable="false">XBA</string>
+    <string name="currency_187" translatable="false">XBB</string>
+    <string name="currency_188" translatable="false">XBC</string>
+    <string name="currency_189" translatable="false">XBD</string>
+    <string name="currency_190" translatable="false">XCD</string>
+    <string name="currency_191" translatable="false">XEU</string>
+    <string name="currency_192" translatable="false">XFO</string>
+    <string name="currency_193" translatable="false">XFU</string>
+    <string name="currency_194" translatable="false">XOF</string>
+    <string name="currency_195" translatable="false">XPD</string>
+    <string name="currency_196" translatable="false">XPF</string>
+    <string name="currency_197" translatable="false">XRE</string>
+    <string name="currency_198" translatable="false">XSU</string>
+    <string name="currency_199" translatable="false">XXX</string>
+    <string name="currency_200" translatable="false">YDD</string>
+    <string name="currency_201" translatable="false">YER</string>
+    <string name="currency_202" translatable="false">YUD</string>
+    <string name="currency_203" translatable="false">YUM</string>
+    <string name="currency_204" translatable="false">YUN</string>
+    <string name="currency_205" translatable="false">ZAL</string>
+    <string name="currency_206" translatable="false">ZAR</string>
+    <string name="currency_207" translatable="false">ZMK</string>
+    <string name="currency_208" translatable="false">ZRN</string>
+    <string name="currency_209" translatable="false">ZRZ</string>
+    <string name="currency_210" translatable="false">ZWC</string>
+    <string name="currency_211" translatable="false">ZWD</string>
+    <string name="currency_212" translatable="false">ZWN</string>
+    <string name="currency_213" translatable="false">ZWR</string>
+    <string name="accounts_table_name" translatable="false">ACCOUNTS</string>
+    <string name="account_key_id" translatable="false">ACCOUNT_ID</string>
+    <string name="account_key_name" translatable="false">ACCOUNT_NAME</string>
+    <string name="account_key_selected" translatable="false">ACCOUNT_SELECTED</string>
+    <string name="movement_key_id" translatable="false">MOVEMENT_ID</string>
+    <string name="movement_key_title" translatable="false">MOVEMENT_TITLE</string>
+    <string name="movement_key_amount" translatable="false">MOVEMENT_AMOUNT</string>
+    <string name="movement_key_epoch" translatable="false">MOVEMENT_EPOCH</string>
+    <string name="account_table_name_prefix" translatable="false">ACCOUNT_</string>
+    <string name="old_image_name_appendix" translatable="false">-old</string>
+    <string name="new_movement_dialog_name" translatable="false">NEW_MOVEMENT_DIALOG</string>
+    <string name="edit_movement_dialog_name" translatable="false">EDIT_MOVEMENT_DIALOG</string>
+    <string name="movement_image_dialog_name" translatable="false">MOVEMENT_IMAGE_DIALOG</string>
+    <string name="amount_numeric_none" translatable="false">0,00</string>
+    <string name="iso_8601_date_format" translatable="false">yyyy-MM-dd</string>
+    <string name="exported_file_name" translatable="false">lbudget.csv</string>
     <string name="default_account_name">Default account</string>
     <string name="navigation_menu_item0">Movements</string>
     <string name="navigation_menu_item1">Expense graph</string>

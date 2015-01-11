@@ -12,10 +12,10 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.jorge.lbudget">
+          package="org.jorge.lbudget">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -25,29 +25,30 @@
         android:logo="@drawable/ic_launcher"
         android:launchMode="singleTop"
         android:theme="@style/AppTheme"
-        android:configChanges="orientation|screenSize|keyboardHidden">
+        android:configChanges="orientation|screenSize|keyboardHidden"
+        android:supportsRtl="true">
         <meta-data
             android:name="com.google.android.backup.api_key"
-            android:value="AEdPqrEAAAAIfUZv_HqOv6U1My_aBIVhDMYBSwC8I4vGP8pjWA" />
+            android:value="AEdPqrEAAAAIfUZv_HqOv6U1My_aBIVhDMYBSwC8I4vGP8pjWA"/>
 
         <activity
             android:name=".ui.activity.InitialActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.MainActivity"/>
         <activity
             android:name=".ui.activity.SettingsPreferenceActivity"
             android:logo="@drawable/ic_action_settings"
             android:theme="@style/SettingsTheme"
-            android:label="@string/action_settings" />
+            android:label="@string/action_settings"/>
 
         <meta-data
             android:name="com.crashlytics.ApiKey"
-            android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c" />
+            android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c"/>
     </application>
 
 </manifest>

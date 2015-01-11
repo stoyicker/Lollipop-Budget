@@ -14,34 +14,28 @@
 <lint>
     <!-- Crashlytics generates a wrong dash, who cares -->
     <issue id="TypographyDashes">
-        <ignore path="src/main/res/values/com_crashlytics_export_strings.xml" />
+        <ignore path="src/main/res/values/com_crashlytics_export_strings.xml"/>
     </issue>
-    <!-- Lint doesn't recognize Gradle min API declaration -->
-    <issue id="InlinedApi" severity="ignore" />
-    <issue id="NewApi" severity="ignore" />
-
-    <!-- Text that does not have to be translated -->
-    <issue id="MissingTranslation">
-        <ignore path="src/main/res/values/strings.xml" />
-    </issue>
-    <issue id="ExtraTranslation" severity="ignore" />
     <!-- Misleading accessibility warning -->
-    <issue id="ClickableViewAccessibility" severity="ignore" />
+    <issue id="ClickableViewAccessibility" severity="ignore"/>
     <!-- Obvious -->
-    <issue id="Override" severity="ignore" />
+    <issue id="Override" severity="ignore"/>
     <!-- Things loaded through reflection -->
-    <issue id="UnusedResources" severity="ignore" />
+    <issue id="UnusedResources" severity="ignore"/>
     <!-- It's fine for the dialogs -->
     <issue id="InflateParams">
-        <ignore path="src/main/java/org/jorge/lbudget/ui/frags/MovementDetailDialogFragment.java" />
-        <ignore path="src/main/java/org/jorge/lbudget/ui/frags/MovementImageDialogFragment.java" />
+        <ignore path="src/main/java/org/jorge/lbudget/ui/frags/MovementDetailDialogFragment.java"/>
+        <ignore path="src/main/java/org/jorge/lbudget/ui/frags/MovementImageDialogFragment.java"/>
     </issue>
     <!-- Needs to be non-static -->
     <issue id="HandlerLeak">
-        <ignore path="src/main/java/org/jorge/lbudget/ui/utils/FloatingActionButton.java" />
+        <ignore path="src/main/java/org/jorge/lbudget/ui/utils/FloatingActionButton.java"/>
     </issue>
     <!-- It's fine, the navigation toolbar does require its own color -->
     <issue id="Overdraw">
-        <ignore path="src/main/res/layout/fragment_navigation_toolbar.xml" />
+        <ignore path="src/main/res/layout/fragment_navigation_toolbar.xml"/>
+    </issue>
+    <issue id="RelativeOverlap">
+        <ignore path="src/main/res/layout/dialog_fragment_movement_detail.xml"/>
     </issue>
 </lint>

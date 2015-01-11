@@ -13,6 +13,7 @@
 
 package org.jorge.lbudget.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -35,10 +36,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lbudget.R;
-import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
+import org.jorge.lbudget.io.files.FileManager;
+import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
 import org.jorge.lbudget.util.LBudgetTimeUtils;
 import org.jorge.lbudget.util.LBudgetUtils;
 
@@ -64,7 +65,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
      * To be used when editing a movement.
      *
      * @param movement {@link org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter
-     * .MovementDataModel} The movement to edit.
+     *                 .MovementDataModel} The movement to edit.
      * @return {@link org.jorge.lbudget.ui.fragment.MovementDetailDialogFragment} The ready-to-use
      * fragment
      */
@@ -95,8 +96,9 @@ public class MovementDetailDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout
-                .dialog_fragment_movement_detail, null);
+        @SuppressLint("InflateParams") View view = getActivity().getLayoutInflater().inflate(R
+                .layout
+                .dialog_fragment_movement_detail, null, Boolean.FALSE);
 
         final Bundle args = getArguments();
 
@@ -118,8 +120,8 @@ public class MovementDetailDialogFragment extends DialogFragment {
         if (args == null) {
             imagePath = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils
                     .calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext);
-                    //The data around the object is just random stub to be able to get the image
-                    // path
+            //The data around the object is just random stub to be able to get the image
+            // path
             dialogTitle = LBudgetUtils.getString(mContext, "register_movement_dialog_title");
             onPositiveButtonClickListener =
                     new DialogInterface.OnClickListener() {
@@ -234,16 +236,18 @@ public class MovementDetailDialogFragment extends DialogFragment {
         Dialog ret = new AlertDialog.Builder(getActivity()).setView(view).setTitle(dialogTitle)
                 .setPositiveButton(android.R.string.ok, onPositiveButtonClickListener
                 ).setNegativeButton(android.R.string.cancel,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        FileManager.recursiveDelete(new File(new MovementListRecyclerAdapter
-                                .MovementDataModel(LBudgetUtils.calculateAvailableMovementId(),
-                                "stub", -23, 5).getImagePath(mContext))); //The data around the
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                FileManager.recursiveDelete(new File(new MovementListRecyclerAdapter
+                                        .MovementDataModel(LBudgetUtils
+                                        .calculateAvailableMovementId(),
+                                        "stub", -23, 5).getImagePath(mContext))); //The data
+                                // around the
                                 // object is just random stub to be able to get the image path
-                        MovementDetailDialogFragment.this.dismiss();
-                    }
-                }
-        ).create();
+                                MovementDetailDialogFragment.this.dismiss();
+                            }
+                        }
+                ).create();
 
         ret.setCanceledOnTouchOutside(args != null);
 
@@ -304,7 +308,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         final String path = new MovementListRecyclerAdapter.MovementDataModel(LBudgetUtils
                 .calculateAvailableMovementId(), "stub", -23, 5).getImagePath(mContext); //The
-                // data around the object is just random stub to be able to get the image path
+        // data around the object is just random stub to be able to get the image path
         final File oldPathAsFile = new File(path + LBudgetUtils.getString(mContext,
                 "old_image_name_appendix"));
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == Activity.RESULT_OK) {
