@@ -33,6 +33,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.6"
+            android:ellipsize="marquee"
             android:background="@android:color/transparent"
             style="@style/AccountTextNonSelected"
             android:drawableStart="@drawable/ic_edit_non_selected"

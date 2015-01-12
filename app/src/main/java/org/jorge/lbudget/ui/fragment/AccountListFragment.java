@@ -100,7 +100,7 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
                     new GestureDetector.SimpleOnGestureListener() {
                         @Override
                         public boolean onSingleTapUp(MotionEvent e) {
-                            return Boolean.TRUE;
+                            return Boolean.FALSE;
                         }
                     });
         }
