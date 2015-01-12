@@ -24,11 +24,8 @@ import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,8 +48,6 @@ import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementD
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter
         .ViewHolder> {
-
-    private final float MIN_SWIPE_WIDTH_PIXELS;
     private final Activity mActivity;
     private final RecyclerView mRecyclerView;
     private List<MovementDataModel> items;
@@ -60,7 +55,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final int itemLayout = R.layout.list_item_movement;
     private static int incomeColor, expenseColor;
     private final Context mContext;
-    private static float x = Float.MAX_VALUE;
     private final UndoBarShowStateListener undoBarShowStateListener;
     private final MovementImageClickListener movementImageClickListener;
     private View mEmptyView;
@@ -76,7 +70,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         this.movementImageClickListener = movementImageClickListener;
         mContext = activity.getApplicationContext();
         mActivity = activity;
-        MIN_SWIPE_WIDTH_PIXELS = LBudgetUtils.getInt(mContext, "min_swipe_width_pixels");
         mRecyclerView = recyclerView;
         undoBarShowStateListener = _undoBarShowStateListener;
         mEmptyView = emptyView;
@@ -133,13 +126,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         MovementManager.getInstance().addMovement(item);
         mRecyclerView.smoothScrollToPosition(items.size() - 1);
     }
-//
-//    public MovementDataModel remove(int position) {
-//        MovementDataModel ret = items.remove(position);
-//        notifyItemRemoved(position);
-//        removeMovementFromPersistence(ret);
-//        return ret;
-//    }
 
     private void sendShareIntent(MovementDataModel item) {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -219,82 +205,54 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         notifyDataSetChanged();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnTouchListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView movementNameView, movementAmountView, movementEpochView;
         private final ImageView movementImageView;
         private final View movementTypeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            itemView.setOnClickListener(null);
-            itemView.setOnTouchListener(this);
+//            itemView.setOnClickListener(null); TODO Restore this?
             movementNameView = (TextView) itemView.findViewById(R.id.movement_name_view);
             movementAmountView = (TextView) itemView.findViewById(R.id.movement_amount_view);
             movementImageView = (ImageView) itemView.findViewById(R.id.movement_image_view);
             movementTypeView = itemView.findViewById(R.id.movement_type_view);
             movementEpochView = (TextView) itemView.findViewById(R.id.movement_epoch_view);
         }
+    }
 
-        @Override
-        public boolean onTouch(final View view, MotionEvent motionEvent) {
-            final int pos = getPosition();
-            switch (motionEvent.getAction()) {
-                case MotionEvent.ACTION_UP:
-                    final float diff = motionEvent.getX() - x;
-                    if (x != Float.MAX_VALUE && Math.abs(diff) >= MIN_SWIPE_WIDTH_PIXELS) {
-                        final Animation fadeOut = AnimationUtils.loadAnimation(mContext,
-                                diff < 0 ? R.anim.fade_out_to_left : R.anim.fade_out_to_right);
-                        fadeOut.setAnimationListener(new Animation.AnimationListener() {
-                            @Override
-                            public void onAnimationStart(Animation animation) {
-                            }
-
-                            @Override
-                            public void onAnimationEnd(Animation animation) {
-                                view.setVisibility(View.GONE);
-                                final MovementDataModel movement = items.remove(pos);
-                                notifyItemRemoved(pos);
-                                undoBarShowStateListener.onShowUndoBar();
-                                new UndoBar.Builder(mActivity)
-                                        .setMessage(LBudgetUtils.getString(mContext,
-                                                "movement_list_item_removal"))
-                                        .setListener(new UndoBar.Listener() {
-                                            @Override
-                                            public void onHide() {
-                                                view.setVisibility(View.VISIBLE);
-                                                removeMovementFromPersistence(movement);
-                                                undoBarShowStateListener.onHideUndoBar();
-                                            }
-
-                                            @Override
-                                            public void onUndo(Parcelable token) {
-                                                items.add(pos, movement);
-                                                view.setVisibility(View.VISIBLE);
-                                                notifyItemInserted(pos);
-                                                mRecyclerView.smoothScrollToPosition(pos);
-                                                undoBarShowStateListener.onHideUndoBar();
-                                            }
-                                        })
-                                        .show();
-                            }
-
-                            @Override
-                            public void onAnimationRepeat(Animation animation) {
-                            }
-                        });
-                        view.startAnimation(fadeOut);
-                    } else {
-                        x = Float.MAX_VALUE; //Reset x
-                        mMovementEditRequestListener.onMovementEditRequested(items.get
-                                (getPosition()));
+    public void runDestroy(final View view, final Integer pos) {
+        view.setVisibility(View.GONE);
+        final MovementDataModel movement = items.get(pos);
+        items.remove(movement);
+        notifyItemRemoved(pos);
+        undoBarShowStateListener.onShowUndoBar();
+        new UndoBar.Builder(mActivity)
+                .setMessage(LBudgetUtils.getString(mContext,
+                        "movement_list_item_removal"))
+                .setListener(new UndoBar.Listener() {
+                    @Override
+                    public void onHide() {
+                        view.setVisibility(View.VISIBLE);
+                        removeMovementFromPersistence(movement);
+                        undoBarShowStateListener.onHideUndoBar();
                     }
-                    break;
-                case MotionEvent.ACTION_DOWN:
-                    x = motionEvent.getX();
-                    break;
-            }
-            return false;
-        }
+
+                    @Override
+                    public void onUndo(Parcelable token) {
+                        items.add(pos, movement);
+                        view.setVisibility(View.VISIBLE);
+                        notifyItemInserted(pos);
+                        mRecyclerView.smoothScrollToPosition(pos);
+                        undoBarShowStateListener.onHideUndoBar();
+                    }
+                })
+                .show();
+    }
+
+    public void runClick(Integer position) {
+        mMovementEditRequestListener.onMovementEditRequested(items.get
+                (position));
     }
 
     public static class MovementDataModel {
