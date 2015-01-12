@@ -37,7 +37,6 @@
     <string name="default_account_name">Cuenta por defecto</string>
     <string name="no_movements">¡No hay movimientos!</string>
     <string name="new_account_default_name">Nueva cuenta\u0020</string>
-    <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
     <string name="time_ago_today">hoy</string>
     <string name="time_ago_a_day">ayer</string>
     <string name="time_ago_days">hace {TIMEPLACEHOLDER} días</string>

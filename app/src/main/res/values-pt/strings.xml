@@ -38,8 +38,7 @@
   <string name="default_account_name">Conta padrão</string>
   <string name="no_movements">Nenhum movimento encontrado!</string>
   <string name="new_account_default_name">Nova conta</string>
-  <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
-  <string name="time_ago_today">hoje</string>
+    <string name="time_ago_today">hoje</string>
   <string name="time_ago_a_day">ontem</string>
   <string name="time_ago_days">Há {TIMEPLACEHOLDER} dias atrás</string>
   <string name="time_ago_a_month">há um mês atrás</string>

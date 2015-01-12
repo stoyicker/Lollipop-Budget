@@ -212,7 +212,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
 
         public ViewHolder(View itemView) {
             super(itemView);
-//            itemView.setOnClickListener(null); TODO Restore this?
             movementNameView = (TextView) itemView.findViewById(R.id.movement_name_view);
             movementAmountView = (TextView) itemView.findViewById(R.id.movement_amount_view);
             movementImageView = (ImageView) itemView.findViewById(R.id.movement_image_view);

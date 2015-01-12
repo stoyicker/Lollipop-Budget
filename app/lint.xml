@@ -42,4 +42,7 @@
         <ignore path="src/main/res/drawable/button_focused.9.png"/>
         <ignore path="src/main/res/drawable/button_pressed.9.png"/>
     </issue>
+    <issue id="MissingTranslation">
+        <ignore path="src/main/res/values-el"/>
+    </issue>
 </lint>

@@ -282,7 +282,7 @@
     <string name="account_name_edit_text_hint">Account name</string>
     <string name="no_movements">No movements found!</string>
     <string name="new_account_default_name">New account\u0020</string>
-    <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
+    <string name="time_ago_placeholder" translatable="false">{TIMEPLACEHOLDER}</string>
     <string name="time_ago_today">today</string>
     <string name="time_ago_a_day">yesterday</string>
     <string name="time_ago_days">{TIMEPLACEHOLDER} days ago</string>

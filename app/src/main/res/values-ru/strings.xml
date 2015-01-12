@@ -38,8 +38,7 @@
   <string name="default_account_name">Счёт по умолчанию</string>
   <string name="no_movements">Нет денежных потоков.</string>
   <string name="new_account_default_name">Новый счёт\u0020</string>
-  <string name="time_ago_placeholder">{TIMEPLACEHOLDER}</string>
-  <string name="time_ago_today">сегодня</string>
+    <string name="time_ago_today">сегодня</string>
   <string name="time_ago_a_day">вчера</string>
   <string name="time_ago_days">{TIMEPLACEHOLDER} дней назад</string>
   <string name="time_ago_a_month">месяц назад</string>
