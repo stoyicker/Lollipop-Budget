@@ -33,8 +33,8 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
 import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.ui.util.undobar.UndoBar;
-import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
+import org.jorge.lbudget.ui.component.undobar.UndoBar;
+import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.LBudgetTimeUtils;
 import org.jorge.lbudget.util.LBudgetUtils;
 
@@ -43,8 +43,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 
-import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel
-        .printifyAmount;
+import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
 
 public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementListRecyclerAdapter
         .ViewHolder> {
@@ -249,7 +248,7 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
                 .show();
     }
 
-    public void runClick(Integer position) {
+    public void performClick(Integer position) {
         mMovementEditRequestListener.onMovementEditRequested(items.get
                 (position));
     }

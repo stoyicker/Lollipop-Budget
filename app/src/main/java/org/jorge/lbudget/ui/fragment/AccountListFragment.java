@@ -21,9 +21,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -32,8 +30,8 @@ import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
 import org.jorge.lbudget.ui.component.RecyclerItemClickListener;
 import org.jorge.lbudget.ui.component.SwipeDismissRecyclerViewTouchListener;
-import org.jorge.lbudget.ui.util.FloatingActionHideActionBarButton;
-import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
+import org.jorge.lbudget.ui.component.FloatingActionHideActionBarButton;
+import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 
 public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
 
@@ -75,7 +73,7 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
                 new SwipeDismissRecyclerViewTouchListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        adapter.runClick(view, position);
+                        adapter.performClick(view, position);
                     }
                 }));
         mNewAccountButton = (FloatingActionHideActionBarButton) view.findViewById(R.id

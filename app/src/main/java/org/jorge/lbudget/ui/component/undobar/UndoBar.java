@@ -11,7 +11,7 @@
  * along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.jorge.lbudget.ui.util.undobar;
+package org.jorge.lbudget.ui.component.undobar;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

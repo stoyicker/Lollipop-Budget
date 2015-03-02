@@ -1,4 +1,4 @@
-package org.jorge.lbudget.ui.util;
+package org.jorge.lbudget.ui.component;
 
 
 import android.os.Handler;

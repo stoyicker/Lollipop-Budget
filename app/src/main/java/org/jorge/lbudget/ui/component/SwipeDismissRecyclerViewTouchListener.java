@@ -11,7 +11,6 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListView;
 
@@ -20,6 +19,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListener {
+
+    private static final Integer MIN_DELTA_CONSIDER_CLICK = 20;
+    private OnNotDismissedListener mListener;
+    private Integer mLastTouchedIndex;
 
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
@@ -89,6 +92,13 @@ public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListen
         mCallbacks = callbacks;
     }
 
+    public SwipeDismissRecyclerViewTouchListener(RecyclerView recyclerView,
+                                                 DismissCallbacks dismissCallbacks,
+                                                 OnNotDismissedListener listener) {
+        this(recyclerView, dismissCallbacks);
+        mListener = listener;
+    }
+
     /**
      * Enables or disables (pauses or resumes) watching for swipe-to-dismiss gestures.
      *
@@ -131,7 +141,8 @@ public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListen
                 int x = (int) motionEvent.getRawX() - listViewCoords[0];
                 int y = (int) motionEvent.getRawY() - listViewCoords[1];
                 View child;
-                for (int i = 0; i < childCount; i++) {
+                int i = 0;
+                for (; i < childCount; i++) {
                     child = mRecyclerView.getChildAt(i);
                     child.getHitRect(rect);
                     if (rect.contains(x, y)) {
@@ -139,6 +150,7 @@ public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListen
                         break;
                     }
                 }
+                mLastTouchedIndex = i;
 
                 if (mDownView != null) {
                     mDownX = motionEvent.getRawX();
@@ -216,6 +228,9 @@ public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListen
                             });
                 } else {
                     // cancel
+                    if (mListener != null && !dismiss && Math.abs(deltaX) <
+                            MIN_DELTA_CONSIDER_CLICK)
+                        mListener.onNotDismissed(mLastTouchedIndex);
                     mDownView.animate()
                             .translationX(0)
                             .alpha(1)
@@ -284,8 +299,6 @@ public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListen
         // Animate the dismissed list item to zero-height and fire the dismiss callback when
         // all dismissed list item animations have completed. This triggers layout on each animation
         // frame; in the future we may want to do something smarter and better performance-wise.
-
-        final ViewGroup.LayoutParams lp = dismissView.getLayoutParams();
         final int originalHeight = dismissView.getHeight();
 
         ValueAnimator animator = ValueAnimator.ofInt(originalHeight, 1).setDuration(mAnimationTime);
@@ -326,5 +339,9 @@ public class SwipeDismissRecyclerViewTouchListener implements View.OnTouchListen
 
         mPendingDismisses.add(new PendingDismissData(dismissPosition, dismissView));
         animator.start();
+    }
+
+    public interface OnNotDismissedListener {
+        public void onNotDismissed(final Integer position);
     }
 }

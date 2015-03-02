@@ -10,7 +10,7 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
   -->
-<org.jorge.lbudget.ui.util.FloatingActionHideActionBarButton xmlns:android="http://schemas.android.com/apk/res/android"
+<org.jorge.lbudget.ui.component.FloatingActionHideActionBarButton xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/button_new_item"
     android:layout_width="wrap_content"

@@ -27,8 +27,8 @@ import android.widget.TextView;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
-import org.jorge.lbudget.ui.util.undobar.UndoBar;
-import org.jorge.lbudget.ui.util.undobar.UndoBarShowStateListener;
+import org.jorge.lbudget.ui.component.undobar.UndoBar;
+import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.IMECloseListenableEditText;
 import org.jorge.lbudget.util.LBudgetUtils;
 
@@ -184,7 +184,7 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
                 .show();
     }
 
-    public void runClick(View view, Integer position) {
+    public void performClick(View view, Integer position) {
         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(
                 Context.INPUT_METHOD_SERVICE);
         mActivity.findViewById(android.R.id.content).requestFocus();
