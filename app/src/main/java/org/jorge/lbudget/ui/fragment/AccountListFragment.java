@@ -24,13 +24,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
-import org.jorge.lbudget.ui.component.RecyclerItemClickListener;
-import org.jorge.lbudget.ui.component.SwipeDismissRecyclerViewTouchListener;
 import org.jorge.lbudget.ui.component.FloatingActionHideActionBarButton;
+import org.jorge.lbudget.ui.component.SwipeDismissRecyclerViewTouchListener;
 import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 
 public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
@@ -40,7 +40,7 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
     private FloatingActionHideActionBarButton mNewAccountButton;
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAccountsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -62,28 +62,34 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
                                                   int[] reverseSortedPositions) {
                                 if (reverseSortedPositions != null)
                                     adapter.runDestroy(recyclerView,
-                                            reverseSortedPositions[0]); //Just limit
+                                            reverseSortedPositions[0]);
+                                final InputMethodManager imm = (InputMethodManager) mContext
+                                        .getSystemService(
+                                                Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0); //Just limit
                                 // to deal with one, in the future we'll see what happens
                                 // with many
                             }
-                        });
-        mAccountsRecyclerView.setOnTouchListener(touchListener);
-        mAccountsRecyclerView.setOnScrollListener(touchListener.makeScrollListener());
-        mAccountsRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(mContext,
-                new SwipeDismissRecyclerViewTouchListener.OnItemClickListener() {
+                        }, new SwipeDismissRecyclerViewTouchListener.OnNotDismissedListener() {
                     @Override
-                    public void onItemClick(View view, int position) {
+                    public void onNotDismissed(final Integer position) {
                         adapter.performClick(view, position);
                     }
-                }));
+                });
+        mAccountsRecyclerView.setOnTouchListener(touchListener);
+        mAccountsRecyclerView.setOnScrollListener(touchListener.makeScrollListener());
         mNewAccountButton = (FloatingActionHideActionBarButton) view.findViewById(R.id
                 .button_new_item);
-        mNewAccountButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                adapter.createNewAccount();
-            }
-        });
+        mNewAccountButton.setOnClickListener(new View.OnClickListener()
+
+                                             {
+                                                 @Override
+                                                 public void onClick(View view) {
+                                                     adapter.createNewAccount();
+                                                 }
+                                             }
+
+        );
         mNewAccountButton.attachToRecyclerView(mAccountsRecyclerView);
     }
 

@@ -45,4 +45,5 @@
     <issue id="MissingTranslation">
         <ignore path="src/main/res/values-el"/>
     </issue>
+    <issue id="IconDensities" severity="ignore"/>
 </lint>
