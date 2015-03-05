@@ -28,8 +28,7 @@
   <string name="action_share">Поделиться</string>
   <string name="share_dialog_title">Поделиться с помощью</string>
   <string name="share_text_income">Получено {MONEYPLACEHOLDER}\u0020</string>
-  <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
-  <string name="undo_bar_undo_uppercase">ОТМЕНА</string>
+    <string name="undo_bar_undo_uppercase">ОТМЕНА</string>
   <string name="movement_list_item_removal">Удалено</string>
   <string name="item_edit">Изменить</string>
   <string name="pref_title_currency_code">Валюта</string>
@@ -69,4 +68,7 @@
   <string name="pref_title_export_csv">Экспортировать в CSV</string>
   <string name="csv_export_successful">Данные экспортированы в папку \"Загрузки\".</string>
   <string name="csv_export_unsuccessful">Произошла ошибка, данные не экспортированы.</string>
+    <string name="hint_date">дата</string>
+    <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
+    <string name="hint_amount">количество</string>
 </resources>

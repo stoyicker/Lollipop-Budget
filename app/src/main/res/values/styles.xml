@@ -142,4 +142,8 @@
         <item name="android:shadowRadius">1</item>
         <item name="android:textSize">@dimen/expense_graph_title_text_size</item>
     </style>
+
+    <style name="MovementDetailFloatLabelStyle" parent="TextAppearance.FLL.FloatLabel">
+        <item name="android:textColor">@color/material_light_blue_500</item>
+    </style>
 </resources>

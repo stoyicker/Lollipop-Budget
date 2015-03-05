@@ -254,8 +254,9 @@
     <string name="new_movement_dialog_name" translatable="false">NEW_MOVEMENT_DIALOG</string>
     <string name="edit_movement_dialog_name" translatable="false">EDIT_MOVEMENT_DIALOG</string>
     <string name="movement_image_dialog_name" translatable="false">MOVEMENT_IMAGE_DIALOG</string>
-    <string name="amount_numeric_none" translatable="false">0,00</string>
+    <string name="hint_amount">Amount</string>
     <string name="iso_8601_date_format" translatable="false">yyyy-MM-dd</string>
+    <string name="hint_date">Date</string>
     <string name="exported_file_name" translatable="false">lbudget.csv</string>
     <string name="default_account_name">Default account</string>
     <string name="navigation_menu_item0">Movements</string>
@@ -273,7 +274,7 @@
     <string name="action_share">Share</string>
     <string name="share_dialog_title">Share to…</string>
     <string name="share_text_income">Got {MONEYPLACEHOLDER}\u0020</string>
-    <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
+    <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
     <string name="undo_bar_undo_uppercase">UNDO</string>
     <string name="movement_list_item_removal">Item removed</string>
     <string name="item_edit">Edit</string>

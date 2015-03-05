@@ -95,4 +95,5 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.2.2@aar') {
         transitive = true;
     }
+    compile 'org.ligi:floatlabel:0.2.0'
 }

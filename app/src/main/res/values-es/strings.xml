@@ -27,7 +27,6 @@
     <string name="action_share">Compartir</string>
     <string name="share_dialog_title">Compartir con</string>
     <string name="share_text_income">He ingresado {MONEYPLACEHOLDER}\u0020</string>
-    <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
     <string name="undo_bar_undo_uppercase">DESHACER</string>
     <string name="movement_list_item_removal">Elemento eliminado</string>
     <string name="item_edit">Editar</string>
@@ -68,4 +67,7 @@
     <string name="pref_title_export_csv">Exportar datos como CSV</string>
     <string name="csv_export_successful">Datos exportados correctamente a tu carpeta de descargas.</string>
     <string name="csv_export_unsuccessful">Ha habido un error que ha impedido que los datos sean exportados.</string>
+    <string name="hint_date">Fecha</string>
+    <string name="share_text_expense">¡{MONEYPLACEHOLDER}!</string>
+    <string name="hint_amount">Cantidad</string>
 </resources>

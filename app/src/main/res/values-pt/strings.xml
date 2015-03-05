@@ -28,8 +28,7 @@
   <string name="action_share">Partilhar</string>
   <string name="share_dialog_title">Partilhar para&#8230;</string>
   <string name="share_text_income">Tenho {MONEYPLACEHOLDER}</string>
-  <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
-  <string name="undo_bar_undo_uppercase">DESFAZER</string>
+    <string name="undo_bar_undo_uppercase">DESFAZER</string>
   <string name="movement_list_item_removal">Item removido</string>
   <string name="item_edit">Editar</string>
   <string name="pref_title_currency_code">Moeda</string>
@@ -69,4 +68,7 @@
   <string name="pref_title_export_csv">Exportar dados como CSV</string>
   <string name="csv_export_successful">Dados exportados com sucesso para a sua pasta de downloads.</string>
   <string name="csv_export_unsuccessful">Houve um erro e os dados não foram exportados.</string>
+    <string name="hint_date">Data</string>
+    <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
+    <string name="hint_amount">Quantidade</string>
 </resources>

@@ -15,6 +15,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
+              xmlns:fll="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -22,57 +23,79 @@
               android:focusableInTouchMode="true"
               android:padding="@dimen/dialog_fragment_padding">
 
-    <EditText
-        android:id="@+id/movement_detail_date_view"
-        android:editable="false"
-        style="@style/MovementDetailText"
-        android:layout_marginTop="@dimen/movement_detail_dialog_top_padding"
-        android:hint="@string/iso_8601_date_format"
+    <org.ligi.floatlabel.FloatingLabelLayout
         android:layout_width="wrap_content"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:nextFocusLeft="@null"
-        android:nextFocusUp="@null"
-        android:nextFocusDown="@+id/movement_detail_title_view"
-        android:nextFocusForward="@+id/movement_detail_title_view"
-        android:nextFocusRight="@+id/movement_detail_title_view"
         android:layout_height="wrap_content"
-        tools:ignore="Deprecated,TextFields"/>
+        fll:floatLabelTrigger="text"
+        fll:floatLabelTextAppearance="@style/MovementDetailFloatLabelStyle">
 
-    <EditText
-        android:id="@+id/movement_detail_title_view"
-        android:hint="@string/movement_detail_name_view_hint"
-        style="@style/MovementDetailText"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:layout_width="match_parent"
+        <EditText
+            android:id="@+id/movement_detail_date_view"
+            android:editable="false"
+            style="@style/MovementDetailText"
+            android:layout_marginTop="@dimen/movement_detail_dialog_top_padding"
+            android:hint="@string/hint_date"
+            android:layout_width="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:nextFocusLeft="@null"
+            android:nextFocusUp="@null"
+            android:nextFocusDown="@+id/movement_detail_title_view"
+            android:nextFocusForward="@+id/movement_detail_title_view"
+            android:nextFocusRight="@+id/movement_detail_title_view"
+            android:layout_height="wrap_content"
+            tools:ignore="Deprecated,TextFields"/>
+    </org.ligi.floatlabel.FloatingLabelLayout>
+
+    <org.ligi.floatlabel.FloatingLabelLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:nextFocusLeft="@null"
-        android:nextFocusUp="@null"
-        android:nextFocusDown="@+id/movement_detail_amount_view"
-        android:nextFocusForward="@+id/movement_detail_amount_view"
-        android:nextFocusRight="@+id/movement_detail_amount_view"
-        android:inputType="text"/>
+        fll:floatLabelTrigger="text"
+        fll:floatLabelTextAppearance="@style/MovementDetailFloatLabelStyle">
+
+        <EditText
+            android:id="@+id/movement_detail_title_view"
+            android:hint="@string/movement_detail_name_view_hint"
+            style="@style/MovementDetailText"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nextFocusLeft="@null"
+            android:nextFocusUp="@null"
+            android:nextFocusDown="@+id/movement_detail_amount_view"
+            android:nextFocusForward="@+id/movement_detail_amount_view"
+            android:nextFocusRight="@+id/movement_detail_amount_view"
+            android:inputType="text"/>
+    </org.ligi.floatlabel.FloatingLabelLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
-            android:id="@+id/movement_detail_amount_view"
-            android:hint="@string/amount_numeric_none"
-            android:focusable="true"
-            style="@style/MovementDetailText"
-            android:focusableInTouchMode="true"
-            android:layout_width="@dimen/movement_detail_amount_edittext_width"
+        <org.ligi.floatlabel.FloatingLabelLayout
+            android:id="@+id/movement_detail_amount_view_wrapper"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:nextFocusLeft="@id/movement_detail_title_view"
-            android:nextFocusUp="@id/movement_detail_title_view"
-            android:nextFocusDown="@null"
-            android:nextFocusForward="@null"
-            android:nextFocusRight="@null"
-            android:inputType="numberDecimal"/>
+            fll:floatLabelTrigger="text"
+            fll:floatLabelTextAppearance="@style/MovementDetailFloatLabelStyle">
+
+            <EditText
+                android:id="@+id/movement_detail_amount_view"
+                android:hint="@string/hint_amount"
+                android:focusable="true"
+                style="@style/MovementDetailText"
+                android:focusableInTouchMode="true"
+                android:layout_width="@dimen/movement_detail_amount_edittext_width"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:nextFocusLeft="@id/movement_detail_title_view"
+                android:nextFocusUp="@id/movement_detail_title_view"
+                android:nextFocusDown="@null"
+                android:nextFocusForward="@null"
+                android:nextFocusRight="@null"
+                android:inputType="numberDecimal"/>
+        </org.ligi.floatlabel.FloatingLabelLayout>
 
         <TextView
             android:id="@+id/movement_detail_currency_view"
@@ -80,7 +103,7 @@
             android:focusableInTouchMode="false"
             android:gravity="center_horizontal|bottom"
             android:layout_width="wrap_content"
-            android:layout_toEndOf="@id/movement_detail_amount_view"
+            android:layout_toEndOf="@id/movement_detail_amount_view_wrapper"
             android:layout_alignBottom="@+id/movement_detail_types_view"
             android:layout_height="wrap_content"/>
 

@@ -69,4 +69,8 @@
     <string name="pref_title_export_csv">Εξαγωγή δεδομένων ως CSV</string>
     <string name="csv_export_successful">Τα δεδομένα έγιναν εξαγωγή με επιτυχία στο φάκελο download σας.</string>
     <string name="csv_export_unsuccessful">Παρουσιάστηκε σφάλμα και τα δεδομένα δεν μπορούν να εξαχθούν.</string>
+    <string name="hint_date">ημερομηνία</string>
+    <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
+    <string name="share_text_income">Έλαβα {MONEYPLACEHOLDER}</string>
+    <string name="hint_amount">ποσό</string>
 </resources>

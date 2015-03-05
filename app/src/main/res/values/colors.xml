@@ -49,4 +49,6 @@
     <color name="expense_type_7_color">#FFFFFF</color>
     <color name="expense_type_8_color">#0DFF0E</color>
     <color name="expense_type_9_color">#FE6DA8</color>
+
+    <color name="material_light_blue_500">#03a9f4</color>
 </resources>

@@ -28,7 +28,6 @@
     <string name="action_share">Share</string>
     <string name="share_dialog_title">Share to…</string>
     <string name="share_text_income">Got {MONEYPLACEHOLDER}\u0020</string>
-    <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
     <string name="undo_bar_undo_uppercase">UNDO</string>
     <string name="movement_list_item_removal">Item removed</string>
     <string name="item_edit">Edit</string>
@@ -68,4 +67,7 @@
     <string name="pref_title_export_csv">Export data as CSV</string>
     <string name="csv_export_successful">Data exported successfully into your downloads folder.</string>
     <string name="csv_export_unsuccessful">There was an error and the data could not be exported.</string>
+    <string name="hint_date">Date</string>
+    <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
+    <string name="hint_amount">Amount</string>
 </resources>

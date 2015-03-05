@@ -28,7 +28,7 @@
   <string name="action_share">Teilen</string>
   <string name="share_dialog_title">Teilen mit&#8230;</string>
   <string name="share_text_income">{MONEYPLACEHOLDER}\u0020 erhalten</string>
-  <string name="share_text_expense">{MONEYPLACEHOLDER}</string>
+  <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
   <string name="undo_bar_undo_uppercase">RÜCKGÄNGIG</string>
   <string name="movement_list_item_removal">Element entfernt</string>
   <string name="item_edit">Bearbeiten</string>
@@ -69,4 +69,6 @@
   <string name="pref_title_export_csv">Daten als CSV exportieren</string>
   <string name="csv_export_successful">Daten erfolgreich exportiert in Ihr Downloads Ordner.</string>
   <string name="csv_export_unsuccessful">Es trat ein Fehler auf und die Daten konnten nicht exportiert werden.</string>
+    <string name="hint_date">Datum</string>
+    <string name="hint_amount">Höhe</string>
 </resources>
