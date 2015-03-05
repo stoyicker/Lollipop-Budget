@@ -14,17 +14,16 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/movement_image_showcase_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_picture"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:contentDescription="@string/movement_image_content_description" />
+        android:contentDescription="@string/movement_image_content_description"/>
 
     <ImageButton
         android:id="@+id/button_movement_image_snap"
@@ -35,5 +34,5 @@
         android:src="@drawable/ic_action_camera"
         android:scaleType="centerInside"
         android:background="@drawable/snap_button_background_ripple"
-        android:contentDescription="@string/picture_snap_content_description" />
+        android:contentDescription="@string/picture_snap_content_description"/>
 </RelativeLayout>
