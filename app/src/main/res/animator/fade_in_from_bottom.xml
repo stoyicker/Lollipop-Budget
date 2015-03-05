@@ -14,7 +14,7 @@
   -->
 
 <objectAnimator xmlns:android="http://schemas.android.com/apk/res/android"
-    android:duration="300"
-    android:valueFrom="5000"
-    android:valueTo="0"
-    android:propertyName="translationY" />
+                android:duration="800"
+                android:valueFrom="5000"
+                android:valueTo="0"
+                android:propertyName="translationY"/>
