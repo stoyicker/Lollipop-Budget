@@ -19,7 +19,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -33,7 +32,6 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
 import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.ui.component.undobar.UndoBar;
 import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.LBudgetTimeUtils;
 import org.jorge.lbudget.util.LBudgetUtils;
@@ -219,33 +217,11 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         }
     }
 
-    public void runDestroy(final View view, final Integer pos) {
-        view.setVisibility(View.GONE);
+    public void runDestroy(final Integer pos) {
         final MovementDataModel movement = items.get(pos);
         items.remove(movement);
         notifyItemRemoved(pos);
-        undoBarShowStateListener.onShowUndoBar();
-        new UndoBar.Builder(mActivity)
-                .setMessage(LBudgetUtils.getString(mContext,
-                        "movement_list_item_removal"))
-                .setListener(new UndoBar.Listener() {
-                    @Override
-                    public void onHide() {
-                        view.setVisibility(View.VISIBLE);
-                        removeMovementFromPersistence(movement);
-                        undoBarShowStateListener.onHideUndoBar();
-                    }
-
-                    @Override
-                    public void onUndo(Parcelable token) {
-                        items.add(pos, movement);
-                        view.setVisibility(View.VISIBLE);
-                        notifyItemInserted(pos);
-                        mRecyclerView.smoothScrollToPosition(pos);
-                        undoBarShowStateListener.onHideUndoBar();
-                    }
-                })
-                .show();
+        removeMovementFromPersistence(movement);
     }
 
     public void performClick(Integer position) {

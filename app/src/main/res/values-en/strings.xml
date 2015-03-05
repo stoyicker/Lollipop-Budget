@@ -70,4 +70,5 @@
     <string name="hint_date">Date</string>
     <string name="share_text_expense">{MONEYPLACEHOLDER}!</string>
     <string name="hint_amount">Amount</string>
+    <string name="delete">Delete</string>
 </resources>

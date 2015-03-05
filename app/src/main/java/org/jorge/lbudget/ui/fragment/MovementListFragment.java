@@ -25,11 +25,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.hudomju.swipe.OnItemClickListener;
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.SwipeableItemClickListener;
+import com.hudomju.swipe.adapter.RecyclerViewAdapter;
+import com.hudomju.swipe.adapter.ViewAdapter;
+
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.MovementManager;
 import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
 import org.jorge.lbudget.ui.component.FloatingActionHideActionBarButton;
-import org.jorge.lbudget.ui.component.SwipeDismissRecyclerViewTouchListener;
 import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.LBudgetUtils;
 
@@ -51,32 +56,41 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
                 (android.R.id
                         .empty), this, mMovementsView, getActivity(), MovementManager.getInstance()
                 .getSelectedAccountMovementsToDate(), this, this));
-        SwipeDismissRecyclerViewTouchListener touchListener =
-                new SwipeDismissRecyclerViewTouchListener(
-                        mMovementsView,
-                        new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+        final SwipeToDismissTouchListener touchListener =
+                new SwipeToDismissTouchListener<>(
+                        new RecyclerViewAdapter(mMovementsView),
+                        new SwipeToDismissTouchListener.DismissCallbacks<ViewAdapter>() {
                             @Override
                             public boolean canDismiss(int position) {
                                 return Boolean.TRUE;
                             }
 
                             @Override
-                            public void onDismiss(RecyclerView recyclerView,
-                                                  int[] reverseSortedPositions) {
-                                if (reverseSortedPositions != null)
-                                    adapter.runDestroy(recyclerView,
-                                            reverseSortedPositions[0]); //Just limit
-                                // to deal with one, in the future we'll see what happens
-                                // with many
+                            public void onDismiss(ViewAdapter viewAdapter, int i) {
+                                if (i > -1 && i < adapter.getItemCount()) {
+                                    adapter.runDestroy(i);
+                                }
                             }
-                        }, new SwipeDismissRecyclerViewTouchListener.OnNotDismissedListener() {
-                    @Override
-                    public void onNotDismissed(final Integer position) {
-                        adapter.performClick(position);
-                    }
-                });
+                        }
+                );
         mMovementsView.setOnTouchListener(touchListener);
-        mMovementsView.setOnScrollListener(touchListener.makeScrollListener());
+        mMovementsView.setOnScrollListener((RecyclerView.OnScrollListener) touchListener.makeScrollListener());
+        mMovementsView.addOnItemTouchListener(new SwipeableItemClickListener(mContext,
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        final Integer viewId = view.getId();
+                        if (viewId == R.id.txt_delete) {
+                            touchListener.processPendingDismisses();
+                        } else if (viewId == R.id.txt_undo) {
+                            touchListener.undoPendingDismiss();
+                            mMovementsView.smoothScrollToPosition(position);
+                        } else {
+                            adapter.performClick(position);
+                        }
+                    }
+                }
+        ));
         mNewMovementButton = (FloatingActionHideActionBarButton) view.findViewById(R.id
                 .button_new_item);
         mNewMovementButton.attachToRecyclerView(mMovementsView);

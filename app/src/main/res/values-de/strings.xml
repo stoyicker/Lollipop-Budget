@@ -71,4 +71,5 @@
   <string name="csv_export_unsuccessful">Es trat ein Fehler auf und die Daten konnten nicht exportiert werden.</string>
     <string name="hint_date">Datum</string>
     <string name="hint_amount">Höhe</string>
+    <string name="delete">Löschen</string>
 </resources>

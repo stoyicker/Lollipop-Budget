@@ -58,4 +58,5 @@
     <dimen name="navigation_toolbar_height">100dp</dimen>
     <dimen name="movement_detail_amount_edittext_width">120dp</dimen>
     <dimen name="card_corner_radius">4dp</dimen>
+    <dimen name="list_undo_item_padding_sides">16dp</dimen>
 </resources>

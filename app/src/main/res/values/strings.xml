@@ -315,4 +315,5 @@
     <string name="pref_title_export_csv">Export data as CSV</string>
     <string name="csv_export_successful">Data exported successfully into your downloads folder.</string>
     <string name="csv_export_unsuccessful">There was an error and the data could not be exported.</string>
+    <string name="delete">Delete</string>
 </resources>
