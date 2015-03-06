@@ -34,6 +34,7 @@
     <!-- It's fine, the navigation toolbar does require its own color -->
     <issue id="Overdraw">
         <ignore path="src/main/res/layout/fragment_navigation_toolbar.xml"/>
+        <ignore path="src/main/res/layout/include_undo.xml"/>
     </issue>
     <issue id="RelativeOverlap">
         <ignore path="src/main/res/layout/dialog_fragment_movement_detail.xml"/>

@@ -60,4 +60,6 @@
             android:maxLines="1"
             style="@style/AccountTextNonSelected"/>
     </LinearLayout>
+
+    <include layout="@layout/include_undo_delete"/>
 </android.support.v7.widget.CardView>

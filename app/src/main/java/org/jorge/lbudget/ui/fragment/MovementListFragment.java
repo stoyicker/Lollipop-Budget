@@ -35,12 +35,11 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.MovementManager;
 import org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter;
 import org.jorge.lbudget.ui.component.FloatingActionHideActionBarButton;
-import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.LBudgetUtils;
 
-public class MovementListFragment extends Fragment implements UndoBarShowStateListener,
+public class MovementListFragment extends Fragment implements
         MovementListRecyclerAdapter.MovementImageClickListener, MovementListRecyclerAdapter
-                .MovementEditRequestListener {
+        .MovementEditRequestListener {
 
     private RecyclerView mMovementsView;
     private Context mContext;
@@ -54,7 +53,7 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         final MovementListRecyclerAdapter adapter;
         mMovementsView.setAdapter(adapter = new MovementListRecyclerAdapter(view.findViewById
                 (android.R.id
-                        .empty), this, mMovementsView, getActivity(), MovementManager.getInstance()
+                        .empty), mMovementsView, getActivity(), MovementManager.getInstance()
                 .getSelectedAccountMovementsToDate(), this, this));
         final SwipeToDismissTouchListener touchListener =
                 new SwipeToDismissTouchListener<>(
@@ -126,16 +125,6 @@ public class MovementListFragment extends Fragment implements UndoBarShowStateLi
         super.onResume();
         MovementListRecyclerAdapter.updateMovementColors(mContext);
         mMovementsView.getAdapter().notifyDataSetChanged();
-    }
-
-    @Override
-    public void onShowUndoBar() {
-        mNewMovementButton.setEnabled(Boolean.FALSE);
-    }
-
-    @Override
-    public void onHideUndoBar() {
-        mNewMovementButton.setEnabled(Boolean.TRUE);
     }
 
     @Override

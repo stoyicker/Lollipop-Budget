@@ -26,14 +26,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
+import com.hudomju.swipe.OnItemClickListener;
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.SwipeableItemClickListener;
+import com.hudomju.swipe.adapter.RecyclerViewAdapter;
+import com.hudomju.swipe.adapter.ViewAdapter;
+
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.ui.adapter.AccountListRecyclerAdapter;
 import org.jorge.lbudget.ui.component.FloatingActionHideActionBarButton;
-import org.jorge.lbudget.ui.component.SwipeDismissRecyclerViewTouchListener;
-import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 
-public class AccountListFragment extends Fragment implements UndoBarShowStateListener {
+public class AccountListFragment extends Fragment {
 
     private RecyclerView mAccountsRecyclerView;
     private Context mContext;
@@ -45,39 +49,51 @@ public class AccountListFragment extends Fragment implements UndoBarShowStateLis
         mAccountsRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mAccountsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         final AccountListRecyclerAdapter adapter;
-        mAccountsRecyclerView.setAdapter(adapter = new AccountListRecyclerAdapter(this,
-                getActivity(), AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
+        mAccountsRecyclerView.setAdapter(adapter = new AccountListRecyclerAdapter(getActivity(),
+                AccountManager.getInstance().getAccounts(), mAccountsRecyclerView));
 
-        SwipeDismissRecyclerViewTouchListener touchListener =
-                new SwipeDismissRecyclerViewTouchListener(
-                        mAccountsRecyclerView,
-                        new SwipeDismissRecyclerViewTouchListener.DismissCallbacks() {
+        final SwipeToDismissTouchListener touchListener =
+                new SwipeToDismissTouchListener<>(
+                        new RecyclerViewAdapter(mAccountsRecyclerView),
+                        new SwipeToDismissTouchListener.DismissCallbacks<ViewAdapter>() {
                             @Override
                             public boolean canDismiss(int position) {
                                 return !adapter.isSelected(position);
                             }
 
                             @Override
-                            public void onDismiss(RecyclerView recyclerView,
-                                                  int[] reverseSortedPositions) {
-                                if (reverseSortedPositions != null)
-                                    adapter.runDestroy(recyclerView,
-                                            reverseSortedPositions[0]);
+                            public void onDismiss(ViewAdapter viewAdapter, int i) {
+                                if (i > -1 && i < adapter.getItemCount()) {
+                                    adapter.runDestroy(i);
+                                }
                                 final InputMethodManager imm = (InputMethodManager) mContext
                                         .getSystemService(
                                                 Context.INPUT_METHOD_SERVICE);
-                                imm.hideSoftInputFromWindow(recyclerView.getWindowToken(), 0); //Just limit
-                                // to deal with one, in the future we'll see what happens
+                                imm.hideSoftInputFromWindow(mAccountsRecyclerView.getWindowToken
+                                        (), 0);
+                                //Just limit to deal with one, in the future we'll see what happens
                                 // with many
                             }
-                        }, new SwipeDismissRecyclerViewTouchListener.OnNotDismissedListener() {
-                    @Override
-                    public void onNotDismissed(final Integer position) {
-                        adapter.performClick(view, position);
-                    }
-                });
+                        });
         mAccountsRecyclerView.setOnTouchListener(touchListener);
-        mAccountsRecyclerView.setOnScrollListener(touchListener.makeScrollListener());
+        mAccountsRecyclerView.setOnScrollListener((RecyclerView.OnScrollListener) touchListener
+                .makeScrollListener());
+        mAccountsRecyclerView.addOnItemTouchListener(new SwipeableItemClickListener(mContext,
+                new OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        final Integer viewId = view.getId();
+                        if (viewId == R.id.txt_delete) {
+                            touchListener.processPendingDismisses();
+                        } else if (viewId == R.id.txt_undo) {
+                            touchListener.undoPendingDismiss();
+                            mAccountsRecyclerView.smoothScrollToPosition(position);
+                        } else {
+                            adapter.performClick(view, position);
+                        }
+                    }
+                }
+        ));
         mNewAccountButton = (FloatingActionHideActionBarButton) view.findViewById(R.id
                 .button_new_item);
         mNewAccountButton.setOnClickListener(new View.OnClickListener()

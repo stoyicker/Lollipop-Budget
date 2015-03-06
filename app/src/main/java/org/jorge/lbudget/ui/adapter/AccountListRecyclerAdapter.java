@@ -15,7 +15,6 @@ package org.jorge.lbudget.ui.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,15 +26,12 @@ import android.widget.TextView;
 import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
-import org.jorge.lbudget.ui.component.undobar.UndoBar;
-import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.IMECloseListenableEditText;
 import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.List;
 
-import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel
-        .printifyAmount;
+import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
 
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter
         .ViewHolder> {
@@ -46,16 +42,14 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
     private final List<AccountDataModel> items;
     @SuppressWarnings("FieldCanBeLocal")
     private final int itemLayout = R.layout.list_item_account;
-    private final UndoBarShowStateListener undoBarShowStateListener;
 
-    public AccountListRecyclerAdapter(UndoBarShowStateListener _undoBarShowStateListener,
-                                      Activity activity, List<AccountDataModel> accounts,
-                                      RecyclerView _recyclerView) {
+    public AccountListRecyclerAdapter(
+            Activity activity, List<AccountDataModel> accounts,
+            RecyclerView _recyclerView) {
         mActivity = activity;
         mContext = activity.getApplicationContext();
         items = accounts;
         mRecyclerView = _recyclerView;
-        undoBarShowStateListener = _undoBarShowStateListener;
     }
 
     private void setSelectedAccount(int position) {
@@ -151,37 +145,11 @@ public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountList
         }
     }
 
-    public void runDestroy(final RecyclerView origin, final Integer pos) {
-        final View thisView = origin.getChildAt(pos);
-        thisView.setVisibility(View.GONE);
+    public void runDestroy(final Integer pos) {
         final AccountDataModel account = items.get(pos);
         items.remove(account);
         notifyItemRemoved(pos);
-        undoBarShowStateListener.onShowUndoBar();
-        new UndoBar.Builder(mActivity)
-                .setMessage(LBudgetUtils.getString(mContext,
-                        "movement_list_item_removal"))
-                .setListener(new UndoBar.Listener() {
-                    @Override
-                    public void onHide() {
-                        thisView.setVisibility(View.VISIBLE);
-                        removeAccountFromPersistence(account);
-                        undoBarShowStateListener
-                                .onHideUndoBar();
-                    }
-
-                    @Override
-                    public void onUndo(Parcelable token) {
-                        items.add(pos, account);
-                        thisView.setVisibility(View.VISIBLE);
-                        notifyItemInserted(pos);
-                        mRecyclerView.smoothScrollToPosition
-                                (pos);
-                        undoBarShowStateListener
-                                .onHideUndoBar();
-                    }
-                })
-                .show();
+        removeAccountFromPersistence(account);
     }
 
     public void performClick(View view, Integer position) {

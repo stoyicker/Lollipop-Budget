@@ -32,7 +32,6 @@ import org.jorge.lbudget.R;
 import org.jorge.lbudget.controller.AccountManager;
 import org.jorge.lbudget.controller.MovementManager;
 import org.jorge.lbudget.io.files.FileManager;
-import org.jorge.lbudget.ui.component.undobar.UndoBarShowStateListener;
 import org.jorge.lbudget.util.LBudgetTimeUtils;
 import org.jorge.lbudget.util.LBudgetUtils;
 
@@ -52,14 +51,12 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
     private final int itemLayout = R.layout.list_item_movement;
     private static int incomeColor, expenseColor;
     private final Context mContext;
-    private final UndoBarShowStateListener undoBarShowStateListener;
     private final MovementImageClickListener movementImageClickListener;
     private View mEmptyView;
     private final MovementEditRequestListener mMovementEditRequestListener;
     private static MovementListRecyclerAdapter publicAccessInstance;
 
-    public MovementListRecyclerAdapter(View emptyView, UndoBarShowStateListener
-            _undoBarShowStateListener, RecyclerView recyclerView, Activity activity,
+    public MovementListRecyclerAdapter(View emptyView, RecyclerView recyclerView, Activity activity,
                                        List<MovementDataModel> items,
                                        MovementImageClickListener movementImageClickListener,
                                        MovementEditRequestListener movementEditRequestListener) {
@@ -68,7 +65,6 @@ public class MovementListRecyclerAdapter extends RecyclerView.Adapter<MovementLi
         mContext = activity.getApplicationContext();
         mActivity = activity;
         mRecyclerView = recyclerView;
-        undoBarShowStateListener = _undoBarShowStateListener;
         mEmptyView = emptyView;
         mMovementEditRequestListener = movementEditRequestListener;
         publicAccessInstance = this;
