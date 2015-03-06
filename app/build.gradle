@@ -97,5 +97,4 @@ dependencies {
     }
     compile 'org.ligi:floatlabel:0.2.0'
     compile 'com.hudomju:swipe-to-dismiss-undo:1.0'
-    compile 'com.balysv:material-ripple:1.0.1'
 }

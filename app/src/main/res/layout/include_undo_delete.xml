@@ -12,54 +12,28 @@
     android:paddingRight="@dimen/list_undo_item_padding_sides"
     android:baselineAligned="false"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
-
-    <com.balysv.materialripple.MaterialRippleLayout
-        android:layout_width="0dp"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/txt_delete"
+        android:gravity="center_vertical"
+        android:text="@string/delete"
+        android:textAllCaps="true"
+        android:longClickable="false"
         android:layout_weight="2"
-        app:mrl_rippleHover="true"
-        app:mrl_rippleDelayClick="true"
-        app:mrl_ripplePersistent="false"
-        app:mrl_rippleDimension="5dp"
-        app:mrl_rippleDuration="3000"
-        app:mrl_rippleFadeDuration="5">
+        android:hapticFeedbackEnabled="true"
+        android:textColor="@android:color/white"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/txt_delete"
-            android:gravity="center_vertical"
-            android:text="@string/delete"
-            android:textAllCaps="true"
-            android:longClickable="false"
-            android:layout_weight="2"
-            android:hapticFeedbackEnabled="true"
-            android:textColor="@android:color/white"/>
-    </com.balysv.materialripple.MaterialRippleLayout>
-
-    <com.balysv.materialripple.MaterialRippleLayout
-        android:layout_width="0dp"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        app:mrl_rippleHover="true"
-        app:mrl_rippleDelayClick="true"
-        app:mrl_ripplePersistent="false"
-        app:mrl_rippleDimension="5dp"
-        app:mrl_rippleDuration="3000"
-        app:mrl_rippleFadeDuration="5">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/txt_undo"
-            android:longClickable="false"
-            android:gravity="center"
-            android:text="@string/undo_bar_undo_uppercase"
-            android:textStyle="bold"
-            android:textAllCaps="true"
-            android:clickable="false"
-            android:textColor="@color/material_yellow_a200"/>
-    </com.balysv.materialripple.MaterialRippleLayout>
+        android:id="@+id/txt_undo"
+        android:longClickable="false"
+        android:gravity="center"
+        android:text="@string/undo_bar_undo_uppercase"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textColor="@color/material_yellow_a200"/>
 </LinearLayout>

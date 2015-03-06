@@ -73,7 +73,8 @@ public class MovementListFragment extends Fragment implements
                         }
                 );
         mMovementsView.setOnTouchListener(touchListener);
-        mMovementsView.setOnScrollListener((RecyclerView.OnScrollListener) touchListener.makeScrollListener());
+        mMovementsView.setOnScrollListener((RecyclerView.OnScrollListener) touchListener
+                .makeScrollListener());
         mMovementsView.addOnItemTouchListener(new SwipeableItemClickListener(mContext,
                 new OnItemClickListener() {
                     @Override
