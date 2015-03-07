@@ -10,7 +10,6 @@
     android:paddingLeft="@dimen/list_undo_item_padding_sides"
     android:paddingRight="@dimen/list_undo_item_padding_sides"
     android:baselineAligned="false"
-    android:background="?android:attr/selectableItemBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 

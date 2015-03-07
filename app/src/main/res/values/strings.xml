@@ -316,6 +316,5 @@
     <string name="csv_export_successful">Data exported successfully into your downloads folder.</string>
     <string name="csv_export_unsuccessful">There was an error and the data could not be exported.</string>
     <string name="delete">Delete</string>
-    <string name="empty">No image found.</string>
     <string name="no_image_found">No image found.</string>
 </resources>
