@@ -72,4 +72,5 @@
     <string name="hint_date">Datum</string>
     <string name="hint_amount">Höhe</string>
     <string name="delete">Löschen</string>
+    <string name="no_image_found">Kein Bild gefunden.</string>
 </resources>

@@ -71,4 +71,5 @@
     <string name="share_text_expense">¡{MONEYPLACEHOLDER}!</string>
     <string name="hint_amount">Cantidad</string>
     <string name="delete">Borrar</string>
+    <string name="no_image_found">No se encontró la imagen.</string>
 </resources>

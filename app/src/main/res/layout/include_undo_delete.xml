@@ -4,18 +4,18 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_teal_500"
     android:orientation="horizontal"
     android:visibility="gone"
     android:weightSum="3"
     android:paddingLeft="@dimen/list_undo_item_padding_sides"
     android:paddingRight="@dimen/list_undo_item_padding_sides"
     android:baselineAligned="false"
+    android:background="?android:attr/selectableItemBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/txt_delete"
         android:gravity="center_vertical"
@@ -24,10 +24,11 @@
         android:longClickable="false"
         android:layout_weight="2"
         android:hapticFeedbackEnabled="true"
-        android:textColor="@android:color/white"/>
+        android:textColor="@android:color/black"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"
         android:id="@+id/txt_undo"
         android:longClickable="false"
@@ -35,5 +36,5 @@
         android:text="@string/undo_bar_undo_uppercase"
         android:textStyle="bold"
         android:textAllCaps="true"
-        android:textColor="@color/material_yellow_a200"/>
+        android:textColor="@color/material_light_blue_500"/>
 </LinearLayout>

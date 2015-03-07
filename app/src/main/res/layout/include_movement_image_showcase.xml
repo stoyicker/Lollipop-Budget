@@ -22,13 +22,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+        android:scaleType="center"
+        android:text="@string/no_image_found"
         android:contentDescription="@string/movement_image_content_description"/>
 
     <ImageButton
         android:id="@+id/button_movement_image_snap"
-        android:layout_alignBottom="@id/movement_image_showcase_view"
         android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@id/movement_image_showcase_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_action_camera"
