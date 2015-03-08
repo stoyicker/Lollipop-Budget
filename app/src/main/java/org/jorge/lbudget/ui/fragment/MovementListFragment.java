@@ -14,10 +14,10 @@
 package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -43,6 +43,7 @@ public class MovementListFragment extends Fragment implements
 
     private RecyclerView mMovementsView;
     private Context mContext;
+    @SuppressWarnings("FieldCanBeLocal")
     private FloatingActionHideActionBarButton mNewMovementButton;
 
     @Override

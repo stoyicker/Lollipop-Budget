@@ -14,34 +14,28 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:animateLayoutChanges="true">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:animateLayoutChanges="true">
 
-    <fragment
-        android:id="@+id/fragment_navigation_toolbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:name="org.jorge.lbudget.ui.fragment.NavigationToolbarFragment"
-        tools:layout="@layout/fragment_navigation_toolbar" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/navigation_toolbar_selector"
-        android:background="@color/navigation_dropdown_background"
+    <github.chenupt.springindicator.SpringIndicator
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginTop="@dimen/dialog_fragment_padding"
+        app:siTextSize="@dimen/spring_indicator_text"
+        app:siIndicatorColors="@array/indicator_colors"
+        app:siTextColor="@color/theme_color_primary_dark"
+        app:siSelectedTextColor="@android:color/white"
+        app:siIndicatorColor="@color/theme_color_primary"
+        android:id="@+id/spring_indicator"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/navigation_toolbar_height"
-        android:visibility="gone"
-        android:elevation="@dimen/elevation_navigation_dropdown" />
+        android:layout_height="@dimen/spring_indicator_height"/>
 
-    <FrameLayout
-        android:id="@+id/content_fragment_container"
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/content_margin"
-        android:background="@android:color/transparent" />
+        android:layout_height="match_parent"/>
 </LinearLayout>

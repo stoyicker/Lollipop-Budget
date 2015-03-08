@@ -18,7 +18,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +26,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -95,7 +95,7 @@ public class MovementDetailDialogFragment extends DialogFragment {
     }
 
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(@NonNull Bundle savedInstanceState) {
         @SuppressLint("InflateParams") View view = getActivity().getLayoutInflater().inflate(R
                 .layout
                 .dialog_fragment_movement_detail, null, Boolean.FALSE);

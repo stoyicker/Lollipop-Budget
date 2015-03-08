@@ -13,9 +13,10 @@
   ~ along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="@dimen/dialog_fragment_padding">
 
     <TextView
         android:id="@+id/expense_graph_month_title_view"
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/ExpenseGraphMonthTextStyle"
-        android:gravity="center" />
+        android:gravity="center"/>
 
     <org.eazegraph.lib.charts.PieChart
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -34,7 +35,7 @@
         app:egHighlightStrength="10"
         app:egLegendTextSize="@dimen/expense_graph_legend_size"
         app:egAnimationTime="1000"
-        app:egInnerValueSize="@dimen/expense_graph_text_size" />
+        app:egInnerValueSize="@dimen/expense_graph_text_size"/>
 
     <TextView
         android:id="@android:id/empty"
@@ -42,5 +43,5 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </LinearLayout>

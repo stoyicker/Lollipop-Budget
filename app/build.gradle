@@ -91,10 +91,12 @@ dependencies {
     compile 'com.android.support:cardview-v7:21.0.3'
     compile 'com.github.chrisbanes.photoview:library:1.2.3'
     compile 'com.github.blackfizz:eazegraph:1.2.5l'
-    compile 'com.nineoldandroids:library:2.4.0'
     compile('com.crashlytics.sdk.android:crashlytics:2.2.2@aar') {
         transitive = true;
     }
     compile 'org.ligi:floatlabel:0.2.0'
     compile 'com.hudomju:swipe-to-dismiss-undo:1.0'
+    compile 'com.android.support:support-v13:21.0.3'
+    compile 'com.github.chenupt.android:springindicator:1.0.1@aar'
+    compile 'com.github.chenupt.android:multiplemodel:1.2.0-SNAPSHOT@aar'
 }

@@ -12,6 +12,11 @@
   -->
 
 <resources>
+    <array name="indicator_colors">
+        <item>@color/indicator_0</item>
+        <item>@color/indicator_1</item>
+        <item>@color/indicator_2</item>
+    </array>
     <string-array name="navigation_items">
         <item>@string/navigation_menu_item0</item>
         <item>@string/navigation_menu_item1</item>

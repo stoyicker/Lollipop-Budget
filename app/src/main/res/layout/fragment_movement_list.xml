@@ -13,16 +13,17 @@
   ~ along with Lollipop Budget. If not, see <http://www.gnu.org/licenses/>.
   -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:padding="@dimen/dialog_fragment_padding">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/movement_list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/content_fragment_background" />
+        android:background="@color/content_fragment_background"/>
 
-    <include layout="@layout/include_new_item_floating_button" />
+    <include layout="@layout/include_new_item_floating_button"/>
 
     <TextView
         android:id="@android:id/empty"
@@ -30,5 +31,5 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 </FrameLayout>

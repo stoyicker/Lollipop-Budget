@@ -15,11 +15,11 @@ package org.jorge.lbudget.ui.fragment;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +51,8 @@ public class ExpenseGraphFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_expense_graph, container, Boolean.FALSE);
     }
 
@@ -74,7 +75,7 @@ public class ExpenseGraphFragment extends Fragment {
         redrawExpenseGraph();
     }
 
-    private synchronized void redrawExpenseGraph() {
+    public synchronized void redrawExpenseGraph() {
 
         final int monthsAgo = MONTHS_AGO;
 
@@ -84,9 +85,11 @@ public class ExpenseGraphFragment extends Fragment {
         while (LBudgetUtils.getColor(mContext, "expense_type_" + maxUniquePies + "_color") != -1) {
             maxUniquePies++;
         }
-        maxUniquePies -= 2; //One for the initial index, another one because the last color belongs to 'Other'
+        maxUniquePies -= 2; //One for the initial index, another one because the last color
+        // belongs to 'Other'
 
-        List<PieModel> pies = MovementManager.getInstance().createMonthlyPieModels(mContext, monthsAgo, maxUniquePies);
+        List<PieModel> pies = MovementManager.getInstance().createMonthlyPieModels(mContext,
+                monthsAgo, maxUniquePies);
 
         if (pies.isEmpty()) {
             mPieChart.setVisibility(View.GONE);
@@ -117,23 +120,25 @@ public class ExpenseGraphFragment extends Fragment {
             j++;
         }
 
-        monthChooserBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
+        monthChooserBuilder.setNegativeButton(android.R.string.cancel,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
 
-        monthChooserBuilder.setSingleChoiceItems(adapter, MONTHS_AGO, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (MONTHS_AGO < 0 || MONTHS_AGO > 11)
-                    return;
-                ExpenseGraphFragment.this.MONTHS_AGO = i;
-                ExpenseGraphFragment.this.redrawExpenseGraph();
-                dialogInterface.dismiss();
-            }
-        });
+        monthChooserBuilder.setSingleChoiceItems(adapter, MONTHS_AGO,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (MONTHS_AGO < 0 || MONTHS_AGO > 11)
+                            return;
+                        ExpenseGraphFragment.this.MONTHS_AGO = i;
+                        ExpenseGraphFragment.this.redrawExpenseGraph();
+                        dialogInterface.dismiss();
+                    }
+                });
 
         monthChooserBuilder.show();
     }
