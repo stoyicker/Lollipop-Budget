@@ -31,7 +31,8 @@ import org.jorge.lbudget.util.LBudgetUtils;
 
 import java.util.List;
 
-import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel.printifyAmount;
+import static org.jorge.lbudget.ui.adapter.MovementListRecyclerAdapter.MovementDataModel
+        .printifyAmount;
 
 public class AccountListRecyclerAdapter extends RecyclerView.Adapter<AccountListRecyclerAdapter
         .ViewHolder> {

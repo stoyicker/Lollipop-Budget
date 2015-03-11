@@ -32,15 +32,15 @@ android {
     }
 
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "22.0.0"
 
     productFlavors {
         standard {
             applicationId "org.jorge.lbudget"
             minSdkVersion 21
             targetSdkVersion 21
-            versionCode 20
-            versionName "0.8"
+            versionCode 21
+            versionName "0.8.1"
         }
     }
 
